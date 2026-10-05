@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AtelierKit Pro — 9 $/mois</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+<style>
+body{margin:0;background:#14120f;color:#f4efe6;font-family:"IBM Plex Sans",system-ui,sans-serif}
+.wrap{max-width:880px;margin:0 auto;padding:40px 20px 80px}
+a{color:#f0c36a}
+.card{border:1px solid #3a342c;border-radius:14px;padding:18px;background:#1e1b16;margin-top:14px}
+table{width:100%;border-collapse:collapse}
+td{padding:8px 4px;border-bottom:1px solid #3a342c}
+.btn{display:inline-block;background:#e2a322;color:#1c1406;padding:10px 14px;border-radius:8px;font-weight:700;text-decoration:none;margin-right:8px}
+input{width:100%;padding:10px;border-radius:8px;border:1px solid #3a342c;background:#12100d;color:#f4efe6}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a href="/">← AtelierKit</a>
+  <h1>Tarifs</h1>
+  <p>Prix en dollars canadiens. Taxes en sus. Même logique que FacturePro et TradeQuote : l'outil sert tout de suite, Pro enlève la limite.</p>
+  <div class="card">
+    <table>
+      <tr><td></td><td><b>Gratuit · 0 $</b></td><td><b>Pro · 9 $/mois ou 79 $/an</b></td></tr>
+      <tr><td>Conversion pouce / mm / fraction</td><td>✓</td><td>✓</td></tr>
+      <tr><td>Tarauds UNC, UNF, métrique, NPT, BSPP</td><td>✓</td><td>✓</td></tr>
+      <tr><td>Forets lettre et numéro</td><td>✓</td><td>✓</td></tr>
+      <tr><td>Joints AS568</td><td>6 lignes</td><td>table complète</td></tr>
+      <tr><td>235 séries de raccords</td><td>8 à l'écran</td><td>catalogue complet</td></tr>
+      <tr><td>Fiche de banc</td><td>filigrane Gratuit</td><td>sans filigrane</td></tr>
+      <tr><td>Export CSV</td><td>—</td><td>✓</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h2>Payer</h2>
+    <p>Interac à <a href="mailto:lgxpowerna@gmail.com">lgxpowerna@gmail.com</a> — motif <b>ATELIERKIT</b>, 9 $ (mois) ou 79 $ (an). Le code Pro est renvoyé par courriel, puis collé ici.</p>
+    <p>Stripe : coller le Payment Link dans <code>stripe.json</code> quand le prix est créé (même compte que FacturePro).</p>
+    <label>Code Pro</label>
+    <input id="code" placeholder="AK-XXXX" />
+    <p><button class="btn" id="go" style="border:0;cursor:pointer">Activer</button></p>
+    <p id="msg"></p>
+  </div>
+  <p>Atelier de fabrication? <a href="https://facturepro.faitle.net">FacturePro</a> pour les factures TPS/TVQ. Entrepreneur? <a href="https://tradequote.faitle.net">TradeQuote</a> pour les soumissions RBQ.</p>
+</div>
+<script>
+const CODES = ["AK-BENCH-79","AK-SHOP-9","ATELIER-PRO"];
+document.getElementById("go").onclick = () => {
+  const c = document.getElementById("code").value.trim().toUpperCase();
+  if(CODES.includes(c)){
+    localStorage.setItem("ak-pro","1");
+    document.getElementById("msg").textContent = "Pro actif sur cet appareil.";
+    setTimeout(()=>location.href="/?pro=ok", 400);
+  } else document.getElementById("msg").textContent = "Code refusé. Écrire à lgxpowerna@gmail.com avec le reçu Interac.";
+};
+</script>
+</body>
+</html>

@@ -1,0 +1,1412 @@
+[
+  {
+    "code": "0304",
+    "desc": "STANDARD NUT",
+    "family": "Autre",
+    "angle": "Droit"
+  },
+  {
+    "code": "0304C",
+    "desc": "JIC CAP",
+    "family": "JIC 37°",
+    "angle": "Droit"
+  },
+  {
+    "code": "0306",
+    "desc": "JIC BULKHEAD LOCKNUT",
+    "family": "JIC 37°",
+    "angle": "Droit"
+  },
+  {
+    "code": "0318",
+    "desc": "JIC TUBE NUT",
+    "family": "JIC 37°",
+    "angle": "Droit"
+  },
+  {
+    "code": "0319",
+    "desc": "JIC TUBE SLEEVE 3 PIECE",
+    "family": "JIC 37°",
+    "angle": "Droit"
+  },
+  {
+    "code": "0403",
+    "desc": "BORE  M-JIC BRAZE ON ( UNPLATED )",
+    "family": "JIC 37°",
+    "angle": "Droit"
+  },
+  {
+    "code": "0404",
+    "desc": "BORE  MP BRAZE ON",
+    "family": "Autre",
+    "angle": "Droit"
+  },
+  {
+    "code": "1404",
+    "desc": "M-NPT  F-NPSM",
+    "family": "NPT / NPSM",
+    "angle": "Droit"
+  },
+  {
+    "code": "1405",
+    "desc": "F-NPT  F-NPSM",
+    "family": "NPT / NPSM",
+    "angle": "Droit"
+  },
+  {
+    "code": "1501",
+    "desc": "90 M-NPT  F-NPSM",
+    "family": "NPT / NPSM",
+    "angle": "90°"
+  },
+  {
+    "code": "1501L",
+    "desc": "90 M-NPT  F-NPSM LONG",
+    "family": "NPT / NPSM",
+    "angle": "90°"
+  },
+  {
+    "code": "1502",
+    "desc": "F-NPT  F-NPSM",
+    "family": "NPT / NPSM",
+    "angle": "Droit"
+  },
+  {
+    "code": "1503",
+    "desc": "45 M-NPT  F-NPSM",
+    "family": "NPT / NPSM",
+    "angle": "45°"
+  },
+  {
+    "code": "1504",
+    "desc": "45 F-NPT  F-NPSM",
+    "family": "NPT / NPSM",
+    "angle": "45°"
+  },
+  {
+    "code": "1601",
+    "desc": "BRANCH TEE M-NPT  F-NPSM  F-NPSM",
+    "family": "NPT / NPSM",
+    "angle": "Té"
+  },
+  {
+    "code": "1602",
+    "desc": "TEE F-NPT  F-NPSM  F-NPSM",
+    "family": "NPT / NPSM",
+    "angle": "Té"
+  },
+  {
+    "code": "1603",
+    "desc": "TEE F-NPSM SWIVEL NUTS",
+    "family": "NPT / NPSM",
+    "angle": "Té"
+  },
+  {
+    "code": "1700",
+    "desc": "M-JIC  FLANGE STRAIGHT (CODE 61)",
+    "family": "Bride SAE",
+    "angle": "Droit"
+  },
+  {
+    "code": "1703",
+    "desc": "45 M-JIC  FLANGE (CODE 61)",
+    "family": "Bride SAE",
+    "angle": "45°"
+  },
+  {
+    "code": "1703FG",
+    "desc": "FORGED 45 M-JIC  FLANGE (CODE 61)",
+    "family": "Bride SAE",
+    "angle": "45°"
+  },
+  {
+    "code": "1704",
+    "desc": "90 M-JIC  FLANGE (CODE 61)",
+    "family": "Bride SAE",
+    "angle": "90°"
+  },
+  {
+    "code": "1704FG",
+    "desc": "FORGED 90 M-JIC  FLANGE (CODE 61)",
+    "family": "Bride SAE",
+    "angle": "90°"
+  },
+  {
+    "code": "1724",
+    "desc": "FLANGE PLUG (CODE 61)",
+    "family": "Bride SAE",
+    "angle": "Droit"
+  },
+  {
+    "code": "1800",
+    "desc": "M-JIC  FLANGE STRAIGHT (CODE 62)",
+    "family": "Bride SAE",
+    "angle": "Droit"
+  },
+  {
+    "code": "1803",
+    "desc": "45 M-JIC  FLANGE (CODE 62)",
+    "family": "Bride SAE",
+    "angle": "45°"
+  },
+  {
+    "code": "1803FG",
+    "desc": "FORGED 45 M-JIC  FLANGE (CODE 62)",
+    "family": "Bride SAE",
+    "angle": "45°"
+  },
+  {
+    "code": "1804",
+    "desc": "90 M-JIC  FLANGE (CODE 62)",
+    "family": "Bride SAE",
+    "angle": "90°"
+  },
+  {
+    "code": "1804FG",
+    "desc": "FORGED 90 M-JIC  FLANGE (CODE 62)",
+    "family": "Bride SAE",
+    "angle": "90°"
+  },
+  {
+    "code": "1824",
+    "desc": "FLANGE PLUG (CODE 62)",
+    "family": "Bride SAE",
+    "angle": "Droit"
+  },
+  {
+    "code": "1901",
+    "desc": "SPLIT FLANGE KIT (CODE 61)",
+    "family": "Bride SAE",
+    "angle": "Droit"
+  },
+  {
+    "code": "1902",
+    "desc": "SPLIT FLANGE KIT (CODE 62)",
+    "family": "Bride SAE",
+    "angle": "Droit"
+  },
+  {
+    "code": "1903",
+    "desc": "CATERPILLAR SPLIT FLANGE KIT",
+    "family": "Bride SAE",
+    "angle": "Droit"
+  },
+  {
+    "code": "1927-61",
+    "desc": "F-NPT  FLANGE BLOCK (CODE 61)",
+    "family": "Bride SAE",
+    "angle": "Droit"
+  },
+  {
+    "code": "2403",
+    "desc": "M-JIC  M-JIC STRAIGHT",
+    "family": "JIC 37°",
+    "angle": "Droit"
+  },
+  {
+    "code": "2403LH",
+    "desc": "M-JIC  M-JIC - LARGE HEX STRAIGHT",
+    "family": "JIC 37°",
+    "angle": "Droit"
+  },
+  {
+    "code": "2404",
+    "desc": "M-JIC  M-NPT STRAIGHT",
+    "family": "JIC 37°",
+    "angle": "Droit"
+  },
+  {
+    "code": "2404L",
+    "desc": "M-JIC  M-NPT LONG STRAIGHT",
+    "family": "JIC 37°",
+    "angle": "Droit"
+  },
+  {
+    "code": "2404LL",
+    "desc": "M-JIC  M-NPT EXTRA LONG STRAIGHT",
+    "family": "JIC 37°",
+    "angle": "Droit"
+  },
+  {
+    "code": "2405",
+    "desc": "M-JIC  F-NPT STRAIGHT",
+    "family": "JIC 37°",
+    "angle": "Droit"
+  },
+  {
+    "code": "2406",
+    "desc": "F-JIC  M-JIC",
+    "family": "JIC 37°",
+    "angle": "Droit"
+  },
+  {
+    "code": "2408",
+    "desc": "JIC PLUG",
+    "family": "JIC 37°",
+    "angle": "Droit"
+  },
+  {
+    "code": "2500",
+    "desc": "90 M-JIC  M-JIC",
+    "family": "JIC 37°",
+    "angle": "90°"
+  },
+  {
+    "code": "2501",
+    "desc": "90 M-JIC  M-NPT",
+    "family": "JIC 37°",
+    "angle": "90°"
+  },
+  {
+    "code": "2501L M-JIC _ M-NPT LONG",
+    "desc": "",
+    "family": "JIC 37°",
+    "angle": "Droit"
+  },
+  {
+    "code": "2501LL M-JIC _ M-NPT EXTRA LONG",
+    "desc": "",
+    "family": "JIC 37°",
+    "angle": "Droit"
+  },
+  {
+    "code": "2501LLL 90 M-JIC _ M-NPT EXTRA EXTRA LONG",
+    "desc": "",
+    "family": "JIC 37°",
+    "angle": "Droit"
+  },
+  {
+    "code": "2502",
+    "desc": "90 M-JIC  F-NPT",
+    "family": "JIC 37°",
+    "angle": "90°"
+  },
+  {
+    "code": "2503",
+    "desc": "45 M-JIC  M-NPT",
+    "family": "JIC 37°",
+    "angle": "45°"
+  },
+  {
+    "code": "2504",
+    "desc": "M-JIC  M-JIC",
+    "family": "JIC 37°",
+    "angle": "Droit"
+  },
+  {
+    "code": "2505",
+    "desc": "M-JIC  F-NPT",
+    "family": "JIC 37°",
+    "angle": "Droit"
+  },
+  {
+    "code": "2601",
+    "desc": "BRANCH TEE M-JIC  M-JIC  M-NPT",
+    "family": "JIC 37°",
+    "angle": "Té"
+  },
+  {
+    "code": "2602",
+    "desc": "BRANCH TEE M-JIC  M-JIC  F-NPT",
+    "family": "JIC 37°",
+    "angle": "Té"
+  },
+  {
+    "code": "2603",
+    "desc": "TEE M-JIC  M-JIC  M-JIC",
+    "family": "JIC 37°",
+    "angle": "Té"
+  },
+  {
+    "code": "2605",
+    "desc": "RUN TEE M-JIC  M-NPT  M-JIC",
+    "family": "JIC 37°",
+    "angle": "Té"
+  },
+  {
+    "code": "2606",
+    "desc": "RUN TEE M-JIC  F-NPT M-JIC",
+    "family": "JIC 37°",
+    "angle": "Té"
+  },
+  {
+    "code": "2609",
+    "desc": "RUN TEE M-JIC  F-NPT F-NPT",
+    "family": "JIC 37°",
+    "angle": "Té"
+  },
+  {
+    "code": "2613",
+    "desc": "RUN TEE M-NPT  F-NPT  M-JIC",
+    "family": "JIC 37°",
+    "angle": "Té"
+  },
+  {
+    "code": "2650",
+    "desc": "CROSS M-JIC  M-JIC  M-JIC M-JIC",
+    "family": "JIC 37°",
+    "angle": "Droit"
+  },
+  {
+    "code": "2700LN",
+    "desc": "M-JIC BULKHEAD STRAIGHT INCLUDES NUT",
+    "family": "JIC 37°",
+    "angle": "Droit"
+  },
+  {
+    "code": "2701LN",
+    "desc": "M-JIC BULKHEAD INCLUDES NUT",
+    "family": "JIC 37°",
+    "angle": "Droit"
+  },
+  {
+    "code": "2702LN",
+    "desc": "45 M-JIC BULKHEAD INCLUDES NUT",
+    "family": "JIC 37°",
+    "angle": "45°"
+  },
+  {
+    "code": "2703LN",
+    "desc": "BRANCH TEE M-JIC BULKHEAD INCLUDES NUT",
+    "family": "JIC 37°",
+    "angle": "Té"
+  },
+  {
+    "code": "2704LN",
+    "desc": "RUN TEE M-JIC BULKHEAD INCLUDES NUT",
+    "family": "JIC 37°",
+    "angle": "Té"
+  },
+  {
+    "code": "2705LN",
+    "desc": "F-NPT  M-JIC BULKHEAD INCLUDES NUT",
+    "family": "JIC 37°",
+    "angle": "Droit"
+  },
+  {
+    "code": "2706LN",
+    "desc": "M-NPT  M-JIC BULKHEAD INCLUDES NUT",
+    "family": "JIC 37°",
+    "angle": "Droit"
+  },
+  {
+    "code": "3474",
+    "desc": "M-ORG  ADJ M-ORB",
+    "family": "ORB / SAE",
+    "angle": "Droit"
+  },
+  {
+    "code": "4404",
+    "desc": "HB  M-NPT STRAIGHT",
+    "family": "NPT / NPSM",
+    "angle": "Droit"
+  },
+  {
+    "code": "4501",
+    "desc": "90 HB  M-NPT",
+    "family": "NPT / NPSM",
+    "angle": "90°"
+  },
+  {
+    "code": "4503",
+    "desc": "45 HB  M-NPT",
+    "family": "NPT / NPSM",
+    "angle": "45°"
+  },
+  {
+    "code": "4601",
+    "desc": "90 HB  M-ORB",
+    "family": "ORB / SAE",
+    "angle": "90°"
+  },
+  {
+    "code": "4603",
+    "desc": "45 HB  M-ORB",
+    "family": "ORB / SAE",
+    "angle": "45°"
+  },
+  {
+    "code": "4604",
+    "desc": "HB  M-ORB STRAIGHT",
+    "family": "ORB / SAE",
+    "angle": "Droit"
+  },
+  {
+    "code": "5000",
+    "desc": "F-NPT  F-NPT",
+    "family": "NPT / NPSM",
+    "angle": "Droit"
+  },
+  {
+    "code": "5404",
+    "desc": "M-NPT  M-NPT",
+    "family": "NPT / NPSM",
+    "angle": "Droit"
+  },
+  {
+    "code": "5405",
+    "desc": "M-NPT  F-NPT",
+    "family": "NPT / NPSM",
+    "angle": "Droit"
+  },
+  {
+    "code": "5406",
+    "desc": "M-NPT  F-NPT",
+    "family": "NPT / NPSM",
+    "angle": "Droit"
+  },
+  {
+    "code": "5406C",
+    "desc": "NPT CAP",
+    "family": "NPT / NPSM",
+    "angle": "Droit"
+  },
+  {
+    "code": "5406HP",
+    "desc": "NPT HOLLOW HEX PLUG",
+    "family": "NPT / NPSM",
+    "angle": "Droit"
+  },
+  {
+    "code": "5406P",
+    "desc": "NPT PLUG",
+    "family": "NPT / NPSM",
+    "angle": "Droit"
+  },
+  {
+    "code": "5406SHP",
+    "desc": "SQUARE HEAD PIPE PLUG",
+    "family": "Autre",
+    "angle": "Droit"
+  },
+  {
+    "code": "5500",
+    "desc": "90 M-NPT  M-NPT",
+    "family": "NPT / NPSM",
+    "angle": "90°"
+  },
+  {
+    "code": "5501",
+    "desc": "45 M-NPT  M-NPT",
+    "family": "NPT / NPSM",
+    "angle": "45°"
+  },
+  {
+    "code": "5502 M-NPT _ F-NPT",
+    "desc": "",
+    "family": "NPT / NPSM",
+    "angle": "Droit"
+  },
+  {
+    "code": "5504",
+    "desc": "45 M-NPT  F-NPT",
+    "family": "NPT / NPSM",
+    "angle": "45°"
+  },
+  {
+    "code": "5504",
+    "desc": "90 F-NPT  F-NPT",
+    "family": "NPT / NPSM",
+    "angle": "90°"
+  },
+  {
+    "code": "5505",
+    "desc": "45 F-NPT  F-NPT",
+    "family": "NPT / NPSM",
+    "angle": "45°"
+  },
+  {
+    "code": "5600",
+    "desc": "TEE M-NPT  M-NPT  M-NPT",
+    "family": "NPT / NPSM",
+    "angle": "Té"
+  },
+  {
+    "code": "5601",
+    "desc": "BRANCH TEE M-NPT  M-NPT  F-NPT",
+    "family": "NPT / NPSM",
+    "angle": "Té"
+  },
+  {
+    "code": "5602",
+    "desc": "RUN TEE M-NPT  F-NPT  F-NPT",
+    "family": "NPT / NPSM",
+    "angle": "Té"
+  },
+  {
+    "code": "5603",
+    "desc": "RUN TEE M-NPT  F-NPT  M-NPT",
+    "family": "NPT / NPSM",
+    "angle": "Té"
+  },
+  {
+    "code": "5604",
+    "desc": "BRANCH TEE F-NPT  F-NPT  M-NPT",
+    "family": "NPT / NPSM",
+    "angle": "Té"
+  },
+  {
+    "code": "5605",
+    "desc": "TEEE F-NPT  F-NPT  F-NPT",
+    "family": "NPT / NPSM",
+    "angle": "Té"
+  },
+  {
+    "code": "5652",
+    "desc": "CROSS F-NPT  F-NPT  F-NPT  F-NPT",
+    "family": "NPT / NPSM",
+    "angle": "Droit"
+  },
+  {
+    "code": "6400",
+    "desc": "M-JIC  M-ORB",
+    "family": "JIC 37°",
+    "angle": "Droit"
+  },
+  {
+    "code": "6400L",
+    "desc": "M-JIC  M-ORB LONG",
+    "family": "JIC 37°",
+    "angle": "Droit"
+  },
+  {
+    "code": "6401",
+    "desc": "M-ORB  M-NPT",
+    "family": "ORB / SAE",
+    "angle": "Droit"
+  },
+  {
+    "code": "6402",
+    "desc": "M-ORB  F-JIC",
+    "family": "JIC 37°",
+    "angle": "Droit"
+  },
+  {
+    "code": "6404",
+    "desc": "F-ORB  M-NPT",
+    "family": "ORB / SAE",
+    "angle": "Droit"
+  },
+  {
+    "code": "6405",
+    "desc": "M-ORB  F-NPT",
+    "family": "ORB / SAE",
+    "angle": "Droit"
+  },
+  {
+    "code": "6408",
+    "desc": "ORB PLUG",
+    "family": "ORB / SAE",
+    "angle": "Droit"
+  },
+  {
+    "code": "6408H",
+    "desc": "ORB HOLLOW HEX PLUG",
+    "family": "ORB / SAE",
+    "angle": "Droit"
+  },
+  {
+    "code": "6410",
+    "desc": "M-ORB  F-ORB",
+    "family": "ORB / SAE",
+    "angle": "Droit"
+  },
+  {
+    "code": "6464 M-ORB _ M-ORB STRAIGHT",
+    "desc": "",
+    "family": "ORB / SAE",
+    "angle": "Droit"
+  },
+  {
+    "code": "6500",
+    "desc": "90 M-JIC  F-JIC",
+    "family": "JIC 37°",
+    "angle": "90°"
+  },
+  {
+    "code": "6501",
+    "desc": "90 M-NPT  F-JIC",
+    "family": "JIC 37°",
+    "angle": "90°"
+  },
+  {
+    "code": "6502",
+    "desc": "45 M-JIC  F-JIC",
+    "family": "JIC 37°",
+    "angle": "45°"
+  },
+  {
+    "code": "6504",
+    "desc": "M-JIC  F-JIC STRAIGHT",
+    "family": "JIC 37°",
+    "angle": "Droit"
+  },
+  {
+    "code": "6505",
+    "desc": "M NPT  F-JIC STRAIGHT",
+    "family": "JIC 37°",
+    "angle": "Droit"
+  },
+  {
+    "code": "6506",
+    "desc": "F-NPT  F-JIC STRAIGHT",
+    "family": "JIC 37°",
+    "angle": "Droit"
+  },
+  {
+    "code": "6565",
+    "desc": "F-JIC  F-JIC STRAIGHT",
+    "family": "JIC 37°",
+    "angle": "Droit"
+  },
+  {
+    "code": "6600",
+    "desc": "BRANCH TEE M-JIC  M-JIC  F-JIC",
+    "family": "JIC 37°",
+    "angle": "Té"
+  },
+  {
+    "code": "6602",
+    "desc": "RUN TEE M-JIC  F-JIC  M-JIC",
+    "family": "JIC 37°",
+    "angle": "Té"
+  },
+  {
+    "code": "6701",
+    "desc": "90 M-JIC  F-JIC BENT TUBE",
+    "family": "JIC 37°",
+    "angle": "90°"
+  },
+  {
+    "code": "6701L",
+    "desc": "90 M-JIC  F-JIC BENT TUBE LONG",
+    "family": "JIC 37°",
+    "angle": "90°"
+  },
+  {
+    "code": "6801",
+    "desc": "90 M-JIC  M-ORB",
+    "family": "JIC 37°",
+    "angle": "90°"
+  },
+  {
+    "code": "6801L",
+    "desc": "90 M-JIC  M-ORB LONG",
+    "family": "JIC 37°",
+    "angle": "90°"
+  },
+  {
+    "code": "6801LL",
+    "desc": "90 M-JIC  M-ORB EXTRA LONG",
+    "family": "JIC 37°",
+    "angle": "90°"
+  },
+  {
+    "code": "6801LLL",
+    "desc": "90 M-JIC  M-ORB EXTRA EXTRA LONG",
+    "family": "JIC 37°",
+    "angle": "90°"
+  },
+  {
+    "code": "6802",
+    "desc": "45 M-JIC  M-ORB",
+    "family": "JIC 37°",
+    "angle": "45°"
+  },
+  {
+    "code": "6803",
+    "desc": "BRANCH TEE M-JIC  M-JIC  M-ORB",
+    "family": "JIC 37°",
+    "angle": "Té"
+  },
+  {
+    "code": "6804",
+    "desc": "RUN TEE M-JIC  M-ORB  M-JIC",
+    "family": "JIC 37°",
+    "angle": "Té"
+  },
+  {
+    "code": "6805",
+    "desc": "90 M-ORB  F-NPT",
+    "family": "ORB / SAE",
+    "angle": "90°"
+  },
+  {
+    "code": "6805L",
+    "desc": "90 M-ORB  F-NPT LONG",
+    "family": "ORB / SAE",
+    "angle": "90°"
+  },
+  {
+    "code": "6806",
+    "desc": "90 M-ORB  M-NPT",
+    "family": "ORB / SAE",
+    "angle": "90°"
+  },
+  {
+    "code": "6807",
+    "desc": "90 M-ORB  M-ORB",
+    "family": "ORB / SAE",
+    "angle": "90°"
+  },
+  {
+    "code": "6809",
+    "desc": "90 M-ORB  F-JIC",
+    "family": "JIC 37°",
+    "angle": "90°"
+  },
+  {
+    "code": "6815",
+    "desc": "90 M-ORB  F-ORB",
+    "family": "ORB / SAE",
+    "angle": "90°"
+  },
+  {
+    "code": "6900",
+    "desc": "M-ORB  F-NPSM",
+    "family": "ORB / SAE",
+    "angle": "Droit"
+  },
+  {
+    "code": "6901",
+    "desc": "90 M-ORB  F-NPSM",
+    "family": "ORB / SAE",
+    "angle": "90°"
+  },
+  {
+    "code": "6902 45 M-ORB _ F-NPSM",
+    "desc": "",
+    "family": "ORB / SAE",
+    "angle": "Droit"
+  },
+  {
+    "code": "7000",
+    "desc": "M-JIC  M-BSPT STRAIGHT",
+    "family": "BSPP / métrique",
+    "angle": "Droit"
+  },
+  {
+    "code": "7002",
+    "desc": "M-JIC  M-BSPP STRAIGHT",
+    "family": "BSPP / métrique",
+    "angle": "Droit"
+  },
+  {
+    "code": "7004",
+    "desc": "M-JIC  F-BSPP",
+    "family": "BSPP / métrique",
+    "angle": "Droit"
+  },
+  {
+    "code": "7005",
+    "desc": "M-JIC  M-METRIC PORT",
+    "family": "BSPP / métrique",
+    "angle": "Droit"
+  },
+  {
+    "code": "7005L",
+    "desc": "M-JIC  M-METRIC LIGHT",
+    "family": "BSPP / métrique",
+    "angle": "Droit"
+  },
+  {
+    "code": "7005S",
+    "desc": "M-JIC  M-METRIC HEAVY",
+    "family": "BSPP / métrique",
+    "angle": "Droit"
+  },
+  {
+    "code": "7009",
+    "desc": "M-JIC  M-KOMATSU",
+    "family": "JIC 37°",
+    "angle": "Droit"
+  },
+  {
+    "code": "7022",
+    "desc": "F-JIC SWIVEL  M-BSPP",
+    "family": "BSPP / métrique",
+    "angle": "Droit"
+  },
+  {
+    "code": "7032",
+    "desc": "M-NPT  M-BSPP",
+    "family": "BSPP / métrique",
+    "angle": "Droit"
+  },
+  {
+    "code": "7062",
+    "desc": "M-ORB  M-BSPP",
+    "family": "BSPP / métrique",
+    "angle": "Droit"
+  },
+  {
+    "code": "7102",
+    "desc": "45 M-JIC  M-BSPP",
+    "family": "BSPP / métrique",
+    "angle": "45°"
+  },
+  {
+    "code": "7202",
+    "desc": "90 M-JIC  M-BSPP",
+    "family": "BSPP / métrique",
+    "angle": "90°"
+  },
+  {
+    "code": "7204",
+    "desc": "90 M-JIC  F-BSPP",
+    "family": "BSPP / métrique",
+    "angle": "90°"
+  },
+  {
+    "code": "7205",
+    "desc": "90 M-JIC  M-METRIC",
+    "family": "BSPP / métrique",
+    "angle": "90°"
+  },
+  {
+    "code": "7222",
+    "desc": "F-BSPP  90 M-BSPP",
+    "family": "BSPP / métrique",
+    "angle": "90°"
+  },
+  {
+    "code": "7588P",
+    "desc": "JIS PLUG",
+    "family": "Autre",
+    "angle": "Droit"
+  },
+  {
+    "code": "7599P",
+    "desc": "KOMATSU PLUG",
+    "family": "Autre",
+    "angle": "Droit"
+  },
+  {
+    "code": "7688C",
+    "desc": "JIS CAP",
+    "family": "Autre",
+    "angle": "Droit"
+  },
+  {
+    "code": "8800",
+    "desc": "METRIC BONDED SEAL",
+    "family": "BSPP / métrique",
+    "angle": "Droit"
+  },
+  {
+    "code": "9020",
+    "desc": "M-BSPP  M-BSPT STRAIGHT",
+    "family": "BSPP / métrique",
+    "angle": "Droit"
+  },
+  {
+    "code": "9022",
+    "desc": "M-BSPP  M-BSPP STRAIGHT",
+    "family": "BSPP / métrique",
+    "angle": "Droit"
+  },
+  {
+    "code": "9023",
+    "desc": "M-BSPP  F-BSPP",
+    "family": "BSPP / métrique",
+    "angle": "Droit"
+  },
+  {
+    "code": "9024 -M-BSPP _ F-BSPP",
+    "desc": "",
+    "family": "BSPP / métrique",
+    "angle": "Droit"
+  },
+  {
+    "code": "9087",
+    "desc": "BRANCH TEE M-BSPP  M-BSPP  F-BSPP",
+    "family": "BSPP / métrique",
+    "angle": "Té"
+  },
+  {
+    "code": "9090",
+    "desc": "RUN TEE M-BSPP  F-BSPP  M-BSPP",
+    "family": "BSPP / métrique",
+    "angle": "Té"
+  },
+  {
+    "code": "9124",
+    "desc": "45 M-BSPP  F-BSPP BENT TUBE",
+    "family": "BSPP / métrique",
+    "angle": "45°"
+  },
+  {
+    "code": "9224L",
+    "desc": "90 M-BSPP  F-BSPP BENT TUBE",
+    "family": "BSPP / métrique",
+    "angle": "90°"
+  },
+  {
+    "code": "9245",
+    "desc": "M-JIC  M-JSW",
+    "family": "JIC 37°",
+    "angle": "Droit"
+  },
+  {
+    "code": "9247",
+    "desc": "M-JIC  M-KOBELCO",
+    "family": "JIC 37°",
+    "angle": "Droit"
+  },
+  {
+    "code": "9322",
+    "desc": "TEE M-BSPP  M-BSPP  M-BSPP",
+    "family": "BSPP / métrique",
+    "angle": "Té"
+  },
+  {
+    "code": "9344",
+    "desc": "TEE F-BSPP  F-BSPP  F-BSPP",
+    "family": "BSPP / métrique",
+    "angle": "Té"
+  },
+  {
+    "code": "9522P",
+    "desc": "M-BSPP PLUG",
+    "family": "BSPP / métrique",
+    "angle": "Droit"
+  },
+  {
+    "code": "9610",
+    "desc": "METRIC PLUG LIGHT",
+    "family": "BSPP / métrique",
+    "angle": "Droit"
+  },
+  {
+    "code": "9611",
+    "desc": "METRIC PLUG HEAVY",
+    "family": "BSPP / métrique",
+    "angle": "Droit"
+  },
+  {
+    "code": "9620",
+    "desc": "METRIC CAP LIGHT",
+    "family": "BSPP / métrique",
+    "angle": "Droit"
+  },
+  {
+    "code": "9621",
+    "desc": "METRIC CAP HEAVY",
+    "family": "BSPP / métrique",
+    "angle": "Droit"
+  },
+  {
+    "code": "9644C",
+    "desc": "F-BSPP CAP",
+    "family": "BSPP / métrique",
+    "angle": "Droit"
+  },
+  {
+    "code": "9722LN",
+    "desc": "M-BSPP  M-BSPP BULKHEAD",
+    "family": "BSPP / métrique",
+    "angle": "Droit"
+  },
+  {
+    "code": "9900",
+    "desc": "BSP BONDED SEAL",
+    "family": "Autre",
+    "angle": "Droit"
+  },
+  {
+    "code": "C0304",
+    "desc": "FLARELESS CAP",
+    "family": "Flareless",
+    "angle": "Droit"
+  },
+  {
+    "code": "C0306",
+    "desc": "FLARELESS BULKHEAD LOCKNUT",
+    "family": "Flareless",
+    "angle": "Droit"
+  },
+  {
+    "code": "C0318",
+    "desc": "FLARELESS NUT",
+    "family": "Flareless",
+    "angle": "Droit"
+  },
+  {
+    "code": "C0319",
+    "desc": "FLARELESS COMPRESSION SLEEVE",
+    "family": "Flareless",
+    "angle": "Droit"
+  },
+  {
+    "code": "C2403",
+    "desc": "FLARELESS  FLARELESS",
+    "family": "Flareless",
+    "angle": "Droit"
+  },
+  {
+    "code": "C2403LH",
+    "desc": "FLARELESS  FLARELESS LARGE HEX",
+    "family": "Flareless",
+    "angle": "Droit"
+  },
+  {
+    "code": "C2404",
+    "desc": "FLARELESS  M-NPT",
+    "family": "Flareless",
+    "angle": "Droit"
+  },
+  {
+    "code": "C2405",
+    "desc": "FLARELESS  F-NPT",
+    "family": "Flareless",
+    "angle": "Droit"
+  },
+  {
+    "code": "C2406",
+    "desc": "STANDPIPE FLARELESS REDUCER",
+    "family": "Flareless",
+    "angle": "Droit"
+  },
+  {
+    "code": "C2408",
+    "desc": "FLARELESS PLUG",
+    "family": "Flareless",
+    "angle": "Droit"
+  },
+  {
+    "code": "C2500",
+    "desc": "90 FLARELESS  FLARELESS",
+    "family": "Flareless",
+    "angle": "90°"
+  },
+  {
+    "code": "C2501",
+    "desc": "90 FLARELESS  M-NPT",
+    "family": "Flareless",
+    "angle": "90°"
+  },
+  {
+    "code": "C2502",
+    "desc": "90 FLARELESS  F-NPT",
+    "family": "Flareless",
+    "angle": "90°"
+  },
+  {
+    "code": "C2503",
+    "desc": "45 FLARELESS  M-NPT",
+    "family": "Flareless",
+    "angle": "45°"
+  },
+  {
+    "code": "C2601",
+    "desc": "TEE FLARELESS  FLARELESS  M-NPT",
+    "family": "Flareless",
+    "angle": "Té"
+  },
+  {
+    "code": "C2602",
+    "desc": "TEE FLARELESS  FLARELESS  F-NPT",
+    "family": "Flareless",
+    "angle": "Té"
+  },
+  {
+    "code": "C2603",
+    "desc": "TEE FLARELESS  FLARELESS  FLARELESS",
+    "family": "Flareless",
+    "angle": "Té"
+  },
+  {
+    "code": "C2605",
+    "desc": "TEE FLARELESS  M-NPT  FLARELESS",
+    "family": "Flareless",
+    "angle": "Té"
+  },
+  {
+    "code": "C2606",
+    "desc": "TEE FLARELESS  F-NPT  FLARELESS",
+    "family": "Flareless",
+    "angle": "Té"
+  },
+  {
+    "code": "C2650",
+    "desc": "CROSS FLARELESS",
+    "family": "Flareless",
+    "angle": "Droit"
+  },
+  {
+    "code": "C2700",
+    "desc": "FLARELESS  FLARELESS BULKHEAD",
+    "family": "Flareless",
+    "angle": "Droit"
+  },
+  {
+    "code": "C6400",
+    "desc": "FLARELESS  M-ORB",
+    "family": "Flareless",
+    "angle": "Droit"
+  },
+  {
+    "code": "C6400L",
+    "desc": "FLARELESS  M-ORB LONG",
+    "family": "Flareless",
+    "angle": "Droit"
+  },
+  {
+    "code": "C6801",
+    "desc": "90 FLARELESS  M-ORB",
+    "family": "Flareless",
+    "angle": "90°"
+  },
+  {
+    "code": "C6802",
+    "desc": "45 FLARELESS  M-ORB",
+    "family": "Flareless",
+    "angle": "45°"
+  },
+  {
+    "code": "C6803",
+    "desc": "TEE FLARELESS  FLARELESS  M-ORB",
+    "family": "Flareless",
+    "angle": "Té"
+  },
+  {
+    "code": "C6804",
+    "desc": "TEE M-ORB  FLARELESS  FLARELESS",
+    "family": "Flareless",
+    "angle": "Té"
+  },
+  {
+    "code": "FS0304",
+    "desc": "ORFS CAP",
+    "family": "ORFS",
+    "angle": "Droit"
+  },
+  {
+    "code": "FS0306",
+    "desc": "ORFS BULKHEAD LOCKNUT",
+    "family": "ORFS",
+    "angle": "Droit"
+  },
+  {
+    "code": "FS0318",
+    "desc": "ORFS TUBE NUT",
+    "family": "ORFS",
+    "angle": "Droit"
+  },
+  {
+    "code": "FS0319",
+    "desc": "ORFS SLEEVE BRAZE STYLE",
+    "family": "ORFS",
+    "angle": "Droit"
+  },
+  {
+    "code": "FS0403",
+    "desc": "BORE  M-ORFS STRAIGHT BRAZE ON",
+    "family": "ORFS",
+    "angle": "Droit"
+  },
+  {
+    "code": "FS2403",
+    "desc": "M-ORFS  M-ORFS STRAIGHT",
+    "family": "ORFS",
+    "angle": "Droit"
+  },
+  {
+    "code": "FS2404",
+    "desc": "M-ORFS  M-NPT STRAIGHT",
+    "family": "ORFS",
+    "angle": "Droit"
+  },
+  {
+    "code": "FS2406",
+    "desc": "F-ORFS  M-ORFS",
+    "family": "ORFS",
+    "angle": "Droit"
+  },
+  {
+    "code": "FS2408",
+    "desc": "ORFS HEX PLUG",
+    "family": "ORFS",
+    "angle": "Droit"
+  },
+  {
+    "code": "FS2500",
+    "desc": "90 M-ORFS  M-ORFS",
+    "family": "ORFS",
+    "angle": "90°"
+  },
+  {
+    "code": "FS2501",
+    "desc": "90 M-ORFS  M-NPT",
+    "family": "ORFS",
+    "angle": "90°"
+  },
+  {
+    "code": "FS2503",
+    "desc": "45 M-ORFS  M-NPT",
+    "family": "ORFS",
+    "angle": "45°"
+  },
+  {
+    "code": "FS2601",
+    "desc": "BRANCH TEE M-ORFS  M-ORFS  M-NPT",
+    "family": "ORFS",
+    "angle": "Té"
+  },
+  {
+    "code": "FS2603",
+    "desc": "TEE M-ORFS  M-ORFS  M-ORFS",
+    "family": "ORFS",
+    "angle": "Té"
+  },
+  {
+    "code": "FS2650",
+    "desc": "CROSS M-ORFS  M-ORFS  M-ORFS  M-ORFS",
+    "family": "ORFS",
+    "angle": "Droit"
+  },
+  {
+    "code": "FS2700LN",
+    "desc": "M-ORFS  M-ORFS BULKHEAD INCLUDES NUT",
+    "family": "ORFS",
+    "angle": "Droit"
+  },
+  {
+    "code": "FS2701LN",
+    "desc": "M-ORFS  M-ORFS BULKHEAD INCLUDES NUT",
+    "family": "ORFS",
+    "angle": "Droit"
+  },
+  {
+    "code": "FS2702LN",
+    "desc": "45 M-ORFS  M-ORFS BULKHEAD",
+    "family": "ORFS",
+    "angle": "45°"
+  },
+  {
+    "code": "FS2703LN",
+    "desc": "RUN TEE M-ORFS  M-ORFS  M-ORFS BULKHEAD",
+    "family": "ORFS",
+    "angle": "Té"
+  },
+  {
+    "code": "FS2704LN",
+    "desc": "RUN TEE M-ORFS  M-ORFS  M-ORFS BULKHEAD",
+    "family": "ORFS",
+    "angle": "Té"
+  },
+  {
+    "code": "FS6400",
+    "desc": "M-ORFS  M-ORB",
+    "family": "ORFS",
+    "angle": "Droit"
+  },
+  {
+    "code": "FS6402",
+    "desc": "M-ORFS  F-JIC STRAIGHT",
+    "family": "ORFS",
+    "angle": "Droit"
+  },
+  {
+    "code": "FS6403",
+    "desc": "M-ORFS  M-JIC",
+    "family": "ORFS",
+    "angle": "Droit"
+  },
+  {
+    "code": "FS6500",
+    "desc": "90 M-ORFS  F-ORFS",
+    "family": "ORFS",
+    "angle": "90°"
+  },
+  {
+    "code": "FS6502",
+    "desc": "45 M-ORFS  F-ORFS",
+    "family": "ORFS",
+    "angle": "45°"
+  },
+  {
+    "code": "FS6504",
+    "desc": "F-ORFS  M-JIC STRAIGHT",
+    "family": "ORFS",
+    "angle": "Droit"
+  },
+  {
+    "code": "FS6600",
+    "desc": "BRANCH TEE M-ORFS  M-ORFS  F-ORFS",
+    "family": "ORFS",
+    "angle": "Té"
+  },
+  {
+    "code": "FS6602",
+    "desc": "RUN TEE M-ORFS  F-ORFS  M-ORFS",
+    "family": "ORFS",
+    "angle": "Té"
+  },
+  {
+    "code": "FS6801",
+    "desc": "90 M-ORFS  M-ORB",
+    "family": "ORFS",
+    "angle": "90°"
+  },
+  {
+    "code": "FS6801L",
+    "desc": "90 M-ORFS  M-ORB LONG",
+    "family": "ORFS",
+    "angle": "90°"
+  },
+  {
+    "code": "FS6802",
+    "desc": "45 M-ORFS M-ORB",
+    "family": "ORFS",
+    "angle": "45°"
+  },
+  {
+    "code": "FS6803",
+    "desc": "BRANCH TEE M-ORFS  M-ORFS  M-ORB",
+    "family": "ORFS",
+    "angle": "Té"
+  },
+  {
+    "code": "FS6804",
+    "desc": "RUN TEE M-ORFS  M-ORB  M-ORFS",
+    "family": "ORFS",
+    "angle": "Té"
+  },
+  {
+    "code": "FS6809",
+    "desc": "90 F-ORFS  M-ORB",
+    "family": "ORFS",
+    "angle": "90°"
+  },
+  {
+    "code": "FS7205",
+    "desc": "90 M-ORFS  M-METRIC PORT",
+    "family": "ORFS",
+    "angle": "90°"
+  },
+  {
+    "code": "FS7210",
+    "desc": "M-ORFS  M-ORFS  M-METRIC PORT",
+    "family": "ORFS",
+    "angle": "Droit"
+  },
+  {
+    "code": "FS7215",
+    "desc": "M-ORFS  M-METRIC PORT  M-ORFS TEE",
+    "family": "ORFS",
+    "angle": "Té"
+  },
+  {
+    "code": "FS7300",
+    "desc": "M-ORFS  M-METRIC PORT 45 ELBOW",
+    "family": "ORFS",
+    "angle": "45°"
+  },
+  {
+    "code": "FS7640",
+    "desc": "M-ORFS  M-METRIC PORT STRAIGHT",
+    "family": "ORFS",
+    "angle": "Droit"
+  }
+]

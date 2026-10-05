@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AtelierKit — Tarauds, forets et raccords | Gratuit</title>
+<meta name="description" content="Outil d'atelier gratuit : foret de taraud UNC, UNF, métrique, NPT, BSPP, conversion pouce/mm, joints AS568 et catalogue de raccords hydrauliques. Pro 9 $/mois." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet" />
+<style>
+:root{--bg:#14120f;--panel:#1e1b16;--line:#3a342c;--ink:#f4efe6;--muted:#b7ad9e;--amber:#e2a322;--amber2:#f0c36a;--ok:#8fbf6a;--paper:#f7f1e6;--ink2:#1c1814}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans",system-ui,sans-serif}
+a{color:var(--amber2);text-decoration:none}
+a:hover{text-decoration:underline}
+header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 28px;border-bottom:1px solid var(--line);position:sticky;top:0;background:#14120fee;backdrop-filter:blur(8px);z-index:5}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.02em}
+.mark{width:28px;height:28px;border-radius:6px;background:var(--amber);color:#1c1406;display:grid;place-items:center;font-family:"IBM Plex Mono",monospace;font-weight:700}
+nav{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+nav a{color:var(--muted);font-size:14px}
+.btn{border:0;border-radius:8px;padding:10px 14px;font-weight:600;cursor:pointer;font-family:inherit}
+.btn-amber{background:var(--amber);color:#1c1406}
+.btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.hero{padding:48px 28px 20px;max-width:1100px;margin:0 auto}
+.kicker{color:var(--amber);font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700}
+h1{font-size:clamp(32px,5vw,54px);line-height:1.05;margin:8px 0 12px;max-width:16ch}
+.sub{color:var(--muted);max-width:62ch;font-size:18px}
+.pills{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}
+.pill{border:1px solid var(--line);border-radius:99px;padding:6px 10px;color:var(--muted);font-size:13px}
+main{max-width:1100px;margin:0 auto;padding:8px 28px 64px;display:grid;gap:18px}
+.grid{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px}
+h2{margin:0 0 6px;font-size:20px}
+.hint{color:var(--muted);font-size:13px;margin:0 0 14px}
+label{display:block;font-size:12px;color:var(--muted);margin:10px 0 4px}
+input,select{width:100%;background:#12100d;color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-family:inherit;font-size:15px}
+.row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.result{background:#12100d;border-radius:10px;padding:12px;margin-top:12px;font-family:"IBM Plex Mono",monospace}
+.result b{color:var(--amber2)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{text-align:left;padding:7px 6px;border-bottom:1px solid var(--line)}
+th{color:var(--muted);font-weight:500}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.tabs button{background:#12100d;color:var(--muted);border:1px solid var(--line);border-radius:8px;padding:7px 10px;cursor:pointer;font-family:inherit}
+.tabs button.on{background:var(--amber);color:#1c1406;border-color:var(--amber)}
+.fit{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+.fit article{border:1px solid var(--line);border-radius:10px;padding:10px;background:#12100d}
+.fit .code{font-family:"IBM Plex Mono",monospace;color:var(--amber2);font-weight:600}
+.tag{font-size:11px;color:#1c1406;background:var(--amber2);border-radius:99px;padding:2px 7px;font-weight:700}
+.warn{font-size:12px;color:#e7c27a}
+footer{border-top:1px solid var(--line);padding:28px;color:var(--muted);font-size:13px}
+footer .wrap{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.price{display:flex;gap:12px;flex-wrap:wrap}
+.price .card{flex:1;min-width:240px}
+.lock{opacity:.55}
+@media(max-width:860px){.grid,.row{grid-template-columns:1fr}header{padding:12px 16px}main,.hero{padding-left:16px;padding-right:16px}}
+@media print{
+  header,footer,.noprint{display:none!important}
+  body{background:#fff;color:#111}
+  .card{break-inside:avoid}
+  .wm{display:block}
+}
+.wm{display:none;text-align:center;font-size:42px;color:#0002;margin-top:20px}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand"><span class="mark">AK</span> AtelierKit</div>
+  <nav>
+    <a href="#taraud">Tarauds</a>
+    <a href="#convert">Pouce / mm</a>
+    <a href="#raccords">Raccords</a>
+    <a href="/tarifs">Tarifs</a>
+    <a href="https://facturepro.faitle.net">FacturePro</a>
+    <a href="https://tradequote.faitle.net">TradeQuote</a>
+    <button class="btn btn-ghost" id="lang">EN</button>
+    <a class="btn btn-amber" href="/tarifs" id="probtn">Pro 9 $</a>
+  </nav>
+</header>
+<section class="hero">
+  <div class="kicker" data-fr="Banc d'atelier · Québec" data-en="Shop bench · Quebec">Banc d'atelier · Québec</div>
+  <h1 data-fr="Le foret juste, avant de casser le taraud." data-en="The right drill, before the tap snaps.">Le foret juste, avant de casser le taraud.</h1>
+  <p class="sub" data-fr="Conversion pouce/mm, chartes UNC · UNF · métrique · NPT · BSPP, forets lettre/numéro, joints AS568 et 235 séries de raccords. Sans Excel, sans marque d'atelier tiers." data-en="Inch/mm, UNC · UNF · metric · NPT · BSPP charts, letter/number drills, AS568 O-rings and 235 hydraulic series. No Excel, no third-party shop branding.">Conversion pouce/mm, chartes UNC · UNF · métrique · NPT · BSPP, forets lettre/numéro, joints AS568 et 235 séries de raccords. Sans Excel, sans marque d'atelier tiers.</p>
+  <div class="pills">
+    <span class="pill">75 % engagement</span>
+    <span class="pill">Formule Machinery's</span>
+    <span class="pill">NPT corrigé</span>
+    <span class="pill">Gratuit + Pro</span>
+  </div>
+</section>
+<main>
+  <section class="grid" id="convert">
+    <div class="card">
+      <h2 data-fr="Pouces ↔ millimètres" data-en="Inches ↔ millimetres">Pouces ↔ millimètres</h2>
+      <p class="hint" data-fr="Pieds, pouces et fraction. Arrondi au 1/64 le plus proche." data-en="Feet, inches and fraction. Rounded to the nearest 1/64.">Pieds, pouces et fraction. Arrondi au 1/64 le plus proche.</p>
+      <div class="row">
+        <div><label>mm</label><input id="mm" inputmode="decimal" placeholder="25.4" /></div>
+        <div><label data-fr="pieds" data-en="feet">pieds</label><input id="ft" inputmode="decimal" placeholder="0" /></div>
+        <div><label data-fr="pouces" data-en="inches">pouces</label><input id="inch" inputmode="decimal" placeholder="1" /></div>
+      </div>
+      <label data-fr="fraction de pouce" data-en="inch fraction">fraction de pouce</label>
+      <select id="frac"></select>
+      <div class="result" id="convout">—</div>
+    </div>
+    <div class="card">
+      <h2 data-fr="Foret lettre / numéro" data-en="Letter / number drill">Foret lettre / numéro</h2>
+      <p class="hint" data-fr="Diamètres ANSI. Le classeur d'origine stockait les numéros en mm sans le dire." data-en="ANSI diameters. The original workbook stored number drills in mm without saying so.">Diamètres ANSI. Le classeur d'origine stockait les numéros en mm sans le dire.</p>
+      <label>A–Z</label><select id="letter"></select>
+      <label>#80–#1</label><select id="number"></select>
+      <div class="result" id="drillout">—</div>
+    </div>
+  </section>
+
+  <section class="card" id="taraud">
+    <h2 data-fr="Foret de taraud" data-en="Tap drill">Foret de taraud</h2>
+    <p class="hint" data-fr="TD = D − 1,299 × pas × %. 75 % est le réglage d'atelier. NPT reste en charte (filet conique)." data-en="TD = D − 1.299 × pitch × %. 75% is the shop default. NPT stays on a chart (tapered thread).">TD = D − 1,299 × pas × %. 75 % est le réglage d'atelier. NPT reste en charte (filet conique).</p>
+    <div class="tabs" id="families"></div>
+    <div class="row">
+      <div><label data-fr="filet" data-en="thread">filet</label><select id="thread"></select></div>
+      <div><label data-fr="engagement %" data-en="engagement %">engagement %</label><input id="pct" type="number" min="50" max="100" value="75" /></div>
+      <div><label data-fr="trou mesuré (option)" data-en="measured hole (optional)">trou mesuré (option)</label><input id="measured" inputmode="decimal" placeholder="0.201" /></div>
+    </div>
+    <div class="result" id="tapout">—</div>
+    <div style="overflow:auto;margin-top:12px"><table id="taptable"></table></div>
+  </section>
+
+  <section class="grid">
+    <div class="card">
+      <h2>AS568</h2>
+      <p class="hint" data-fr="Joint torique par dash ou par section. Référence Parker / SAE AS568, pas une charte maison." data-en="O-ring by dash or cross-section. Parker / SAE AS568 reference, not a shop-made chart.">Joint torique par dash ou par section. Référence Parker / SAE AS568, pas une charte maison.</p>
+      <label>dash ou section</label><input id="oringq" placeholder="214 ou 1/8" />
+      <div id="oringout" style="margin-top:10px"></div>
+    </div>
+    <div class="card" id="fiche">
+      <h2 data-fr="Fiche de banc" data-en="Bench card">Fiche de banc</h2>
+      <p class="hint" data-fr="Gratuit : filigrane. Pro : fiche propre, imprimable, sans marque." data-en="Free: watermark. Pro: clean printable card.">Gratuit : filigrane. Pro : fiche propre, imprimable, sans marque.</p>
+      <label data-fr="job / pièce" data-en="job / part">job / pièce</label><input id="job" placeholder="Bride 1/2 NPT" />
+      <label>notes</label><input id="notes" placeholder="alu 6061, taraud neuf" />
+      <div style="display:flex;gap:8px;margin-top:12px" class="noprint">
+        <button class="btn btn-amber" id="printbtn" data-fr="Imprimer" data-en="Print">Imprimer</button>
+        <button class="btn btn-ghost" id="csvbtn">CSV</button>
+      </div>
+      <div class="wm" id="wm">ATELIERKIT · GRATUIT</div>
+    </div>
+  </section>
+
+  <section class="card" id="raccords">
+    <h2 data-fr="Raccords hydrauliques — 235 séries" data-en="Hydraulic fittings — 235 series">Raccords hydrauliques — 235 séries</h2>
+    <p class="hint" data-fr="JIC 37°, ORFS, NPT/NPSM, ORB, BSPP, flareless, brides code 61/62. Recherche par code Parker-style (2404, FS6404, 6801…). Les photos catalogue fournisseur ne sont pas republiées : schéma + désignation, pour pouvoir vendre l'outil sans marque tierce." data-en="JIC 37°, ORFS, NPT/NPSM, ORB, BSPP, flareless, code 61/62 flanges. Search by Parker-style series (2404, FS6404, 6801…). Supplier catalog photos are not republished.">JIC 37°, ORFS, NPT/NPSM, ORB, BSPP, flareless, brides code 61/62. Recherche par code Parker-style (2404, FS6404, 6801…). Les photos catalogue fournisseur ne sont pas republiées : schéma + désignation, pour pouvoir vendre l'outil sans marque tierce.</p>
+    <div class="row">
+      <div><label data-fr="recherche" data-en="search">recherche</label><input id="fq" placeholder="2404, ORFS, bride, 90" /></div>
+      <div><label data-fr="famille" data-en="family">famille</label><select id="ffam"><option value="">Toutes</option></select></div>
+      <div><label data-fr="forme" data-en="shape">forme</label><select id="fang"><option value="">Toutes</option><option>Droit</option><option>45°</option><option>90°</option><option>Té</option></select></div>
+    </div>
+    <p class="warn" id="flimit"></p>
+    <div class="fit" id="fits"></div>
+  </section>
+
+  <section class="price noprint">
+    <div class="card">
+      <h2>Gratuit</h2>
+      <p>Calculateur, chartes, 8 raccords à l'écran, fiche avec filigrane.</p>
+      <p><b>0 $</b></p>
+    </div>
+    <div class="card">
+      <h2>Pro</h2>
+      <p>Catalogue complet, CSV, fiche sans filigrane, historique de jobs. 9 $ / mois ou 79 $ / an, taxes en sus. Paiement Interac ou Stripe.</p>
+      <a class="btn btn-amber" href="/tarifs">Passer à Pro</a>
+    </div>
+  </section>
+</main>
+<footer>
+  <div class="wrap">
+    <div>AtelierKit · faitle.net · Mont-Laurier, Québec<br>Outil indépendant. Pas affilié à un fabricant de raccords ni à un atelier nommé.</div>
+    <div>
+      <a href="https://facturepro.faitle.net">FacturePro</a> ·
+      <a href="https://tradequote.faitle.net">TradeQuote</a> ·
+      <a href="mailto:lgxpowerna@gmail.com">lgxpowerna@gmail.com</a>
+    </div>
+  </div>
+</footer>
+<script>
+const IN = 25.4;
+const LETTERS = {"A":0.234,"B":0.238,"C":0.242,"D":0.246,"E":0.250,"F":0.257,"G":0.261,"H":0.266,"I":0.272,"J":0.277,"K":0.281,"L":0.290,"M":0.295,"N":0.302,"O":0.316,"P":0.323,"Q":0.332,"R":0.339,"S":0.348,"T":0.358,"U":0.368,"V":0.377,"W":0.386,"X":0.397,"Y":0.404,"Z":0.413};
+const NUMBERS = {"1":0.228,"2":0.221,"3":0.213,"4":0.209,"5":0.2055,"6":0.204,"7":0.201,"8":0.199,"9":0.196,"10":0.1935,"11":0.191,"12":0.189,"13":0.185,"14":0.182,"15":0.180,"16":0.177,"17":0.173,"18":0.1695,"19":0.166,"20":0.161,"21":0.159,"22":0.157,"23":0.154,"24":0.152,"25":0.1495,"26":0.147,"27":0.144,"28":0.1405,"29":0.136,"30":0.1285,"31":0.120,"32":0.116,"33":0.113,"34":0.111,"35":0.110,"36":0.1065,"37":0.104,"38":0.1015,"39":0.0995,"40":0.098,"41":0.096,"42":0.0935,"43":0.089,"44":0.086,"45":0.082,"46":0.081,"47":0.0785,"48":0.076,"49":0.073,"50":0.070,"51":0.067,"52":0.0635,"53":0.0595,"54":0.055,"55":0.052,"56":0.0465,"57":0.043,"58":0.042,"59":0.041,"60":0.040,"61":0.039,"62":0.038,"63":0.037,"64":0.036,"65":0.035,"66":0.033,"67":0.032,"68":0.031,"69":0.0292,"70":0.028,"71":0.026,"72":0.025,"73":0.024,"74":0.0225,"75":0.021,"76":0.020,"77":0.018,"78":0.016,"79":0.0145,"80":0.0135};
+const UNC = [
+["#1-64",0.073,64],["#2-56",0.086,56],["#3-48",0.099,48],["#4-40",0.112,40],["#5-40",0.125,40],["#6-32",0.138,32],["#8-32",0.164,32],["#10-24",0.190,24],["#12-24",0.216,24],
+["1/4-20",0.250,20],["5/16-18",0.3125,18],["3/8-16",0.375,16],["7/16-14",0.4375,14],["1/2-13",0.500,13],["9/16-12",0.5625,12],["5/8-11",0.625,11],["3/4-10",0.750,10],["7/8-9",0.875,9],["1-8",1,8],["1-1/8-7",1.125,7],["1-1/4-7",1.25,7],["1-1/2-6",1.5,6],["2-4.5",2,4.5]
+];
+const UNF = [
+["#0-80",0.060,80],["#1-72",0.073,72],["#2-64",0.086,64],["#3-56",0.099,56],["#4-48",0.112,48],["#5-44",0.125,44],["#6-40",0.138,40],["#8-36",0.164,36],["#10-32",0.190,32],["#12-28",0.216,28],
+["1/4-28",0.250,28],["5/16-24",0.3125,24],["3/8-24",0.375,24],["7/16-20",0.4375,20],["1/2-20",0.500,20],["9/16-18",0.5625,18],["5/8-18",0.625,18],["3/4-16",0.750,16],["7/8-14",0.875,14],["1-12",1,12],["1-1/8-12",1.125,12],["1-1/4-12",1.25,12],["1-1/2-12",1.5,12]
+];
+const MET = [
+["M1.6×0.35",1.6,0.35],["M2×0.4",2,0.4],["M2.5×0.45",2.5,0.45],["M3×0.5",3,0.5],["M3.5×0.6",3.5,0.6],["M4×0.7",4,0.7],["M5×0.8",5,0.8],["M6×1",6,1],["M8×1.25",8,1.25],["M8×1",8,1],["M10×1.5",10,1.5],["M10×1.25",10,1.25],["M12×1.75",12,1.75],["M12×1.25",12,1.25],["M14×2",14,2],["M14×1.5",14,1.5],["M16×2",16,2],["M16×1.5",16,1.5],["M18×2.5",18,2.5],["M18×1.5",18,1.5],["M20×2.5",20,2.5],["M20×1.5",20,1.5],["M24×3",24,3],["M24×2",24,2],["M30×3.5",30,3.5],["M30×2",30,2]
+];
+const NPT = [
+["1/16-27 NPT","C",0.242,"1/4 po aussi vu en atelier"],
+["1/8-27 NPT","Q",0.332,"21/64 (0.328) aussi accepté"],
+["1/4-18 NPT","7/16",0.4375,"charte corrigée"],
+["3/8-18 NPT","9/16",0.5625,"37/64 (0.578) plus ouvert"],
+["1/2-14 NPT","45/64",0.703,"23/32 (0.719) Machinery's"],
+["3/4-14 NPT","29/32",0.906,"59/64 (0.922) Machinery's"],
+["1-11.5 NPT","1-9/64",1.1406,"typo 1-9/6 du classeur corrigée. 1-5/32 = 1.156"],
+["1-1/4-11.5 NPT","1-31/64",1.484,"1-1/2 = 1.500 aussi listé"],
+["1-1/2-11.5 NPT","1-23/32",1.719,"1-47/64 = 1.734 Machinery's"],
+["2-11.5 NPT","2-3/16",2.1875,"2-7/32 = 2.219 Machinery's"]
+];
+const BSPP = [
+["1/8-28 BSPP","G1/8",0.344,11/32],
+["1/4-19 BSPP","G1/4",0.453,29/64],
+["3/8-19 BSPP","G3/8",0.594,19/32],
+["1/2-14 BSPP","G1/2",0.734,47/64],
+["3/4-14 BSPP","G3/4",0.969,31/32],
+["1-11 BSPP","G1",1.203,1-13/64]
+];
+const ORINGS = [
+["006",0.114,0.070],["010",0.239,0.070],["011",0.301,0.070],["012",0.364,0.070],["014",0.489,0.070],["016",0.614,0.070],["110",0.362,0.103],["112",0.487,0.103],["114",0.612,0.103],["116",0.737,0.103],["210",0.734,0.139],["212",0.859,0.139],["214",0.984,0.139],["216",1.109,0.139],["218",1.234,0.139],["222",1.484,0.139],["325",1.475,0.210],["326",1.600,0.210],["328",1.850,0.210],["330",2.100,0.210]
+];
+const JIC = [["4","7/16-20"],["5","1/2-20"],["6","9/16-18"],["8","3/4-16"],["10","7/8-14"],["12","1-1/16-12"],["16","1-5/16-12"],["20","1-5/8-12"],["24","1-7/8-12"],["32","2-1/2-12"]];
+let lang = localStorage.getItem("ak-lang") || "fr";
+let pro = localStorage.getItem("ak-pro") === "1";
+let fittings = [];
+let family = "UNC";
+
+function frac(n){
+  const sign = n < 0 ? -1 : 1; n = Math.abs(n);
+  const whole = Math.floor(n);
+  const den = 64;
+  let num = Math.round((n-whole)*den);
+  if(num===den){return (sign*(whole+1))+"\""; }
+  let a=num,b=den; while(b){const t=a%b; a=b; b=t;}
+  if(num===0) return (sign*whole)+"\"";
+  const ns=num/a, ds=den/a;
+  return (whole? whole+" ":"")+ns+"/"+ds+"\"";
+}
+function nearestDrill(inches){
+  let best=null, bd=1e9;
+  for(const [k,v] of Object.entries(LETTERS)){const d=Math.abs(v-inches); if(d<bd){bd=d; best="lettre "+k;}}
+  for(const [k,v] of Object.entries(NUMBERS)){const d=Math.abs(v-inches); if(d<bd){bd=d; best="#"+k;}}
+  const f = Math.round(inches*64)/64;
+  if(Math.abs(f-inches) <= bd) best = frac(f);
+  return best;
+}
+function tapDrill(major, pitch, pct){ return major - 1.299038105676658 * pitch * (pct/100); }
+function setLang(l){
+  lang=l; localStorage.setItem("ak-lang", l);
+  document.documentElement.lang=l;
+  document.querySelectorAll("[data-fr]").forEach(el=>{el.textContent = l==="fr"?el.dataset.fr:el.dataset.en;});
+  document.getElementById("lang").textContent = l==="fr"?"EN":"FR";
+  renderTap(); renderFits();
+}
+function isPro(){return pro;}
+function fillSelect(sel, rows){sel.innerHTML = rows.map((r,i)=>`<option value="${i}">${r[0]}</option>`).join("");}
+
+function renderConv(){
+  const mm = parseFloat(document.getElementById("mm").value);
+  const ft = parseFloat(document.getElementById("ft").value)||0;
+  const inch = parseFloat(document.getElementById("inch").value)||0;
+  const fr = document.getElementById("frac").value;
+  let fromIn = null, fromMm = null;
+  if(!Number.isNaN(mm) && document.activeElement===document.getElementById("mm")){
+    fromMm = mm; fromIn = mm/IN;
+  } else if(document.getElementById("ft").value || document.getElementById("inch").value || fr!=="0"){
+    const [n,d] = fr.split("/").map(Number);
+    fromIn = ft*12 + inch + (d? n/d : 0);
+    fromMm = fromIn*IN;
+  } else if(!Number.isNaN(mm)){
+    fromMm = mm; fromIn = mm/IN;
+  }
+  const out = document.getElementById("convout");
+  if(fromIn==null){out.textContent="—"; return;}
+  const feet = Math.floor(fromIn/12);
+  const rem = fromIn - feet*12;
+  out.innerHTML = `<div><b>${fromMm.toFixed(3)} mm</b></div><div>${fromIn.toFixed(4)} in</div><div>${feet}' ${frac(rem)}</div><div>1/64 : ${frac(Math.round(fromIn*64)/64)}</div>`;
+}
+function renderDrills(){
+  const L = document.getElementById("letter").value;
+  const N = document.getElementById("number").value;
+  const li = LETTERS[L], ni = NUMBERS[N];
+  document.getElementById("drillout").innerHTML = `Lettre ${L} : <b>${li.toFixed(4)}"</b> · ${(li*IN).toFixed(3)} mm<br>#${N} : <b>${ni.toFixed(4)}"</b> · ${(ni*IN).toFixed(3)} mm`;
+}
+function currentTable(){
+  return {UNC,UNF,MET,NPT,BSPP}[family];
+}
+function renderTap(){
+  const pct = Math.min(100, Math.max(50, parseFloat(document.getElementById("pct").value)||75));
+  const sel = document.getElementById("thread");
+  const table = currentTable();
+  const i = +sel.value || 0;
+  const row = table[i];
+  const out = document.getElementById("tapout");
+  const measured = parseFloat(document.getElementById("measured").value);
+  if(family==="NPT" || family==="BSPP"){
+    const inch = row[2];
+    out.innerHTML = `<b>${row[0]}</b><br>Foret charte : ${row[1]} · ${inch.toFixed(4)}" · ${(inch*IN).toFixed(2)} mm<br><span class="warn">${row[3]||""}</span>`;
+  } else {
+    const major = row[1], pitch = family==="MET"? row[2] : 1/row[2];
+    const td = tapDrill(major, pitch, pct);
+    const unit = family==="MET"?"mm":"in";
+    const inches = family==="MET"? td/IN : td;
+    const shop = family==="MET"? (Math.round(td*10)/10).toFixed(1)+" mm" : nearestDrill(inches);
+    let extra = `Foret calculé ${pct}% : <b>${td.toFixed(4)} ${unit}</b> · atelier : ${shop}`;
+    if(family!=="MET") extra += ` · ${(td*IN).toFixed(3)} mm`;
+    else extra += ` · ${inches.toFixed(4)}"`;
+    if(!Number.isNaN(measured)){
+      const m = family==="MET"? measured : measured;
+      const maj = family==="MET"? major : major;
+      const p = pitch;
+      const engagement = ((maj - m) / (1.299038105676658 * p)) * 100;
+      extra += `<br>Trou mesuré → ${engagement.toFixed(0)} % de filet`;
+    }
+    extra += `<br><span class="warn">JIC dash ${JIC.map(x=>x[0]+"="+x[1]).slice(0,4).join(" · ")} …</span>`;
+    out.innerHTML = `<b>${row[0]}</b><br>${extra}`;
+  }
+  const head = family==="NPT" || family==="BSPP"
+    ? "<tr><th>Filet</th><th>Foret</th><th>po</th><th>note</th></tr>"
+    : "<tr><th>Filet</th><th>75 %</th><th>proche</th></tr>";
+  const body = table.map(r=>{
+    if(family==="NPT"||family==="BSPP") return `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]||""}</td></tr>`;
+    const pitch = family==="MET"? r[2] : 1/r[2];
+    const td = tapDrill(r[1], pitch, 75);
+    const shop = family==="MET"? (Math.round(td*10)/10).toFixed(1)+" mm" : nearestDrill(family==="MET"?td/IN:td);
+    return `<tr><td>${r[0]}</td><td>${td.toFixed(4)}</td><td>${shop}</td></tr>`;
+  }).join("");
+  document.getElementById("taptable").innerHTML = head+body;
+}
+function renderOring(){
+  const q = document.getElementById("oringq").value.trim().toLowerCase();
+  const rows = ORINGS.filter(o=>!q || o[0].includes(q.replace("-","")) || String(o[2]).includes(q) || (q.includes("1/8")&&Math.abs(o[2]-0.139)<0.01) || (q.includes("3/32")&&Math.abs(o[2]-0.103)<0.01) || (q.includes("1/16")&&Math.abs(o[2]-0.070)<0.01) || (q.includes("1/4")&&Math.abs(o[2]-0.210)<0.01));
+  document.getElementById("oringout").innerHTML = `<table><tr><th>dash</th><th>ID po</th><th>CS po</th><th>ID mm</th></tr>${rows.slice(0,isPro()?20:6).map(o=>`<tr><td>-${o[0]}</td><td>${o[1].toFixed(3)}</td><td>${o[2].toFixed(3)}</td><td>${(o[1]*IN).toFixed(2)}</td></tr>`).join("")}</table>`;
+}
+function renderFits(){
+  const q = document.getElementById("fq").value.trim().toLowerCase();
+  const fam = document.getElementById("ffam").value;
+  const ang = document.getElementById("fang").value;
+  let rows = fittings.filter(f => (!q || (f.code+" "+f.desc+" "+f.family).toLowerCase().includes(q)) && (!fam || f.family===fam) && (!ang || f.angle===ang));
+  const cap = isPro()? rows.length : 8;
+  document.getElementById("flimit").textContent = isPro()? `${rows.length} séries` : (lang==="fr"? `${Math.min(8,rows.length)} affichées sur ${rows.length}. Pro = catalogue complet.` : `${Math.min(8,rows.length)} of ${rows.length} shown. Pro = full catalog.`);
+  document.getElementById("fits").innerHTML = rows.slice(0,cap).map(f=>`<article><div class="code">${f.code}</div><div>${f.desc}</div><div style="margin-top:6px"><span class="tag">${f.family}</span> <span class="tag">${f.angle}</span></div></article>`).join("") || "<p>—</p>";
+}
+function printCard(){
+  document.getElementById("wm").style.display = isPro()? "none":"block";
+  window.print();
+}
+function csv(){
+  if(!isPro()){ location.href="/tarifs"; return; }
+  const blob = new Blob([document.getElementById("taptable").innerText], {type:"text/csv"});
+  const a = document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="atelierkit-tarauds.csv"; a.click();
+}
+document.getElementById("families").innerHTML = ["UNC","UNF","MET","NPT","BSPP"].map(f=>`<button data-f="${f}" class="${f==="UNC"?"on":""}">${f}</button>`).join("");
+document.getElementById("families").onclick = e=>{
+  if(!e.target.dataset.f) return;
+  family=e.target.dataset.f;
+  document.querySelectorAll("#families button").forEach(b=>b.classList.toggle("on", b.dataset.f===family));
+  fillSelect(document.getElementById("thread"), currentTable());
+  renderTap();
+};
+const fracSel = document.getElementById("frac");
+fracSel.innerHTML = ["0/1",..."1 3 5 7 9 11 13 15 17 19 21 23 25 27 29 31 33 35 37 39 41 43 45 47 49 51 53 55 57 59 61 63".split(" ").map(n=>n+"/64"),"1/32","1/16","1/8","3/16","1/4","5/16","3/8","1/2","3/4"].map(x=>`<option>${x}</option>`).join("");
+document.getElementById("letter").innerHTML = Object.keys(LETTERS).map(k=>`<option>${k}</option>`).join("");
+document.getElementById("number").innerHTML = Object.keys(NUMBERS).map(k=>`<option>${k}</option>`).join("");
+fillSelect(document.getElementById("thread"), UNC);
+["mm","ft","inch","frac"].forEach(id=>document.getElementById(id).addEventListener("input", renderConv));
+document.getElementById("letter").onchange=renderDrills;
+document.getElementById("number").onchange=renderDrills;
+["thread","pct","measured"].forEach(id=>document.getElementById(id).addEventListener("input", renderTap));
+document.getElementById("oringq").addEventListener("input", renderOring);
+["fq","ffam","fang"].forEach(id=>document.getElementById(id).addEventListener("input", renderFits));
+document.getElementById("printbtn").onclick=printCard;
+document.getElementById("csvbtn").onclick=csv;
+document.getElementById("lang").onclick=()=>setLang(lang==="fr"?"en":"fr");
+renderDrills(); renderTap(); renderOring();
+fetch("fittings.json").then(r=>r.json()).then(data=>{
+  fittings=data;
+  const fams=[...new Set(data.map(f=>f.family))];
+  document.getElementById("ffam").innerHTML = `<option value="">Toutes</option>`+fams.map(f=>`<option>${f}</option>`).join("");
+  renderFits();
+});
+if(new URLSearchParams(location.search).get("pro")==="ok"){localStorage.setItem("ak-pro","1"); pro=true;}
+setLang(lang);
+</script>
+</body>
+</html>
