@@ -3,62 +3,68 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>AtelierKit — convertisseur et chartes</title>
-<meta name="description" content="Convertisseur pouce/mm, foret de taraud UNC UNF métrique NPT BSPP, forets lettre et numéro, joints AS568, catalogue visuel de raccords." />
+<title>AtelierKit — comptoir machine shop</title>
+<meta name="description" content="Aide magasinier : le client dit 1/2, tu vois le dash, le filet JIC, ORFS ou NPT, le foret de taraud et la conversion pouce/mm." />
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet" />
 <style>
-:root{--bg:#efeae2;--ink:#1c1915;--muted:#6d655c;--line:#d9d0c4;--card:#fffdf9;--accent:#9a4f12;--accent2:#1e4d5c;--hi:#fff4df}
+:root{--bg:#efeae2;--ink:#1c1915;--muted:#6d655c;--line:#d9d0c4;--card:#fffdf9;--accent:#9a4f12;--hi:#fff4df}
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans",system-ui,sans-serif}
 button,input,select{font-family:inherit}
-header{display:flex;align-items:center;gap:18px;padding:12px 20px;background:#1c1915;color:#f6f1ea;position:sticky;top:0;z-index:4}
-.brand{font-weight:600;letter-spacing:.02em}
-.brand span{color:#e2a322}
-nav{display:flex;gap:6px;flex-wrap:wrap}
+header{display:flex;align-items:center;gap:14px;padding:12px 16px;background:#1c1915;color:#f6f1ea;position:sticky;top:0;z-index:4}
+.brand{font-weight:600}.brand span{color:#e2a322}
+nav{display:flex;gap:4px;flex-wrap:wrap}
 nav button{background:transparent;color:#f6f1ea;border:0;padding:8px 10px;border-radius:8px;cursor:pointer}
 nav button.on{background:#e2a322;color:#1c1406}
 #lang{margin-left:auto;background:transparent;color:#f6f1ea;border:1px solid #4a433b;border-radius:8px;padding:6px 10px;cursor:pointer}
-main{max-width:1080px;margin:0 auto;padding:18px 16px 48px}
-.panel{display:none}
-.panel.on{display:block}
+main{max-width:1080px;margin:0 auto;padding:16px 16px 48px}
+.panel{display:none}.panel.on{display:block}
 .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+.lead{margin:0 0 10px;color:var(--muted)}
 .pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 label{display:block;font-size:12px;color:var(--muted);margin:8px 0 4px}
 input,select{width:100%;border:1px solid var(--line);background:#fff;border-radius:10px;padding:12px;font-size:20px;font-family:"IBM Plex Mono",monospace}
 .chips{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}
-.chips button{border:1px solid var(--line);background:#fff;border-radius:99px;padding:6px 10px;cursor:pointer}
+.chips button{border:1px solid var(--line);background:#fff;border-radius:99px;padding:7px 11px;cursor:pointer}
 .chips button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.give{background:#1c1915;color:#f6f1ea;border-radius:12px;padding:14px 16px;margin-top:12px}
+.give b{display:block;font-size:22px;margin-top:4px}
+.cols{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+.cols article{border:1px solid var(--line);border-radius:12px;padding:10px;background:#fff}
+.cols .k{font-size:12px;color:var(--muted)}
+.cols .v{font-family:"IBM Plex Mono",monospace;font-size:18px;font-weight:600}
+.idgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.idgrid button{border:1px solid var(--line);background:#fff;border-radius:12px;padding:8px;cursor:pointer;text-align:left}
+.idgrid button.on{outline:2px solid var(--accent)}
+.idgrid svg{width:100%;height:92px;display:block}
 .readout{display:grid;grid-template-columns:1.2fr .8fr;gap:12px;margin-top:12px}
-.big{font-family:"IBM Plex Mono",monospace;font-size:42px;line-height:1;font-weight:600}
+.big{font-family:"IBM Plex Mono",monospace;font-size:40px;line-height:1;font-weight:600}
 .subn{color:var(--muted);margin-top:6px}
 table{width:100%;border-collapse:collapse;font-size:14px}
 th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line)}
-tr.sel{background:var(--hi)}
-tr{cursor:pointer}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+tr.sel{background:var(--hi)} tr{cursor:pointer}
 .drillgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(72px,1fr));gap:6px}
 .drillgrid button{border:1px solid var(--line);background:#fff;border-radius:8px;padding:8px 4px;cursor:pointer;text-align:center}
 .drillgrid button small{display:block;color:var(--muted);font-size:11px}
-.drillgrid button.on{background:var(--accent2);color:#fff;border-color:var(--accent2)}
-.drillgrid button.on small{color:#d5e6ea}
-.fits{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin-top:12px}
+.drillgrid button.on{background:#1e4d5c;color:#fff;border-color:#1e4d5c}
+.fits{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px;margin-top:12px}
 .fits article{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}
-.fits img{width:100%;height:140px;object-fit:contain;background:#f7f4ef;display:block}
+.fits svg{width:100%;height:110px;display:block;background:#f7f4ef}
 .fits div{padding:8px 10px 10px}
 .code{font-family:"IBM Plex Mono",monospace;font-weight:600}
 .meta{color:var(--muted);font-size:12px}
-footer{padding:18px 20px 28px;color:var(--muted);font-size:12px;text-align:center}
+footer{padding:18px;color:var(--muted);font-size:12px;text-align:center}
 footer a{color:var(--muted)}
 .search{font-size:16px}
-@media(max-width:760px){.pair,.readout,.grid2{grid-template-columns:1fr}.big{font-size:32px}}
-@media print{header,footer,.chips{display:none!important}.panel{display:block!important}body{background:#fff}}
+@media(max-width:800px){.pair,.readout,.cols,.idgrid{grid-template-columns:1fr 1fr}.big{font-size:30px}}
 </style>
 </head>
 <body>
 <header>
   <div class="brand"><span>AK</span> AtelierKit</div>
   <nav>
-    <button class="on" data-tab="convert" data-fr="Convertir" data-en="Convert">Convertir</button>
+    <button class="on" data-tab="desk" data-fr="Comptoir" data-en="Counter">Comptoir</button>
+    <button data-tab="convert" data-fr="Convertir" data-en="Convert">Convertir</button>
     <button data-tab="tap" data-fr="Tarauds" data-en="Taps">Tarauds</button>
     <button data-tab="drill" data-fr="Forets" data-en="Drills">Forets</button>
     <button data-tab="oring" data-fr="Joints" data-en="O-rings">Joints</button>
@@ -67,64 +73,50 @@ footer a{color:var(--muted)}
   <button id="lang">EN</button>
 </header>
 <main>
-  <section class="panel on" id="convert">
+  <section class="panel on" id="desk">
+    <div class="card">
+      <p class="lead" data-fr="Le client donne une taille. Mesure avant de sortir la pièce : 1/2 NPT n'est pas un tube 1/2." data-en="The customer gives a size. Measure before you pull the part: 1/2 NPT is not 1/2 tube.">Le client donne une taille. Mesure avant de sortir la pièce : 1/2 NPT n'est pas un tube 1/2.</p>
+      <label data-fr="il a dit" data-en="they said">il a dit</label>
+      <div class="chips" id="said"></div>
+      <div class="give"><span data-fr="À vérifier au comptoir" data-en="Check at the counter">À vérifier au comptoir</span><b id="give">—</b></div>
+      <div class="cols" id="deskcols"></div>
+      <h3 data-fr="Reconnaître le bout" data-en="Recognize the end">Reconnaître le bout</h3>
+      <div class="idgrid" id="idgrid"></div>
+      <p id="idtext" class="lead"></p>
+    </div>
+  </section>
+
+  <section class="panel" id="convert">
     <div class="card">
       <div class="pair">
-        <div>
-          <label>mm</label>
-          <input id="mm" inputmode="decimal" value="25.4" />
-        </div>
-        <div>
-          <label data-fr="pouces" data-en="inches">pouces</label>
-          <input id="inch" inputmode="decimal" value="1" />
-        </div>
+        <div><label>mm</label><input id="mm" inputmode="decimal" value="25.4" /></div>
+        <div><label data-fr="pouces" data-en="inches">pouces</label><input id="inch" inputmode="decimal" value="1" /></div>
       </div>
       <div class="chips" id="fracs"></div>
       <div class="readout">
-        <div>
-          <div class="big" id="bigmm">25.400 mm</div>
-          <div class="subn" id="bigin">1.0000 po</div>
-        </div>
-        <div>
-          <div class="big" id="bigfrac">1"</div>
-          <div class="subn" id="bigft" data-fr="0 pi 1 po" data-en="0 ft 1 in">0 pi 1 po</div>
-        </div>
+        <div><div class="big" id="bigmm">25.400 mm</div><div class="subn" id="bigin">1.0000 po</div></div>
+        <div><div class="big" id="bigfrac">1"</div><div class="subn" id="bigft">0 pi 1 po</div></div>
       </div>
     </div>
   </section>
 
   <section class="panel" id="tap">
     <div class="card">
+      <p class="lead" data-fr="75 % de filet. Le chiffre en gros est le foret à prendre dans le tiroir." data-en="75% thread. The big number is the drill to pull.">75 % de filet. Le chiffre en gros est le foret à prendre dans le tiroir.</p>
       <div class="chips" id="fams"></div>
       <div class="pair">
-        <div>
-          <label data-fr="filet" data-en="thread">filet</label>
-          <select id="thread"></select>
-        </div>
-        <div>
-          <label data-fr="engagement %" data-en="engagement %">engagement %</label>
-          <input id="pct" type="number" min="50" max="100" value="75" />
-        </div>
+        <div><label data-fr="filet" data-en="thread">filet</label><select id="thread"></select></div>
+        <div><label data-fr="engagement %" data-en="engagement %">engagement %</label><input id="pct" type="number" min="50" max="100" value="75" /></div>
       </div>
-      <div class="readout">
-        <div>
-          <div class="big" id="tapbig">—</div>
-          <div class="subn" id="tapsub"></div>
-        </div>
-        <div>
-          <div class="big" id="tapshop">—</div>
-          <div class="subn" data-fr="foret d'atelier le plus proche" data-en="nearest shop drill">foret d'atelier le plus proche</div>
-        </div>
-      </div>
+      <div class="give"><span data-fr="Prends ce foret" data-en="Pull this drill">Prends ce foret</span><b id="tapbig">—</b></div>
+      <div class="subn" id="tapsub"></div>
       <div style="overflow:auto;margin-top:8px"><table id="taptable"></table></div>
     </div>
   </section>
 
   <section class="panel" id="drill">
     <div class="card">
-      <div class="readout">
-        <div><div class="big" id="drillbig">A</div><div class="subn" id="drillsub">0.2340 po · 5.944 mm</div></div>
-      </div>
+      <div class="give"><span data-fr="Diamètre" data-en="Diameter">Diamètre</span><b id="drillbig">A · 0.2340 po</b></div>
       <h3 data-fr="Lettres" data-en="Letters">Lettres</h3>
       <div class="drillgrid" id="letters"></div>
       <h3 data-fr="Numéros" data-en="Numbers">Numéros</h3>
@@ -134,6 +126,7 @@ footer a{color:var(--muted)}
 
   <section class="panel" id="oring">
     <div class="card">
+      <p class="lead" data-fr="Section d'abord, dash ensuite. Le dash n'est pas la taille du tuyau." data-en="Cross-section first, then dash. The dash is not the hose size.">Section d'abord, dash ensuite. Le dash n'est pas la taille du tuyau.</p>
       <div class="chips" id="cs"></div>
       <label>dash</label>
       <input id="oq" class="search" placeholder="214" />
@@ -143,6 +136,7 @@ footer a{color:var(--muted)}
 
   <section class="panel" id="fit">
     <div class="card">
+      <p class="lead" data-fr="Schéma du bout, pas une photo catalogue. Cherche le code ou la famille." data-en="End sketch, not a catalog photo. Search the code or family.">Schéma du bout, pas une photo catalogue. Cherche le code ou la famille.</p>
       <label data-fr="code ou nom" data-en="code or name">code ou nom</label>
       <input id="fq" class="search" placeholder="2404, JIC, ORFS, 90, bride" />
       <div class="chips" id="fitfams"></div>
@@ -150,31 +144,55 @@ footer a{color:var(--muted)}
     </div>
   </section>
 </main>
-<footer>
-  AtelierKit
-  · <a href="/tarifs" data-fr="impression" data-en="print pack">impression</a>
-  · <a href="https://facturepro.faitle.net">FacturePro</a>
-  · <a href="https://tradequote.faitle.net">TradeQuote</a>
-</footer>
+<footer>AtelierKit · <a href="/tarifs" data-fr="impression" data-en="print">impression</a> · <a href="https://facturepro.faitle.net">FacturePro</a> · <a href="https://tradequote.faitle.net">TradeQuote</a></footer>
 <script>
 const IN=25.4;
 const LETTERS={"A":0.234,"B":0.238,"C":0.242,"D":0.246,"E":0.250,"F":0.257,"G":0.261,"H":0.266,"I":0.272,"J":0.277,"K":0.281,"L":0.290,"M":0.295,"N":0.302,"O":0.316,"P":0.323,"Q":0.332,"R":0.339,"S":0.348,"T":0.358,"U":0.368,"V":0.377,"W":0.386,"X":0.397,"Y":0.404,"Z":0.413};
 const NUMBERS={"1":0.228,"2":0.221,"3":0.213,"4":0.209,"5":0.2055,"6":0.204,"7":0.201,"8":0.199,"9":0.196,"10":0.1935,"11":0.191,"12":0.189,"13":0.185,"14":0.182,"15":0.180,"16":0.177,"17":0.173,"18":0.1695,"19":0.166,"20":0.161,"21":0.159,"22":0.157,"23":0.154,"24":0.152,"25":0.1495,"26":0.147,"27":0.144,"28":0.1405,"29":0.136,"30":0.1285,"31":0.120,"32":0.116,"33":0.113,"34":0.111,"35":0.110,"36":0.1065,"37":0.104,"38":0.1015,"39":0.0995,"40":0.098,"41":0.096,"42":0.0935,"43":0.089,"44":0.086,"45":0.082,"46":0.081,"47":0.0785,"48":0.076,"49":0.073,"50":0.070,"51":0.067,"52":0.0635,"53":0.0595,"54":0.055,"55":0.052,"56":0.0465,"57":0.043,"58":0.042,"59":0.041,"60":0.040,"61":0.039,"62":0.038,"63":0.037,"64":0.036,"65":0.035,"66":0.033,"67":0.032,"68":0.031,"69":0.0292,"70":0.028,"71":0.026,"72":0.025,"73":0.024,"74":0.0225,"75":0.021,"76":0.020,"77":0.018,"78":0.016,"79":0.0145,"80":0.0135};
 const UNC=[["#1-64",0.073,64],["#2-56",0.086,56],["#3-48",0.099,48],["#4-40",0.112,40],["#5-40",0.125,40],["#6-32",0.138,32],["#8-32",0.164,32],["#10-24",0.190,24],["#12-24",0.216,24],["1/4-20",0.250,20],["5/16-18",0.3125,18],["3/8-16",0.375,16],["7/16-14",0.4375,14],["1/2-13",0.500,13],["9/16-12",0.5625,12],["5/8-11",0.625,11],["3/4-10",0.750,10],["7/8-9",0.875,9],["1-8",1,8],["1-1/8-7",1.125,7],["1-1/4-7",1.25,7],["1-1/2-6",1.5,6],["2-4.5",2,4.5]];
 const UNF=[["#0-80",0.060,80],["#1-72",0.073,72],["#2-64",0.086,64],["#3-56",0.099,56],["#4-48",0.112,48],["#6-40",0.138,40],["#8-36",0.164,36],["#10-32",0.190,32],["#12-28",0.216,28],["1/4-28",0.250,28],["5/16-24",0.3125,24],["3/8-24",0.375,24],["7/16-20",0.4375,20],["1/2-20",0.500,20],["9/16-18",0.5625,18],["5/8-18",0.625,18],["3/4-16",0.750,16],["7/8-14",0.875,14],["1-12",1,12],["1-1/4-12",1.25,12],["1-1/2-12",1.5,12]];
-const MET=[["M3×0.5",3,0.5],["M4×0.7",4,0.7],["M5×0.8",5,0.8],["M6×1",6,1],["M8×1.25",8,1.25],["M8×1",8,1],["M10×1.5",10,1.5],["M10×1.25",10,1.25],["M12×1.75",12,1.75],["M12×1.25",12,1.25],["M14×2",14,2],["M16×2",16,2],["M16×1.5",16,1.5],["M20×2.5",20,2.5],["M24×3",24,3],["M30×3.5",30,3.5]];
+const MET=[["M3×0.5",3,0.5],["M4×0.7",4,0.7],["M5×0.8",5,0.8],["M6×1",6,1],["M8×1.25",8,1.25],["M8×1",8,1],["M10×1.5",10,1.5],["M10×1.25",10,1.25],["M12×1.75",12,1.75],["M12×1.25",12,1.25],["M14×2",14,2],["M16×2",16,2],["M20×2.5",20,2.5],["M24×3",24,3]];
 const NPT=[["1/16-27","C",0.242],["1/8-27","Q",0.332],["1/4-18","7/16",0.4375],["3/8-18","9/16",0.5625],["1/2-14","45/64",0.703],["3/4-14","29/32",0.906],["1-11.5","1-9/64",1.1406],["1-1/4-11.5","1-31/64",1.484],["1-1/2-11.5","1-23/32",1.719],["2-11.5","2-3/16",2.1875]];
 const BSPP=[["G1/8-28","11/32",0.344],["G1/4-19","29/64",0.453],["G3/8-19","19/32",0.594],["G1/2-14","47/64",0.734],["G3/4-14","31/32",0.969],["G1-11","1-13/64",1.203]];
 const ORINGS=[["006",0.114,0.070],["010",0.239,0.070],["011",0.301,0.070],["012",0.364,0.070],["014",0.489,0.070],["110",0.362,0.103],["112",0.487,0.103],["114",0.612,0.103],["210",0.734,0.139],["212",0.859,0.139],["214",0.984,0.139],["216",1.109,0.139],["222",1.484,0.139],["325",1.475,0.210],["328",1.850,0.210]];
-let lang=localStorage.getItem("ak-lang")||"fr";
-let src="mm", family="UNC", fittings=[], fitFam="";
+const DESK=[
+ {say:"1/4",dash:"-4",tube:"1/4 po",jic:"7/16-20",orfs:"9/16-18",npt:"1/8 NPT, OD ~0.41 po",note:"Tube 1/4 ≠ NPT 1/4"},
+ {say:"5/16",dash:"-5",tube:"5/16 po",jic:"1/2-20",orfs:"—",npt:"souvent confondu avec 1/4",note:"Dash -5 existe en JIC, rare en ORFS"},
+ {say:"3/8",dash:"-6",tube:"3/8 po",jic:"9/16-18",orfs:"11/16-16",npt:"1/4 NPT, OD ~0.54 po",note:"Le -6 JIC n'entre pas sur un -6 ORFS"},
+ {say:"1/2",dash:"-8",tube:"1/2 po",jic:"3/4-16",orfs:"13/16-16",npt:"3/8 NPT, OD ~0.68 po",note:"1/2 NPT est plus gros : OD ~0.84 po"},
+ {say:"5/8",dash:"-10",tube:"5/8 po",jic:"7/8-14",orfs:"1-14",npt:"1/2 NPT proche, mesure l'OD",note:"Mesure le diamètre extérieur avant de sortir la boîte"},
+ {say:"3/4",dash:"-12",tube:"3/4 po",jic:"1-1/16-12",orfs:"1-3/16-12",npt:"3/4 NPT, OD ~1.05 po",note:"ORFS -12 a un plus gros filet que JIC -12"},
+ {say:"1",dash:"-16",tube:"1 po",jic:"1-5/16-12",orfs:"1-7/16-12",npt:"1 NPT, OD ~1.32 po",note:"Filet droit UNF ≠ filet conique NPT"}
+];
+const ID=[
+ {id:"jic",fr:"JIC 37°",en:"JIC 37°",txt:"Siège conique 37°. Écrou qui tourne, pas de joint sur le nez. Filet UNF."},
+ {id:"orfs",fr:"ORFS face plate",en:"ORFS flat face",txt:"Face plate + joint visible dans la gorge. Ne visse pas sur un JIC, même dash."},
+ {id:"npt",fr:"NPT conique",en:"NPT taper",txt:"Filet conique, se serre en forçant. Pas de dash. Le nom (1/2) n'est pas le diamètre du tube."},
+ {id:"orb",fr:"ORB / SAE",en:"ORB / SAE",txt:"Filet droit, joint à la base, contre un port plat. Pas un siège 37°."}
+];
+let lang=localStorage.getItem("ak-lang")||"fr", src="mm", family="UNC", fittings=[], fitFam="", said=3, idk="jic";
 function frac(n){n=Math.abs(n);const w=Math.floor(n+1e-9);let num=Math.round((n-w)*64);if(num===64)return (w+1)+"\"";if(!num)return w+"\"";let a=num,b=64;while(b){const t=a%b;a=b;b=t;}return (w?w+" ":"")+(num/a)+"/"+(64/a)+"\"";}
 function nearest(inches){let best=frac(inches),bd=Math.abs(Math.round(inches*64)/64-inches);for(const [k,v] of Object.entries(LETTERS)){const d=Math.abs(v-inches);if(d<bd){bd=d;best=k;}}for(const [k,v] of Object.entries(NUMBERS)){const d=Math.abs(v-inches);if(d<bd){bd=d;best="#"+k;}}return best;}
 function td(major,pitch,pct){return major-1.299038105676658*pitch*(pct/100);}
 function table(){return {UNC,UNF,MET,NPT,BSPP}[family];}
-function setLang(l){lang=l;localStorage.setItem("ak-lang",l);document.documentElement.lang=l;document.getElementById("lang").textContent=l==="fr"?"EN":"FR";document.querySelectorAll("[data-fr]").forEach(el=>{if(el.id==="lang")return;el.textContent=l==="fr"?el.dataset.fr:el.dataset.en;});renderConv();}
+function icon(kind,angle){
+  const c=kind==="orfs"?"#1e4d5c":kind==="npt"?"#9a4f12":kind==="orb"?"#3d6b4f":"#1c1915";
+  const seat=kind==="orfs"?"<circle cx='28' cy='58' r='4' fill='none' stroke='"+c+"' stroke-width='2'/>":kind==="jic"?"<path d='M22 58 L28 50 L34 58' fill='none' stroke='"+c+"' stroke-width='2'/>":kind==="npt"?"<path d='M22 62 L34 52' stroke='"+c+"' stroke-width='2'/>":"<circle cx='28' cy='62' r='3' fill='none' stroke='"+c+"'/>";
+  const body=angle==="90°"?"<path d='M28 58 V30 H70' fill='none' stroke='"+c+"' stroke-width='6' stroke-linecap='square'/>":angle==="45°"?"<path d='M28 62 L58 32' fill='none' stroke='"+c+"' stroke-width='6' stroke-linecap='square'/>":angle==="Té"?"<path d='M16 40 H80 M48 40 V72' fill='none' stroke='"+c+"' stroke-width='6'/>":"<path d='M20 48 H84' fill='none' stroke='"+c+"' stroke-width='6' stroke-linecap='square'/>";
+  return `<svg viewBox="0 0 100 80" aria-hidden="true">${body}${seat}</svg>`;
+}
+function renderDesk(){
+  const d=DESK[said];
+  document.getElementById("give").textContent=lang==="fr"?`Dash ${d.dash} · tube ${d.tube}. ${d.note}`:`Dash ${d.dash} · tube ${d.tube}. ${d.note}`;
+  document.getElementById("deskcols").innerHTML=[
+    ["JIC",d.jic],["ORFS",d.orfs],["NPT proche",d.npt]
+  ].map(x=>`<article><div class="k">${x[0]}</div><div class="v">${x[1]}</div></article>`).join("");
+  document.getElementById("idgrid").innerHTML=ID.map(x=>`<button data-id="${x.id}" class="${x.id===idk?"on":""}">${icon(x.id,x.id==="npt"?"Droit":"Droit")}<b>${lang==="fr"?x.fr:x.en}</b></button>`).join("");
+  const cur=ID.find(x=>x.id===idk);
+  document.getElementById("idtext").textContent=cur.txt;
+}
 function renderConv(){
-  let mm, inch;
+  let mm,inch;
   if(src==="mm"){mm=parseFloat(document.getElementById("mm").value)||0;inch=mm/IN;document.getElementById("inch").value=inch.toFixed(4);}
   else {inch=parseFloat(document.getElementById("inch").value)||0;mm=inch*IN;document.getElementById("mm").value=mm.toFixed(3);}
   const feet=Math.floor(inch/12), rem=inch-feet*12;
@@ -184,20 +202,16 @@ function renderConv(){
   document.getElementById("bigft").textContent=feet+" pi  "+rem.toFixed(3)+" po";
 }
 function renderTap(){
-  const rows=table();
-  const sel=document.getElementById("thread");
+  const rows=table(); const sel=document.getElementById("thread");
   if(sel.options.length!==rows.length) sel.innerHTML=rows.map((r,i)=>`<option value="${i}">${r[0]}</option>`).join("");
-  const i=+sel.value||0;
-  const r=rows[i];
-  const pct=+document.getElementById("pct").value||75;
+  const i=+sel.value||0, r=rows[i], pct=+document.getElementById("pct").value||75;
   let inch, shop, calc;
   if(family==="NPT"||family==="BSPP"){inch=r[2];shop=r[1];calc=inch;}
   else {const pitch=family==="MET"?r[2]:1/r[2];calc=td(r[1],pitch,pct);inch=family==="MET"?calc/IN:calc;shop=family==="MET"?(Math.round(calc*10)/10)+" mm":nearest(inch);}
-  document.getElementById("tapbig").textContent=(family==="MET"?calc.toFixed(2)+" mm":inch.toFixed(4)+" po");
-  document.getElementById("tapsub").textContent=family==="MET"?inch.toFixed(4)+" po":(inch*IN).toFixed(2)+" mm";
-  document.getElementById("tapshop").textContent=shop;
-  document.getElementById("taptable").innerHTML="<tr><th>"+(lang==="fr"?"Filet":"Thread")+"</th><th>"+(lang==="fr"?"Foret":"Drill")+"</th><th>mm</th></tr>"+rows.map((row,idx)=>{
-    let din, label;
+  document.getElementById("tapbig").textContent=shop+"  ·  "+(family==="MET"?calc.toFixed(2)+" mm":inch.toFixed(4)+" po");
+  document.getElementById("tapsub").textContent=(family==="MET"?inch.toFixed(4)+" po · ":(inch*IN).toFixed(2)+" mm · ")+r[0];
+  document.getElementById("taptable").innerHTML="<tr><th>Filet</th><th>Foret</th><th>mm</th></tr>"+rows.map((row,idx)=>{
+    let din,label;
     if(family==="NPT"||family==="BSPP"){din=row[2];label=row[1];}
     else {const p=family==="MET"?row[2]:1/row[2];const c=td(row[1],p,75);din=family==="MET"?c/IN:c;label=family==="MET"?(Math.round(c*10)/10)+" mm":nearest(din);}
     return `<tr class="${idx===i?"sel":""}" data-i="${idx}"><td>${row[0]}</td><td>${label}</td><td>${(din*IN).toFixed(2)}</td></tr>`;
@@ -209,50 +223,44 @@ function renderOring(){
   const rows=ORINGS.filter(o=>(!q||o[0].includes(q.replace("-",""))) && (!cs||Math.abs(o[2]-parseFloat(cs))<0.01));
   document.getElementById("otable").innerHTML="<tr><th>dash</th><th>ID po</th><th>CS po</th><th>ID mm</th></tr>"+rows.map(o=>`<tr><td>-${o[0]}</td><td>${o[1].toFixed(3)}</td><td>${o[2].toFixed(3)}</td><td>${(o[1]*IN).toFixed(2)}</td></tr>`).join("");
 }
+function kindOf(f){const s=(f.family||"").toUpperCase();if(s.includes("ORFS"))return "orfs";if(s.includes("NPT"))return "npt";if(s.includes("ORB"))return "orb";if(s.includes("JIC"))return "jic";return "jic";}
 function renderFits(){
   const q=document.getElementById("fq").value.trim().toLowerCase();
   const rows=fittings.filter(f=>(!q||(f.code+" "+f.desc+" "+f.family).toLowerCase().includes(q)) && (!fitFam||f.family===fitFam));
-  document.getElementById("fits").innerHTML=rows.slice(0,80).map(f=>`<article><img loading="lazy" src="${f.img}" alt="${f.code} ${f.desc}"><div><div class="code">${f.code}</div><div>${f.desc}</div><div class="meta">${f.family} · ${f.angle}</div></div></article>`).join("")||"<p>—</p>";
+  document.getElementById("fits").innerHTML=rows.slice(0,60).map(f=>`<article>${icon(kindOf(f),f.angle)}<div><div class="code">${f.code}</div><div>${f.desc}</div><div class="meta">${f.family} · ${f.angle}</div></div></article>`).join("")||"<p>—</p>";
 }
-document.querySelector("nav").onclick=e=>{
-  const t=e.target.closest("button"); if(!t) return;
-  document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on", b===t));
-  document.querySelectorAll(".panel").forEach(p=>p.classList.toggle("on", p.id===t.dataset.tab));
-};
+document.querySelector("nav").onclick=e=>{const t=e.target.closest("button");if(!t)return;document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b===t));document.querySelectorAll(".panel").forEach(p=>p.classList.toggle("on",p.id===t.dataset.tab));};
+document.getElementById("said").innerHTML=DESK.map((d,i)=>`<button data-i="${i}" class="${i===said?"on":""}">${d.say}</button>`).join("");
+document.getElementById("said").onclick=e=>{const b=e.target.closest("button");if(!b)return;said=+b.dataset.i;document.querySelectorAll("#said button").forEach(x=>x.classList.toggle("on",x===b));renderDesk();};
+document.getElementById("idgrid").onclick=e=>{const b=e.target.closest("button");if(!b)return;idk=b.dataset.id;renderDesk();};
 document.getElementById("mm").addEventListener("input",()=>{src="mm";renderConv();});
 document.getElementById("inch").addEventListener("input",()=>{src="inch";renderConv();});
 const fracs=[[0,"0"],[1/64,"1/64"],[1/32,"1/32"],[1/16,"1/16"],[1/8,"1/8"],[1/4,"1/4"],[3/8,"3/8"],[1/2,"1/2"],[3/4,"3/4"]];
 document.getElementById("fracs").innerHTML=fracs.map((f,i)=>`<button data-i="${i}">${f[1]}</button>`).join("");
-document.getElementById("fracs").onclick=e=>{
-  const b=e.target.closest("button"); if(!b) return;
-  const add=fracs[+b.dataset.i][0];
-  const base=Math.floor(parseFloat(document.getElementById("inch").value)||0);
-  src="inch"; document.getElementById("inch").value=(base+add).toFixed(4); renderConv();
-  document.querySelectorAll("#fracs button").forEach(x=>x.classList.toggle("on", x===b));
-};
+document.getElementById("fracs").onclick=e=>{const b=e.target.closest("button");if(!b)return;src="inch";document.getElementById("inch").value=(Math.floor(parseFloat(document.getElementById("inch").value)||0)+fracs[+b.dataset.i][0]).toFixed(4);renderConv();};
 document.getElementById("fams").innerHTML=["UNC","UNF","MET","NPT","BSPP"].map(f=>`<button data-f="${f}" class="${f==="UNC"?"on":""}">${f}</button>`).join("");
-document.getElementById("fams").onclick=e=>{const b=e.target.closest("button"); if(!b) return; family=b.dataset.f; document.querySelectorAll("#fams button").forEach(x=>x.classList.toggle("on", x===b)); document.getElementById("thread").innerHTML=""; renderTap();};
+document.getElementById("fams").onclick=e=>{const b=e.target.closest("button");if(!b)return;family=b.dataset.f;document.querySelectorAll("#fams button").forEach(x=>x.classList.toggle("on",x===b));document.getElementById("thread").innerHTML="";renderTap();};
 document.getElementById("thread").onchange=renderTap;
 document.getElementById("pct").oninput=renderTap;
-document.getElementById("taptable").onclick=e=>{const tr=e.target.closest("tr"); if(!tr||!tr.dataset.i) return; document.getElementById("thread").value=tr.dataset.i; renderTap();};
+document.getElementById("taptable").onclick=e=>{const tr=e.target.closest("tr");if(!tr||!tr.dataset.i)return;document.getElementById("thread").value=tr.dataset.i;renderTap();};
 document.getElementById("letters").innerHTML=Object.entries(LETTERS).map(([k,v])=>`<button data-k="${k}" data-v="${v}">${k}<small>${v}"</small></button>`).join("");
 document.getElementById("numbers").innerHTML=Object.entries(NUMBERS).map(([k,v])=>`<button data-k="#${k}" data-v="${v}">#${k}<small>${v}"</small></button>`).join("");
-function pickDrill(e){const b=e.target.closest("button"); if(!b) return; document.querySelectorAll(".drillgrid button").forEach(x=>x.classList.remove("on")); b.classList.add("on"); const v=+b.dataset.v; document.getElementById("drillbig").textContent=b.dataset.k; document.getElementById("drillsub").textContent=v.toFixed(4)+" po · "+(v*IN).toFixed(3)+" mm";}
+function pickDrill(e){const b=e.target.closest("button");if(!b)return;document.querySelectorAll(".drillgrid button").forEach(x=>x.classList.remove("on"));b.classList.add("on");const v=+b.dataset.v;document.getElementById("drillbig").textContent=b.dataset.k+" · "+v.toFixed(4)+" po · "+(v*IN).toFixed(2)+" mm";}
 document.getElementById("letters").onclick=pickDrill;
 document.getElementById("numbers").onclick=pickDrill;
-document.getElementById("cs").innerHTML=[["",lang==="fr"?"tous":"all"],["0.070","1/16"],["0.103","3/32"],["0.139","1/8"],["0.210","3/16"]].map((c,i)=>`<button data-cs="${c[0]}" class="${i===0?"on":""}">${c[1]}</button>`).join("");
-document.getElementById("cs").onclick=e=>{const b=e.target.closest("button"); if(!b) return; document.querySelectorAll("#cs button").forEach(x=>x.classList.toggle("on", x===b)); renderOring();};
+document.getElementById("cs").innerHTML=[["","tous"],["0.070","1/16"],["0.103","3/32"],["0.139","1/8"],["0.210","3/16"]].map((c,i)=>`<button data-cs="${c[0]}" class="${i===0?"on":""}">${c[1]}</button>`).join("");
+document.getElementById("cs").onclick=e=>{const b=e.target.closest("button");if(!b)return;document.querySelectorAll("#cs button").forEach(x=>x.classList.toggle("on",x===b));renderOring();};
 document.getElementById("oq").oninput=renderOring;
 document.getElementById("fq").oninput=renderFits;
-document.getElementById("lang").onclick=()=>setLang(lang==="fr"?"en":"fr");
+document.getElementById("lang").onclick=()=>{lang=lang==="fr"?"en":"fr";localStorage.setItem("ak-lang",lang);document.getElementById("lang").textContent=lang==="fr"?"EN":"FR";document.querySelectorAll("[data-fr]").forEach(el=>{el.textContent=lang==="fr"?el.dataset.fr:el.dataset.en;});renderDesk();};
 fetch("fittings.json").then(r=>r.json()).then(data=>{
   fittings=data;
   const fams=[...new Set(data.map(f=>f.family))];
-  document.getElementById("fitfams").innerHTML=`<button class="on" data-f="">${lang==="fr"?"tous":"all"}</button>`+fams.map(f=>`<button data-f="${f}">${f}</button>`).join("");
-  document.getElementById("fitfams").onclick=e=>{const b=e.target.closest("button"); if(!b) return; fitFam=b.dataset.f; document.querySelectorAll("#fitfams button").forEach(x=>x.classList.toggle("on", x===b)); renderFits();};
+  document.getElementById("fitfams").innerHTML=`<button class="on" data-f="">tous</button>`+fams.map(f=>`<button data-f="${f}">${f}</button>`).join("");
+  document.getElementById("fitfams").onclick=e=>{const b=e.target.closest("button");if(!b)return;fitFam=b.dataset.f;document.querySelectorAll("#fitfams button").forEach(x=>x.classList.toggle("on",x===b));renderFits();};
   renderFits();
 });
-renderConv(); renderTap(); renderOring(); setLang(lang);
+renderDesk();renderConv();renderTap();renderOring();
 </script>
 </body>
 </html>
