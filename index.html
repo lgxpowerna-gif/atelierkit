@@ -75,6 +75,19 @@ footer a{color:var(--muted)}
 <main>
   <section class="panel on" id="desk">
     <div class="card">
+      <p class="lead" data-fr="Mesure le diamètre extérieur du filet mâle, sur les premiers filets complets. Le nom que le client donne vient après." data-en="Measure the male thread outside diameter, on the first full threads. The name the customer gives comes after.">Mesure le diamètre extérieur du filet mâle, sur les premiers filets complets. Le nom que le client donne vient après.</p>
+      <div class="pair">
+        <div><label data-fr="diamètre mesuré" data-en="measured diameter">diamètre mesuré</label><input id="od" inputmode="decimal" value="0.562" /></div>
+        <div><label data-fr="filets au pouce, si tu les as comptés" data-en="threads per inch, if counted">filets au pouce, si tu les as comptés</label><input id="tpi" inputmode="decimal" placeholder="18" /></div>
+      </div>
+      <div class="chips" id="odunit">
+        <button class="on" data-u="po">po</button>
+        <button data-u="mm">mm</button>
+      </div>
+      <div class="give"><span data-fr="Boîte la plus proche" data-en="Closest bin">Boîte la plus proche</span><b id="odgive">—</b></div>
+      <div id="odhits"></div>
+    </div>
+    <div class="card" style="margin-top:12px">
       <p class="lead" data-fr="Le client donne une taille. Mesure avant de sortir la pièce : 1/2 NPT n'est pas un tube 1/2." data-en="The customer gives a size. Measure before you pull the part: 1/2 NPT is not 1/2 tube.">Le client donne une taille. Mesure avant de sortir la pièce : 1/2 NPT n'est pas un tube 1/2.</p>
       <label data-fr="il a dit" data-en="they said">il a dit</label>
       <div class="chips" id="said"></div>
@@ -170,7 +183,48 @@ const ID=[
  {id:"npt",fr:"NPT conique",en:"NPT taper",txt:"Filet conique, se serre en forçant. Pas de dash. Le nom (1/2) n'est pas le diamètre du tube."},
  {id:"orb",fr:"ORB / SAE",en:"ORB / SAE",txt:"Filet droit, joint à la base, contre un port plat. Pas un siège 37°."}
 ];
-let lang=localStorage.getItem("ak-lang")||"fr", src="mm", family="UNC", fittings=[], fitFam="", said=3, idk="jic";
+const ENDS=[
+ {fam:"JIC",dash:"-4",thread:"7/16-20",od:0.4375,tpi:20,tell:"siège 37°, écrou libre"},
+ {fam:"JIC",dash:"-5",thread:"1/2-20",od:0.500,tpi:20,tell:"siège 37°"},
+ {fam:"JIC",dash:"-6",thread:"9/16-18",od:0.5625,tpi:18,tell:"siège 37°. Même filet que ORFS -4"},
+ {fam:"JIC",dash:"-8",thread:"3/4-16",od:0.750,tpi:16,tell:"siège 37°"},
+ {fam:"JIC",dash:"-10",thread:"7/8-14",od:0.875,tpi:14,tell:"siège 37°"},
+ {fam:"JIC",dash:"-12",thread:"1-1/16-12",od:1.0625,tpi:12,tell:"siège 37°"},
+ {fam:"JIC",dash:"-16",thread:"1-5/16-12",od:1.3125,tpi:12,tell:"siège 37°"},
+ {fam:"JIC",dash:"-20",thread:"1-5/8-12",od:1.625,tpi:12,tell:"siège 37°"},
+ {fam:"ORFS",dash:"-4",thread:"9/16-18",od:0.5625,tpi:18,tell:"face plate. Même diamètre que JIC -6"},
+ {fam:"ORFS",dash:"-6",thread:"11/16-16",od:0.6875,tpi:16,tell:"face plate + joint"},
+ {fam:"ORFS",dash:"-8",thread:"13/16-16",od:0.8125,tpi:16,tell:"face plate"},
+ {fam:"ORFS",dash:"-10",thread:"1-14",od:1.000,tpi:14,tell:"face plate"},
+ {fam:"ORFS",dash:"-12",thread:"1-3/16-12",od:1.1875,tpi:12,tell:"face plate"},
+ {fam:"ORFS",dash:"-16",thread:"1-7/16-12",od:1.4375,tpi:12,tell:"face plate"},
+ {fam:"ORB",dash:"-4",thread:"7/16-20",od:0.4375,tpi:20,tell:"joint à la base, port plat"},
+ {fam:"ORB",dash:"-6",thread:"9/16-18",od:0.5625,tpi:18,tell:"joint à la base. Même filet que JIC -6"},
+ {fam:"ORB",dash:"-8",thread:"3/4-16",od:0.750,tpi:16,tell:"joint à la base"},
+ {fam:"ORB",dash:"-10",thread:"7/8-14",od:0.875,tpi:14,tell:"joint à la base"},
+ {fam:"ORB",dash:"-12",thread:"1-1/16-12",od:1.0625,tpi:12,tell:"joint à la base"},
+ {fam:"NPT",dash:"1/8",thread:"1/8-27",od:0.405,tpi:27,tell:"conique. Mesure le gros bout"},
+ {fam:"NPT",dash:"1/4",thread:"1/4-18",od:0.540,tpi:18,tell:"conique. Proche du 9/16, regarde le siège"},
+ {fam:"NPT",dash:"3/8",thread:"3/8-18",od:0.675,tpi:18,tell:"conique. Proche de ORFS -6"},
+ {fam:"NPT",dash:"1/2",thread:"1/2-14",od:0.840,tpi:14,tell:"conique. Plus gros qu'un tube 1/2"},
+ {fam:"NPT",dash:"3/4",thread:"3/4-14",od:1.050,tpi:14,tell:"conique. Proche du JIC -12"},
+ {fam:"NPT",dash:"1",thread:"1-11.5",od:1.315,tpi:11.5,tell:"conique"},
+ {fam:"NPT",dash:"1-1/4",thread:"1-1/4-11.5",od:1.660,tpi:11.5,tell:"conique"},
+ {fam:"BSPP",dash:"G1/4",thread:"1/4-19",od:0.518,tpi:19,tell:"filet droit, souvent un joint sur la face"},
+ {fam:"BSPP",dash:"G3/8",thread:"3/8-19",od:0.656,tpi:19,tell:"filet droit BSPP"},
+ {fam:"BSPP",dash:"G1/2",thread:"1/2-14",od:0.825,tpi:14,tell:"filet droit BSPP"}
+];
+let odUnit="po";
+function renderOd(){
+  let v=parseFloat(document.getElementById("od").value);
+  if(!v){document.getElementById("odgive").textContent="—";document.getElementById("odhits").innerHTML="";return;}
+  const inches=odUnit==="mm"?v/IN:v;
+  const tpi=parseFloat(document.getElementById("tpi").value);
+  const hits=ENDS.map(e=>({...e,d:Math.abs(e.od-inches),tpiOk:!tpi||Math.abs(e.tpi-tpi)<=1})).filter(e=>e.d<0.06&&e.tpiOk).sort((a,b)=>a.d-b.d);
+  const top=hits[0];
+  document.getElementById("odgive").textContent=top?`${top.fam} ${top.dash} · ${top.thread}`:"rien dans 1,5 mm — remesure";
+  document.getElementById("odhits").innerHTML=hits.slice(0,4).map(e=>`<article style="margin-top:8px"><div class="k">${e.fam} ${e.dash} · écart ${(e.d*IN).toFixed(2)} mm</div><div class="v">${e.thread}</div><div class="meta">${e.tell}</div></article>`).join("")||"<p class='lead'>Aucun filet assez proche. Mesure perpendiculaire, pas dans le creux du filet.</p>";
+}
 function frac(n){n=Math.abs(n);const w=Math.floor(n+1e-9);let num=Math.round((n-w)*64);if(num===64)return (w+1)+"\"";if(!num)return w+"\"";let a=num,b=64;while(b){const t=a%b;a=b;b=t;}return (w?w+" ":"")+(num/a)+"/"+(64/a)+"\"";}
 function nearest(inches){let best=frac(inches),bd=Math.abs(Math.round(inches*64)/64-inches);for(const [k,v] of Object.entries(LETTERS)){const d=Math.abs(v-inches);if(d<bd){bd=d;best=k;}}for(const [k,v] of Object.entries(NUMBERS)){const d=Math.abs(v-inches);if(d<bd){bd=d;best="#"+k;}}return best;}
 function td(major,pitch,pct){return major-1.299038105676658*pitch*(pct/100);}
@@ -260,7 +314,10 @@ fetch("fittings.json").then(r=>r.json()).then(data=>{
   document.getElementById("fitfams").onclick=e=>{const b=e.target.closest("button");if(!b)return;fitFam=b.dataset.f;document.querySelectorAll("#fitfams button").forEach(x=>x.classList.toggle("on",x===b));renderFits();};
   renderFits();
 });
-renderDesk();renderConv();renderTap();renderOring();
+document.getElementById("od").addEventListener("input",renderOd);
+document.getElementById("tpi").addEventListener("input",renderOd);
+document.getElementById("odunit").onclick=e=>{const b=e.target.closest("button");if(!b)return;odUnit=b.dataset.u;document.querySelectorAll("#odunit button").forEach(x=>x.classList.toggle("on",x===b));renderOd();};
+renderDesk();renderConv();renderTap();renderOring();renderOd();
 </script>
 </body>
 </html>
