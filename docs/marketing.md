@@ -1,30 +1,20 @@
-# Posts prêts à coller — même circuit que FacturePro / TradeQuote
+# Posts — outil de référence, pas une suite
 
-Ne pas poster tant que le domaine `atelierkit.faitle.net` répond. Remplacer l'URL Vercel temporaire si le domaine n'est pas encore branché.
+URL live : https://atelierkit-one.vercel.app
+Domaine visé : https://atelierkit.faitle.net
 
-## Reddit r/Quebec / r/montreal (FR)
+## r/Quebec
 
-Titre : Outil gratuit pour le foret de taraud (UNC, métrique, NPT) — fait au Québec
+Titre : Convertisseur pouce/mm et chartes de taraud, dans le navigateur
 
-Texte :
-Je me suis tanné du classeur Excel sur le PC du banc. AtelierKit donne le foret de taraud (75 %, formule Machinery's), la conversion pouce/mm/fraction, les forets lettre et numéro, et un chercheur de 235 séries de raccords JIC / ORFS / NPT.
+AtelierKit : tu tapes les mm, tu as les pouces et la fraction. Tu choisis le filet, tu as le foret. Lettres, numéros, joints AS568, et les raccords en photo (JIC, ORFS, NPT).
 
-Gratuit dans le navigateur, sans compte. Pro 9 $/mois si tu veux la fiche sans filigrane et le catalogue complet.
+https://atelierkit-one.vercel.app
 
-https://atelierkit.faitle.net
+## r/machinists
 
-Pas un fabricant de raccords. Pas affilié à un atelier.
+Title: Inch/mm converter and tap-drill chart, with fitting pictures
 
-## Reddit r/machinists (EN)
+Browser reference. 75% tap drill, letter and number drills, AS568, hydraulic series with the actual fitting photo. NPT 1-9/6 typo from the old spreadsheet is fixed.
 
-Title: Free tap-drill calculator (UNC/UNF/metric/NPT) with a 75% formula, not a stale spreadsheet
-
-I rebuilt a shop spreadsheet into a browser tool. Tap drill uses TD = major − 1.299 × pitch × engagement, NPT stays on a corrected chart (the old file had a 1-9/6 typo). Letter and number drills, inch/mm fractions, AS568 dashes, hydraulic series search.
-
-Free, no account. Pro is $9 CAD/mo if you want the full fitting list and a clean bench card.
-
-https://atelierkit.faitle.net
-
-## Facebook groupes machinistes / hydraulique Québec
-
-AtelierKit est en ligne : foret de taraud, pouce/mm, joints, raccords. Gratuit, Pro 9 $. Fait pour le banc, pas pour un bureau. https://atelierkit.faitle.net — factures du shop : https://facturepro.faitle.net
+https://atelierkit-one.vercel.app
