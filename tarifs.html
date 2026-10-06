@@ -1,11 +1,15 @@
 <!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AtelierKit — 1 mois, puis 9 $</title>
-<style>body{font-family:system-ui,sans-serif;background:#f4f1ea;color:#1c1915;margin:0}main{max-width:640px;margin:40px auto;padding:24px;background:#fff;border-radius:16px}a{color:#8a5a12}button,input{font:inherit;padding:10px;border-radius:8px}button{background:#8a5a12;color:#fff;border:0}</style></head>
-<body><main><p><a href="/">Retour</a></p><h1>1 mois gratuit, puis 9 $ par mois</h1>
-<p>Le mois commence à la première recherche, pas quand tu ouvres la page. Pendant 30 jours, la boîte, la mèche et l'o-ring sont ouverts.</p>
-<p>Après, les dessins restent. La réponse, la boîte à sortir, se ferme. 9 $ CAD par mois pour un comptoir.</p>
-<p>Pour activer, écris à <a href="mailto:lgxpowerna@gmail.com?subject=AtelierKit">lgxpowerna@gmail.com</a>. Tu reçois un code.</p>
+<style>body{font-family:system-ui,sans-serif;background:#f4f1ea;color:#1c1915;margin:0}main{max-width:680px;margin:40px auto;padding:24px;background:#fff;border-radius:16px}a{color:#8a5a12}button,input{font:inherit;padding:10px;border-radius:8px}button{background:#8a5a12;color:#fff;border:0}.price{display:grid;grid-template-columns:1fr 1fr;gap:12px}.price article{border:1px solid #e4dccf;border-radius:12px;padding:12px}</style></head>
+<body><main><p><a href="/">Retour</a></p><h1>1 mois gratuit, puis le comptoir reste ouvert</h1>
+<p>Le mois commence à la première recherche. Pendant 30 jours, le raccord, la mèche et l'o-ring sont ouverts. Après, les dessins restent. La réponse se ferme.</p>
+<div class="price">
+<article><b>Mois</b><p>9 $ CAD</p><p>Un comptoir. Annulable quand vous voulez.</p></article>
+<article><b>Année</b><p>79 $ CAD</p><p>Deux mois offerts. Écrivez « année » dans le courriel.</p></article>
+</div>
+<p>Pour activer, écrivez à <a href="mailto:lgxpowerna@gmail.com?subject=AtelierKit">lgxpowerna@gmail.com</a>. Vous recevez un code pour cet appareil.</p>
 <label>Code reçu</label><br><input id="code" placeholder="le code"><button id="go">Activer cet appareil</button>
 <p id="msg"></p>
+<p>Factures : <a href="https://facturepro.faitle.net">FacturePro</a>. Soumissions : <a href="https://tradequote.faitle.net">TradeQuote</a>.</p>
 <script>
 document.getElementById("go").onclick=()=>{
   if(document.getElementById("code").value.trim().toUpperCase()==="COMPTOIR9"){
