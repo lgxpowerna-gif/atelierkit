@@ -133,7 +133,7 @@ dialog button{margin:0 16px 16px;border:0;background:#e2a322;border-radius:8px;p
         <div><label>le nom qu'il a dit <button class="help" data-help="threadname">?</button></label><select id="thread"></select></div>
         <div><label>quelle part du filet on garde <button class="help" data-help="pct">?</button></label><input id="pct" type="number" min="50" max="100" value="75" /></div>
       </div>
-      <div class="give"><span data-fr="Sors cette mèche" data-en="Pull this drill">Prends ce foret</span><b id="tapbig">—</b></div>
+      <div class="give"><span data-fr="Sors cette mèche" data-en="Pull this drill">Sors cette mèche</span><b id="tapbig">—</b></div>
       <div class="subn" id="tapsub"></div>
       <div style="overflow:auto;margin-top:8px"><table id="taptable"></table></div>
     </div>
@@ -401,7 +401,7 @@ function closest(map, inches, prefix){
 function gapWords(asked, drill){
   const dmm=(drill.v-asked)*IN;
   if(Math.abs(dmm)<0.005) return drill.name+" fait pile "+(drill.v*IN).toFixed(2)+" mm";
-  return drill.name+" est "+(dmm>0?"plus grosse":"plus petite")+" de "+Math.abs(dmm).toFixed(2)+" mm";
+  return drill.name+" est plus "+(dmm>0?"grosse":"petite")+" que ta mesure, de "+Math.abs(dmm).toFixed(2)+" mm";
 }
 function renderDrillFind(){
   const inches=parseSize(document.getElementById("dsize").value, dUnit);
