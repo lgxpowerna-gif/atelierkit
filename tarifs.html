@@ -1,21 +1,31 @@
-<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AtelierKit — 1 mois, puis 9 $</title>
-<style>body{font-family:system-ui,sans-serif;background:#f4f1ea;color:#1c1915;margin:0}main{max-width:680px;margin:40px auto;padding:24px;background:#fff;border-radius:16px}a{color:#8a5a12}button,input{font:inherit;padding:10px;border-radius:8px}button{background:#8a5a12;color:#fff;border:0}.price{display:grid;grid-template-columns:1fr 1fr;gap:12px}.price article{border:1px solid #e4dccf;border-radius:12px;padding:12px}</style></head>
-<body><main><p><a href="/">Retour</a></p><h1>1 mois gratuit, puis le comptoir reste ouvert</h1>
-<p>Le mois commence à la première recherche. Pendant 30 jours, le raccord, la mèche et l'o-ring sont ouverts. Après, les dessins restent. La réponse se ferme.</p>
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AtelierKit — tarifs</title>
+<style>
+body{font-family:system-ui,sans-serif;background:#f4f1ea;color:#1c1915;margin:0}
+main{max-width:760px;margin:32px auto;padding:28px;background:#fff;border-radius:16px}
+a{color:#8a5a12}
+.price{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:18px 0}
+article{border:1px solid #e4dccf;border-radius:14px;padding:16px}
+.btn{display:inline-block;background:#8a5a12;color:#fff;text-decoration:none;border-radius:8px;padding:10px 14px;font-weight:600}
+.muted{color:#6d655c}
+@media(max-width:640px){.price{grid-template-columns:1fr}}
+</style></head>
+<body><main>
+<p><a href="/">Retour à l'outil</a></p>
+<h1>Accès AtelierKit</h1>
+<p class="muted">Le premier mois est ouvert, à partir de la première recherche. Ensuite, les dessins restent visibles. La réponse — raccord, mèche, o-ring — se rouvre avec l'abonnement. Prix en dollars canadiens, hors taxes.</p>
 <div class="price">
-<article><b>Mois</b><p>9 $ CAD</p><p>Un comptoir. Annulable en tout temps.</p><p><a href="https://buy.stripe.com/4gMcN4bmegVmg3e5MfcfK0h">Payer le mois</a></p></article>
-<article><b>Année</b><p>79 $ CAD</p><p>Deux mois offerts. Facturé une fois par année.</p><p><a href="https://buy.stripe.com/fZu4gy4XQ6gIg3e4IbcfK0i">Payer l'année</a></p></article>
+<article>
+<h2>Mensuel</h2>
+<p><b>9 $</b> CAD / mois</p>
+<p class="muted">Un comptoir. Annulable en tout temps.</p>
+<p><a class="btn" href="https://buy.stripe.com/4gMcN4bmegVmg3e5MfcfK0h?locale=fr">Continuer vers le paiement</a></p>
+</article>
+<article>
+<h2>Annuel</h2>
+<p><b>79 $</b> CAD / année</p>
+<p class="muted">Deux mois offerts. Facturé une fois.</p>
+<p><a class="btn" href="https://buy.stripe.com/fZu4gy4XQ6gIg3e4IbcfK0i?locale=fr">Continuer vers le paiement</a></p>
+</article>
 </div>
-<p>Pour activer, écrivez à <a href="mailto:lgxpowerna@gmail.com?subject=AtelierKit">lgxpowerna@gmail.com</a>. Vous recevez un code pour cet appareil.</p>
-<label>Code reçu</label><br><input id="code" placeholder="le code"><button id="go">Activer cet appareil</button>
-<p id="msg"></p>
-<p>Factures : <a href="https://facturepro.faitle.net">FacturePro</a>. Soumissions : <a href="https://tradequote.faitle.net">TradeQuote</a>.</p>
-<script>
-document.getElementById("go").onclick=()=>{
-  if(document.getElementById("code").value.trim().toUpperCase()==="COMPTOIR9"){
-    localStorage.setItem("ak-pro","oui");
-    document.getElementById("msg").textContent="C'est ouvert.";
-    setTimeout(()=>location.href="/",600);
-  } else document.getElementById("msg").textContent="Ce code n'ouvre pas.";
-};
-</script></main></body></html>
+<p class="muted">Après le paiement, Stripe renvoie sur cet appareil et l'accès s'ouvre. Factures : <a href="https://facturepro.faitle.net">FacturePro</a>. Soumissions : <a href="https://tradequote.faitle.net">TradeQuote</a>.</p>
+</main></body></html>

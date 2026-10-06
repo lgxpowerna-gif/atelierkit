@@ -1,0 +1,18 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AtelierKit — paiement reçu</title>
+<style>body{font-family:system-ui,sans-serif;background:#f4f1ea;color:#1c1915;margin:0}main{max-width:640px;margin:40px auto;padding:28px;background:#fff;border-radius:16px}a{color:#8a5a12}</style></head>
+<body><main>
+<h1 id="t">Paiement reçu</h1>
+<p id="m">L'accès s'ouvre sur cet appareil.</p>
+<p><a href="/">Retour à l'outil</a></p>
+<script>
+const session=new URLSearchParams(location.search).get("session_id");
+if(session){
+  localStorage.setItem("ak-pro","oui");
+  localStorage.setItem("ak-session",session);
+  setTimeout(()=>location.href="/",800);
+}else{
+  document.getElementById("t").textContent="Paiement non confirmé";
+  document.getElementById("m").textContent="Revenez depuis la page Stripe après le paiement. L'accès ne s'ouvre pas si cette page est ouverte directement.";
+}
+</script>
+</main></body></html>
