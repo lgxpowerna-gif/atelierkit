@@ -285,13 +285,13 @@ function td(major,pitch,pct){return major-1.299038105676658*pitch*(pct/100);}
 function table(){return {UNC,UNF,MET,NPT,BSPP}[family];}
 function part(kind, angle){
   const k = (kind||"jic").toLowerCase();
-  let file = "img/jic.jpg", cap = "2404 · T1 = JIC 37°, T2 = NPT";
-  if(angle==="90°"){ file="img/elbow.jpg"; cap="2501 · coude 90, T1 = JIC, T2 = NPT"; }
-  else if(angle==="45°"){ file="img/elbow45.jpg"; cap="2503 · 45°, T1 = JIC, T2 = NPT"; }
-  else if(angle==="Té"){ file="img/tee.jpg"; cap="2601 · T1 et T3 = JIC, T2 = NPT"; }
-  else if(k.includes("orfs")){ file="img/orfs.jpg"; cap="FS2404 · T1 = face plate, T2 = NPT"; }
-  else if(k.includes("npt")||k.includes("npsm")){ file="img/npt.jpg"; cap="1404 · mâle NPT conique"; }
-  else if(k.includes("orb")){ file="img/orb.jpg"; cap="6801 · T2 = ORB, anneau à la base"; }
+  let file = "img/jic.jpg", cap = "T1 JIC, T2 NPT · vernier dehors sur le filet";
+  if(angle==="90°"){ file="img/elbow.jpg"; cap="coude 90 · T1 JIC, T2 NPT"; }
+  else if(angle==="45°"){ file="img/elbow45.jpg"; cap="coude 45 · T1 JIC, T2 NPT"; }
+  else if(angle==="Té"){ file="img/tee.jpg"; cap="té · T1 et T3 JIC, T2 NPT"; }
+  else if(k.includes("orfs")){ file="img/orfs.jpg"; cap="T1 ORFS, gorge du joint dans la face · T2 NPT"; }
+  else if(k.includes("npt")||k.includes("npsm")){ file="img/npt.jpg"; cap="T1 NPT conique · T2 femelle NPSM"; }
+  else if(k.includes("orb")){ file="img/orb.jpg"; cap="T1 JIC · T2 ORB, anneau à la base"; }
   if(sex==="F"){
     file = "img/fjic.jpg"; cap = "F-JIC · filet dedans, siège 37°";
     if(k.includes("orfs")){ file="img/forfs.jpg"; cap="F-ORFS · face plate, joint dans la face"; }
