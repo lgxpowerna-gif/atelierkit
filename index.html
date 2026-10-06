@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>AtelierKit — comptoir machine shop</title>
+<title>AtelierKit — connexions hydrauliques</title>
 <meta name="description" content="Aide magasinier : le client dit 1/2, tu vois le dash, le filet JIC, ORFS ou NPT, le foret de taraud et la conversion pouce/mm." />
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet" />
 <style>
@@ -199,7 +199,7 @@ const DESK=[
  {say:"1/4",dash:"-4",tube:"1/4 po",jic:"7/16-20",orfs:"9/16-18",npt:"1/8 NPT, OD ~0.41 po",note:"Tube 1/4 ≠ NPT 1/4"},
  {say:"5/16",dash:"-5",tube:"5/16 po",jic:"1/2-20",orfs:"—",npt:"souvent confondu avec 1/4",note:"Dash -5 existe en JIC, rare en ORFS"},
  {say:"3/8",dash:"-6",tube:"3/8 po",jic:"9/16-18",orfs:"11/16-16",npt:"1/4 NPT, OD ~0.54 po",note:"Le -6 JIC n'entre pas sur un -6 ORFS"},
- {say:"1/2",dash:"-8",tube:"1/2 po",jic:"3/4-16",orfs:"13/16-16",npt:"3/8 NPT, OD ~0.68 po",note:"1/2 NPT est plus gros : OD ~0.84 po"},
+ {say:"1/2",dash:"-8",tube:"1/2 po",jic:"3/4-16",orfs:"13/16-16",npt:"3/8 NPT, OD ~0.68 po",note:"le 1/2 NPT est plus gros, environ 0,84 po dehors"},
  {say:"5/8",dash:"-10",tube:"5/8 po",jic:"7/8-14",orfs:"1-14",npt:"1/2 NPT proche, mesure l'OD",note:"Mesure le diamètre extérieur avant de sortir la boîte"},
  {say:"3/4",dash:"-12",tube:"3/4 po",jic:"1-1/16-12",orfs:"1-3/16-12",npt:"3/4 NPT, OD ~1.05 po",note:"ORFS -12 a un plus gros filet que JIC -12"},
  {say:"1",dash:"-16",tube:"1 po",jic:"1-5/16-12",orfs:"1-7/16-12",npt:"1 NPT, OD ~1.32 po",note:"Filet droit UNF ≠ filet conique NPT"}
@@ -264,7 +264,7 @@ const ENDS=[
 let sex="M";
 let odUnit="po";
 let lang=localStorage.getItem("ak-lang")||"fr";
-let src="mm", family="UNC", fittings=[], fitFam="", said=3, idk="jic";
+let src="inch", family="UNC", fittings=[], fitFam="", said=3, idk="jic";
 function cardEnd(e){return `<article style="margin-top:8px">${part(e.fam.toLowerCase(),"Droit")}<div class="k">${e.sex==="F"?"femelle":"mâle"} ${e.fam} ${e.dash} · à ${(e.d*IN).toFixed(1)} mm</div><div class="v">${e.thread}</div><div class="meta">${e.tell}</div></article>`;}
 function renderOd(){
   const inches=parseSize(document.getElementById("od").value, odUnit);
@@ -272,7 +272,7 @@ function renderOd(){
   const tpi=parseFloat(String(document.getElementById("tpi").value).replace(",","."));
   const all=ENDS.filter(e=>e.sex===sex).map(e=>({...e,d:Math.abs(e.od-inches),tpiOk:!tpi||Math.abs(e.tpi-tpi)<=1})).filter(e=>e.tpiOk).sort((a,b)=>a.d-b.d);
   const hits=all.filter(e=>e.d<(sex==="F"?0.05:0.06));
-  document.getElementById("odlabel").textContent=sex==="F"?"dedans, dans le filet":"dehors, sur le filet";
+  document.getElementById("odlabel").firstChild.textContent=sex==="F"?"dedans, dans le filet ":"dehors, sur le filet ";
   const list=hits.length?hits:all.slice(0,8);
   window.__odlist=list;
   const pick=`<label>${hits.length?"plusieurs boîtes":"rien dans 1,5 mm — choisis"}</label><select id="odpick">${list.map((e,i)=>`<option value="${i}">${e.fam} ${e.dash} ${e.thread} · ${(e.d*IN).toFixed(1)} mm</option>`).join("")}</select>`;
@@ -292,12 +292,12 @@ function part(kind, angle){
   else if(k.includes("orfs")){ file="img/orfs.jpg"; cap="FS2404 · T1 = face plate, T2 = NPT"; }
   else if(k.includes("npt")){ file="img/npt.jpg"; cap="1404 · mâle NPT conique"; }
   else if(k.includes("orb")){ file="img/orb.jpg"; cap="6801 · T2 = ORB, anneau à la base"; }
-  return `<img class="part" alt="${cap}" src="${file}"><div class="meta">${cap}</div>`;
+  const mate=sex==="F"?" · dessin du mâle qui rentre dedans":""; return `<img class="part" alt="${cap}" src="${file}"><div class="meta">${cap}${mate}</div>`;
 }
 function icon(kind, angle){ return part(kind, angle); }
 function renderDesk(){
   const d=DESK[said];
-  document.getElementById("give").textContent=lang==="fr"?`Dash ${d.dash} · tube ${d.tube}. ${d.note}`:`Dash ${d.dash} · tube ${d.tube}. ${d.note}`;
+  document.getElementById("give").textContent=lang==="fr"?`Numéro ${d.dash} · boyau ${d.tube}. ${d.note}`:`Numéro ${d.dash} · boyau ${d.tube}. ${d.note}`;
   const who=sex==="F"?"femelle":"mâle";
   document.getElementById("deskcols").innerHTML=[
     ["jic","JIC "+who,d.jic],["orfs","ORFS "+who,d.orfs],["npt",sex==="F"?"NPT ou NPSM":"NPT mâle",d.npt]
@@ -366,6 +366,7 @@ const fracs=[[0,"0"],[1/64,"1/64"],[1/32,"1/32"],[1/16,"1/16"],[1/8,"1/8"],[1/4,
 document.getElementById("fracs").innerHTML=fracs.map((f,i)=>`<button data-i="${i}">${f[1]}</button>`).join("");
 document.getElementById("fracs").onclick=e=>{const b=e.target.closest("button");if(!b)return;src="inch";const whole=Math.floor(parseFloat(document.getElementById("inch").value)||0);document.getElementById("inch").value=(whole+fracs[+b.dataset.i][0]).toFixed(4);renderConv();};
 document.getElementById("fams").innerHTML=["UNC","UNF","MET","NPT","BSPP"].map(f=>`<button data-f="${f}" class="${f==="UNC"?"on":""}">${f}</button>`).join("");
+family="UNC";
 document.getElementById("fams").onclick=e=>{const b=e.target.closest("button");if(!b)return;family=b.dataset.f;document.querySelectorAll("#fams button").forEach(x=>x.classList.toggle("on",x===b));document.getElementById("thread").innerHTML="";renderTap();};
 document.getElementById("thread").onchange=renderTap;
 document.getElementById("pct").oninput=renderTap;
@@ -393,7 +394,7 @@ function closest(map, inches, prefix){
 }
 function gapWords(asked, drill){
   const dmm=(drill.v-asked)*IN;
-  if(Math.abs(dmm)<0.02) return drill.name+" fait pile "+(drill.v*IN).toFixed(2)+" mm";
+  if(Math.abs(dmm)<0.005) return drill.name+" fait pile "+(drill.v*IN).toFixed(2)+" mm";
   return drill.name+" est "+(dmm>0?"plus grosse":"plus petite")+" de "+Math.abs(dmm).toFixed(2)+" mm";
 }
 function renderDrillFind(){
@@ -471,7 +472,7 @@ document.getElementById("odhits").addEventListener("change",e=>{if(e.target.id!=
 document.getElementById("otable").addEventListener("change",e=>{if(e.target.id!=="opick")return;document.getElementById("oq").value=e.target.value;renderOring();});
 document.getElementById("fits").addEventListener("change",e=>{if(e.target.id!=="fpick")return;document.getElementById("fq").value=e.target.value;renderFits();});
 document.getElementById("drillcols").addEventListener("change",e=>{if(e.target.id!=="dpick")return;dUnit="po";document.getElementById("dsize").value=e.target.value;renderDrillFind();});
-renderDesk();renderConv();renderTap();renderOring();renderOd();renderDrillFind();
+renderDesk();renderConv();renderTap();const t14=[...document.getElementById("thread").options].findIndex(o=>o.textContent.startsWith("1/4-20"));if(t14>=0)document.getElementById("thread").value=t14;renderTap();renderOring();renderOd();renderDrillFind();
 </script>
 </body>
 </html>
