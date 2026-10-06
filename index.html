@@ -366,7 +366,7 @@ function renderFits(){
     const near=fittings.filter(f=>!fitFam||f.family===fitFam).slice(0,12);
     pick=`<label>aucun code exact — choisis</label><select id="fpick">${near.map(f=>`<option value="${f.code}">${f.code} · ${f.family} · ${f.angle}</option>`).join("")}</select>`;
   }
-  document.getElementById("fits").innerHTML=pick+(rows.length?`<p class="meta">${rows.length} séries</p>`:"")+rows.slice(0,40).map(f=>`<article>${icon(kindOf(f),f.angle)}<div><div class="code">${f.code}</div><div>${f.desc}</div><div class="meta">${f.family} · ${f.angle}</div></div></article>`).join("");
+  document.getElementById("fits").innerHTML=pick+(rows.length?`<p class="meta">${rows.length} séries</p>`:"")+rows.slice(0,40).map(f=>`<article><img class="part" alt="${f.desc}" src="${f.img}"><div><div class="code">${f.code}</div><div>${f.desc}</div><div class="meta">${f.family} · ${f.angle}</div></div></article>`).join("");
 }
 document.querySelector("nav").onclick=e=>{const t=e.target.closest("button");if(!t)return;document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b===t));document.querySelectorAll(".panel").forEach(p=>p.classList.toggle("on",p.id===t.dataset.tab));};
 document.getElementById("said").innerHTML=DESK.map((d,i)=>`<button data-i="${i}" class="${i===said?"on":""}">${d.say}</button>`).join("");
