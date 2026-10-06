@@ -88,7 +88,7 @@ dialog button{margin:0 16px 16px;border:0;background:#e2a322;border-radius:8px;p
       </div>
       <div class="pair">
         <div><label id="odlabel">dehors, sur le filet <button class="help" data-help="od">?</button></label><input id="od" inputmode="decimal" value="0.562" /></div>
-        <div><label>combien de traits sur un pouce <button class="help" data-help="tpi">?</button></label><input id="tpi" inputmode="decimal" placeholder="18" /></div>
+        <div><label>combien de filets sur un pouce <button class="help" data-help="tpi">?</button></label><input id="tpi" inputmode="decimal" placeholder="18" /></div>
       </div>
       <div class="chips" id="odunit">
         <button class="on" data-u="po">po</button>
@@ -141,7 +141,7 @@ dialog button{margin:0 16px 16px;border:0;background:#e2a322;border-radius:8px;p
 
   <section class="panel" id="drill">
     <div class="card">
-      <p class="lead">On te dit une grosseur. Les tiroirs ont un autre nom. <button class="help" data-help="drill">?</button></p>
+      <p class="lead">On te dit une grosseur. La mèche peut s'appeler par une lettre ou par un numéro. <button class="help" data-help="drill">?</button></p>
       <label data-fr="la grosseur : 5/32, 9/16, 0.160 ou 4" data-en="diameter: 5/32, 9/16, 0.156 or 4">diamètre : 5/32, 9/16, 0.156 ou 4</label>
       <input id="dsize" value="5/32" />
       <div class="chips" id="dunit">
@@ -404,8 +404,8 @@ function renderDrillFind(){
   const best=letter.d<=number.d?letter:number;
   const other=best===letter?number:letter;
   document.getElementById("drillbig").textContent=best.name;
-  document.getElementById("drillgap").textContent="Tu as demandé "+(inches*IN).toFixed(2)+" mm. "+gapWords(inches, best)+". L'autre tiroir : "+gapWords(inches, other)+".";
-  document.getElementById("drillcols").innerHTML=`<label>choisis le tiroir</label><select id="dpick"><option value="${letter.v}">${gapWords(inches, letter)}</option><option value="${number.v}">${gapWords(inches, number)}</option></select>`+[
+  document.getElementById("drillgap").textContent="Tu as demandé "+(inches*IN).toFixed(2)+" mm. "+gapWords(inches, best)+". L'autre nom, même grosseur : "+gapWords(inches, other)+".";
+  document.getElementById("drillcols").innerHTML=`<label>lettre ou numéro</label><select id="dpick"><option value="${letter.v}">${gapWords(inches, letter)}</option><option value="${number.v}">${gapWords(inches, number)}</option></select>`+[
     ["Lettre", gapWords(inches, letter)],
     ["Numéro", gapWords(inches, number)],
     ["En fraction", frac(inches)+" · "+inches.toFixed(4)+" po"]
@@ -427,15 +427,15 @@ document.getElementById("lang").onclick=()=>{lang=lang==="fr"?"en":"fr";localSto
 const HELP={
  od:{t:"Mesurer",b:"Mâle : le vernier dehors, sur les premiers filets. Femelle : le vernier dedans, dans l'ouverture. Pas dans le creux du filet."},
  sex:{t:"Mâle ou femelle",b:"Mâle : le filet est dehors, ça rentre dans l'autre. Femelle : le filet est dedans, l'écrou ou le port. Un boyau a souvent une femelle droite NPSM, pas une femelle NPT."},
- tpi:{t:"Compter les traits",b:"Sur un pouce, compte les petites bosses du filet. 18 ou 20. Si tu ne sais pas, laisse vide."},
+ tpi:{t:"Filets",b:"Compte les filets sur un pouce. 18 ou 20. Ce n'est pas la grosseur. Si tu ne sais pas, laisse vide."},
  said:{t:"Il a dit un demi",b:"Un demi peut être le tuyau, ou un autre filet plus gros. Regarde le bout avant de sortir la boîte."},
  end:{t:"Le bout",b:"Pointu : JIC. Plat avec un anneau : ORFS. En cône qui serre fort : NPT. Droit avec l'anneau à la base : ORB."},
  convert:{t:"mm et pouces",b:"25 millimètres, c'est à peu près un pouce. Ici tu changes une mesure dans l'autre."},
  tap:{t:"Taraud",b:"Le taraud grave le filet dans le trou. Avant, on perce. Le trou est plus petit que la vis, sinon ça ne tient pas. On te dit 1/4-20, tu sors la mèche #7."},
- threadname:{t:"1/4-20",b:"1/4, c'est la grosseur de la vis. 20, c'est le nombre de traits sur un pouce. Ce n'est pas le nom de la mèche."},
+ threadname:{t:"1/4-20",b:"1/4, c'est la grosseur de la vis. 20, c'est le nombre de filets sur un pouce. Ce n'est pas le nom de la mèche."},
  pct:{t:"75",b:"On ne perce pas aussi gros que la vis. 75, c'est le trou normal. Plus gros, le filet est faible. Plus petit, l'outil casse."},
  fams:{t:"Les familles",b:"Gros : vis ordinaires. Fin : filet serré, souvent sur les boyaux. Métrique : M6, M8. Tuyau : filet en cône. Gaz : filet droit, souvent sur les machines d'Europe."},
- drill:{t:"Les mèches",b:"Trois noms pour la même mèche : une lettre, un numéro, ou une fraction comme 5/32. Entre ce qu'on t'a dit. On te dit quel tiroir, et de combien il est à côté."},
+ drill:{t:"Les mèches",b:"Trois noms pour la même mèche : une lettre, un numéro, ou une fraction comme 5/32. Entre ce qu'on t'a dit. On te dit la lettre et le numéro les plus proches, et de combien ils sont à côté."},
  letter:{t:"Lettres",b:"De A à Z. A est plus petite que Z. On les demande par la lettre."},
  number:{t:"Numéros",b:"De 1 à 80. Le gros numéro est la petite mèche. #7 sert pour la vis 1/4-20."},
  oring:{t:"Joint",b:"Le numéro du joint n'est pas la grosseur du tuyau. L'épaisseur, c'est le rond. Le trou, c'est le milieu."},
