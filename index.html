@@ -417,7 +417,10 @@ function renderDrillFind(){
   document.getElementById("drillbig").textContent=best?best.name:"—";
   const bits=[smaller,bigger].filter(Boolean);
   document.getElementById("drillgap").textContent="Tu as demandé "+(inches*IN).toFixed(2)+" mm. Pour un trou avant taraud, prends la plus petite. Pour un trou qui laisse passer, prends la plus grosse.";
-  document.getElementById("drillcols").innerHTML=`<label>la prochaine</label><select id="dpick">${bits.map(d=>`<option value="${d.v}">${gapWords(inches,d)}</option>`).join("")}</select>`+[
+  document.getElementById("drillcols").innerHTML=`<div class="chips" id="dpick">
+    <button data-v="${smaller?smaller.v:""}">plus petite<br>${smaller?smaller.name:"—"}</button>
+    <button data-v="${bigger?bigger.v:""}">plus grosse<br>${bigger?bigger.name:"—"}</button>
+  </div>`+[
     ["Prochaine plus petite", smaller?gapWords(inches,smaller):"aucune plus petite"],
     ["Prochaine plus grosse", bigger?gapWords(inches,bigger):"aucune plus grosse"],
     ["En fraction", frac(inches)+" · "+inches.toFixed(4)+" po"]
@@ -482,7 +485,7 @@ document.getElementById("sex").onclick=e=>{const b=e.target.closest("button");if
 document.getElementById("odhits").addEventListener("change",e=>{if(e.target.id!=="odpick")return;const e2=window.__odlist[+e.target.value];if(!e2)return;document.getElementById("odgive").textContent=`${e2.sex==="F"?"femelle":"mâle"} ${e2.fam} ${e2.dash}`;e.target.parentElement.querySelectorAll("article").forEach(n=>n.remove());e.target.insertAdjacentHTML("afterend",cardEnd(e2));});
 document.getElementById("otable").addEventListener("change",e=>{if(e.target.id!=="opick")return;document.getElementById("oq").value=e.target.value;renderOring();});
 document.getElementById("fits").addEventListener("change",e=>{if(e.target.id!=="fpick")return;document.getElementById("fq").value=e.target.value;renderFits();});
-document.getElementById("drillcols").addEventListener("change",e=>{if(e.target.id!=="dpick")return;dUnit="po";document.getElementById("dsize").value=e.target.value;renderDrillFind();});
+document.getElementById("drillcols").addEventListener("click",e=>{const b=e.target.closest("#dpick button");if(!b||!b.dataset.v)return;dUnit="po";document.getElementById("dsize").value=b.dataset.v;renderDrillFind();});
 renderDesk();renderConv();renderTap();const t14=[...document.getElementById("thread").options].findIndex(o=>o.textContent.startsWith("1/4-20"));if(t14>=0)document.getElementById("thread").value=t14;renderTap();renderOring();renderOd();renderDrillFind();
 </script>
 </body>
