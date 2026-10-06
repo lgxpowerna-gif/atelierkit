@@ -290,9 +290,15 @@ function part(kind, angle){
   else if(angle==="45°"){ file="img/elbow45.jpg"; cap="2503 · 45°, T1 = JIC, T2 = NPT"; }
   else if(angle==="Té"){ file="img/tee.jpg"; cap="2601 · T1 et T3 = JIC, T2 = NPT"; }
   else if(k.includes("orfs")){ file="img/orfs.jpg"; cap="FS2404 · T1 = face plate, T2 = NPT"; }
-  else if(k.includes("npt")){ file="img/npt.jpg"; cap="1404 · mâle NPT conique"; }
+  else if(k.includes("npt")||k.includes("npsm")){ file="img/npt.jpg"; cap="1404 · mâle NPT conique"; }
   else if(k.includes("orb")){ file="img/orb.jpg"; cap="6801 · T2 = ORB, anneau à la base"; }
-  const mate=sex==="F"?" · dessin du mâle qui rentre dedans":""; return `<img class="part" alt="${cap}" src="${file}"><div class="meta">${cap}${mate}</div>`;
+  if(sex==="F"){
+    file = "img/fjic.jpg"; cap = "F-JIC · filet dedans, siège 37°";
+    if(k.includes("orfs")){ file="img/forfs.jpg"; cap="F-ORFS · face plate, joint dans la face"; }
+    else if(k.includes("npt")||k.includes("npsm")){ file="img/fnpt.jpg"; cap="F-NPT · filet conique dedans"; }
+    else if(k.includes("orb")){ file="img/forb.jpg"; cap="port ORB · anneau à l'entrée"; }
+  }
+  return `<img class="part" alt="${cap}" src="${file}"><div class="meta">${cap}</div>`;
 }
 function icon(kind, angle){ return part(kind, angle); }
 function renderDesk(){
