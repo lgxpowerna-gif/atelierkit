@@ -237,15 +237,16 @@ const ENDS=[
  {fam:"BSPP",dash:"G1/2",thread:"1/2-14",od:0.825,tpi:14,tell:"filet droit BSPP"}
 ];
 let odUnit="po";
+let lang=localStorage.getItem("ak-lang")||"fr";
+let src="mm", family="UNC", fittings=[], fitFam="", said=3, idk="jic";
 function renderOd(){
-  let v=parseFloat(document.getElementById("od").value);
-  if(!v){document.getElementById("odgive").textContent="—";document.getElementById("odhits").innerHTML="";return;}
-  const inches=odUnit==="mm"?v/IN:v;
-  const tpi=parseFloat(document.getElementById("tpi").value);
+  const inches=parseSize(document.getElementById("od").value, odUnit);
+  if(inches==null){document.getElementById("odgive").textContent="—";document.getElementById("odhits").innerHTML="";return;}
+  const tpi=parseFloat(String(document.getElementById("tpi").value).replace(",","."));
   const hits=ENDS.map(e=>({...e,d:Math.abs(e.od-inches),tpiOk:!tpi||Math.abs(e.tpi-tpi)<=1})).filter(e=>e.d<0.06&&e.tpiOk).sort((a,b)=>a.d-b.d);
   const top=hits[0];
   document.getElementById("odgive").textContent=top?`${top.fam} ${top.dash} · ${top.thread}`:"rien dans 1,5 mm — remesure";
-  document.getElementById("odhits").innerHTML=hits.slice(0,4).map(e=>`<article style="margin-top:8px"><div class="k">${e.fam} ${e.dash} · écart ${(e.d*IN).toFixed(2)} mm</div><div class="v">${e.thread}</div><div class="meta">${e.tell}</div></article>`).join("")||"<p class='lead'>Aucun filet assez proche. Mesure perpendiculaire, pas dans le creux du filet.</p>";
+  document.getElementById("odhits").innerHTML=hits.map(e=>`<article style="margin-top:8px"><div class="k">${e.fam} ${e.dash} · écart ${(e.d*IN).toFixed(2)} mm</div><div class="v">${e.thread}</div><div class="meta">${e.tell}</div></article>`).join("")||"<p class='lead'>Aucun filet assez proche. Entre 0.562, 9/16 ou 14,3 mm.</p>";
 }
 function frac(n){n=Math.abs(n);const w=Math.floor(n+1e-9);let num=Math.round((n-w)*64);if(num===64)return (w+1)+"\"";if(!num)return w+"\"";let a=num,b=64;while(b){const t=a%b;a=b;b=t;}return (w?w+" ":"")+(num/a)+"/"+(64/a)+"\"";}
 function nearest(inches){let best=frac(inches),bd=Math.abs(Math.round(inches*64)/64-inches);for(const [k,v] of Object.entries(LETTERS)){const d=Math.abs(v-inches);if(d<bd){bd=d;best=k;}}for(const [k,v] of Object.entries(NUMBERS)){const d=Math.abs(v-inches);if(d<bd){bd=d;best="#"+k;}}return best;}
@@ -303,7 +304,7 @@ function kindOf(f){const s=(f.family||"").toUpperCase();if(s.includes("ORFS"))re
 function renderFits(){
   const q=document.getElementById("fq").value.trim().toLowerCase();
   const rows=fittings.filter(f=>(!q||(f.code+" "+f.desc+" "+f.family).toLowerCase().includes(q)) && (!fitFam||f.family===fitFam));
-  document.getElementById("fits").innerHTML=rows.slice(0,60).map(f=>`<article>${icon(kindOf(f),f.angle)}<div><div class="code">${f.code}</div><div>${f.desc}</div><div class="meta">${f.family} · ${f.angle}</div></div></article>`).join("")||"<p>—</p>";
+  document.getElementById("fits").innerHTML=(rows.length?`<p class="meta">${rows.length} séries</p>`:"")+rows.map(f=>`<article>${icon(kindOf(f),f.angle)}<div><div class="code">${f.code}</div><div>${f.desc}</div><div class="meta">${f.family} · ${f.angle}</div></div></article>`).join("")||"<p>—</p>";
 }
 document.querySelector("nav").onclick=e=>{const t=e.target.closest("button");if(!t)return;document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b===t));document.querySelectorAll(".panel").forEach(p=>p.classList.toggle("on",p.id===t.dataset.tab));};
 document.getElementById("said").innerHTML=DESK.map((d,i)=>`<button data-i="${i}" class="${i===said?"on":""}">${d.say}</button>`).join("");
@@ -313,7 +314,7 @@ document.getElementById("mm").addEventListener("input",()=>{src="mm";renderConv(
 document.getElementById("inch").addEventListener("input",()=>{src="inch";renderConv();});
 const fracs=[[0,"0"],[1/64,"1/64"],[1/32,"1/32"],[1/16,"1/16"],[1/8,"1/8"],[1/4,"1/4"],[3/8,"3/8"],[1/2,"1/2"],[3/4,"3/4"]];
 document.getElementById("fracs").innerHTML=fracs.map((f,i)=>`<button data-i="${i}">${f[1]}</button>`).join("");
-document.getElementById("fracs").onclick=e=>{const b=e.target.closest("button");if(!b)return;src="inch";document.getElementById("inch").value=(Math.floor(parseFloat(document.getElementById("inch").value)||0)+fracs[+b.dataset.i][0]).toFixed(4);renderConv();};
+document.getElementById("fracs").onclick=e=>{const b=e.target.closest("button");if(!b)return;src="inch";const whole=Math.floor(parseFloat(document.getElementById("inch").value)||0);document.getElementById("inch").value=(whole+fracs[+b.dataset.i][0]).toFixed(4);renderConv();};
 document.getElementById("fams").innerHTML=["UNC","UNF","MET","NPT","BSPP"].map(f=>`<button data-f="${f}" class="${f==="UNC"?"on":""}">${f}</button>`).join("");
 document.getElementById("fams").onclick=e=>{const b=e.target.closest("button");if(!b)return;family=b.dataset.f;document.querySelectorAll("#fams button").forEach(x=>x.classList.toggle("on",x===b));document.getElementById("thread").innerHTML="";renderTap();};
 document.getElementById("thread").onchange=renderTap;
