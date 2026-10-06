@@ -311,6 +311,12 @@ function renderDesk(){
   document.getElementById("idgrid").innerHTML=ID.map(x=>`<button data-id="${x.id}" class="${x.id===idk?"on":""}">${icon(x.id,x.id==="npt"?"Droit":"Droit")}<b>${lang==="fr"?x.fr:x.en}</b></button>`).join("");
   const cur=ID.find(x=>x.id===idk);
   document.getElementById("idtext").textContent=cur.txt;
+  const mix = document.getElementById("mix");
+  if(mix) mix.innerHTML = [
+    ["img/nut.jpg","Écrou : trou ouvert, le tube passe"],
+    ["img/cap.jpg","Bouchon : fond fermé, ça couvre un mâle"],
+    ["img/plug.jpg","Plug : filet dehors, ça bouche une femelle"]
+  ].map(x=>`<article><img class="part" alt="${x[1]}" src="${x[0]}"><div class="v">${x[1]}</div></article>`).join("");
 }
 function renderConv(){
   let mm,inch;
