@@ -81,25 +81,25 @@ dialog button{margin:0 16px 16px;border:0;background:#e2a322;border-radius:8px;p
 <main>
   <section class="panel on" id="desk">
     <div class="card">
-      <p class="lead">Mesure le diamètre extérieur du filet mâle, sur les premiers filets complets. Le nom que le client donne vient après. <button class="help" data-help="od">?</button></p>
+      <p class="lead">Tu as le bout dans la main. Mesure le gros du filet, dehors, pas dans le creux. <button class="help" data-help="od">?</button></p>
       <div class="pair">
-        <div><label>diamètre mesuré <button class="help" data-help="od">?</button></label><input id="od" inputmode="decimal" value="0.562" /></div>
-        <div><label>filets au pouce, si tu les as comptés <button class="help" data-help="tpi">?</button></label><input id="tpi" inputmode="decimal" placeholder="18" /></div>
+        <div><label>ce que le vernier dit <button class="help" data-help="od">?</button></label><input id="od" inputmode="decimal" value="0.562" /></div>
+        <div><label>combien de traits sur un pouce <button class="help" data-help="tpi">?</button></label><input id="tpi" inputmode="decimal" placeholder="18" /></div>
       </div>
       <div class="chips" id="odunit">
         <button class="on" data-u="po">po</button>
         <button data-u="mm">mm</button>
       </div>
-      <div class="give"><span data-fr="Boîte la plus proche" data-en="Closest bin">Boîte la plus proche</span><b id="odgive">—</b></div>
+      <div class="give"><span data-fr="La boîte la plus proche" data-en="Closest bin">Boîte la plus proche</span><b id="odgive">—</b></div>
       <div id="odhits"></div>
     </div>
     <div class="card" style="margin-top:12px">
-      <p class="lead">S'il a donné un nom de tuyau, pas une pièce. 1/2 veut souvent dire le tube, pas le NPT. <button class="help" data-help="said">?</button></p>
+      <p class="lead">Il a dit une taille, sans te donner la pièce. Un demi, ce n'est pas toujours la même boîte. <button class="help" data-help="said">?</button></p>
       <label data-fr="il a dit" data-en="they said">il a dit</label>
       <div class="chips" id="said"></div>
-      <div class="give"><span data-fr="À vérifier au comptoir" data-en="Check at the counter">À vérifier au comptoir</span><b id="give">—</b></div>
+      <div class="give"><span data-fr="Regarde ça avant de sortir la boîte" data-en="Check at the counter">À vérifier au comptoir</span><b id="give">—</b></div>
       <div class="cols" id="deskcols"></div>
-      <h3>Reconnaître le bout <button class="help" data-help="end">?</button></h3>
+      <h3>C'est quoi le bout <button class="help" data-help="end">?</button></h3>
       <div class="idgrid" id="idgrid"></div>
       <p id="idtext" class="lead"></p>
     </div>
@@ -107,7 +107,7 @@ dialog button{margin:0 16px 16px;border:0;background:#e2a322;border-radius:8px;p
 
   <section class="panel" id="convert">
     <div class="card">
-      <p class="lead">Le plan est en mm, le tiroir est en pouces, ou l'inverse. <button class="help" data-help="convert">?</button></p>
+      <p class="lead">Un côté parle en millimètres, l'autre en pouces. Ici tu traduis. <button class="help" data-help="convert">?</button></p>
       <div class="pair">
         <div><label>mm</label><input id="mm" inputmode="decimal" value="25.4" /></div>
         <div><label data-fr="pouces" data-en="inches">pouces</label><input id="inch" inputmode="decimal" value="1" /></div>
@@ -122,14 +122,14 @@ dialog button{margin:0 16px 16px;border:0;background:#e2a322;border-radius:8px;p
 
   <section class="panel" id="tap">
     <div class="card">
-      <p class="lead">Le machiniste demande un taraud. Toi, tu sors le foret qui perce le trou avant. <button class="help" data-help="tap">?</button></p>
+      <p class="lead">On te demande un taraud. Toi tu sors la mèche qui fait le trou avant. <button class="help" data-help="tap">?</button></p>
       <div class="chips" id="fams"></div>
-      <p class="meta">UNC, UNF, métrique, NPT, BSPP <button class="help" data-help="fams">?</button></p>
+      <p class="meta">gros, fin, métrique, tuyau, gaz <button class="help" data-help="fams">?</button></p>
       <div class="pair">
-        <div><label>filet <button class="help" data-help="threadname">?</button></label><select id="thread"></select></div>
-        <div><label>engagement % <button class="help" data-help="pct">?</button></label><input id="pct" type="number" min="50" max="100" value="75" /></div>
+        <div><label>le nom qu'il a dit <button class="help" data-help="threadname">?</button></label><select id="thread"></select></div>
+        <div><label>quelle part du filet on garde <button class="help" data-help="pct">?</button></label><input id="pct" type="number" min="50" max="100" value="75" /></div>
       </div>
-      <div class="give"><span data-fr="Prends ce foret" data-en="Pull this drill">Prends ce foret</span><b id="tapbig">—</b></div>
+      <div class="give"><span data-fr="Sors cette mèche" data-en="Pull this drill">Prends ce foret</span><b id="tapbig">—</b></div>
       <div class="subn" id="tapsub"></div>
       <div style="overflow:auto;margin-top:8px"><table id="taptable"></table></div>
     </div>
@@ -137,15 +137,16 @@ dialog button{margin:0 16px 16px;border:0;background:#e2a322;border-radius:8px;p
 
   <section class="panel" id="drill">
     <div class="card">
-      <p class="lead">Le machiniste dit une mesure. Le tiroir est marqué lettre, numéro ou fraction. <button class="help" data-help="drill">?</button></p>
-      <label data-fr="diamètre : 5/32, 9/16, 0.156 ou 4" data-en="diameter: 5/32, 9/16, 0.156 or 4">diamètre : 5/32, 9/16, 0.156 ou 4</label>
+      <p class="lead">On te dit une grosseur. Les tiroirs ont un autre nom. <button class="help" data-help="drill">?</button></p>
+      <label data-fr="la grosseur : 5/32, 9/16, 0.160 ou 4" data-en="diameter: 5/32, 9/16, 0.156 or 4">diamètre : 5/32, 9/16, 0.156 ou 4</label>
       <input id="dsize" value="5/32" />
       <div class="chips" id="dunit">
         <button class="on" data-u="po">po</button>
         <button data-u="mm">mm</button>
       </div>
       <div class="chips" id="dfracs"></div>
-      <div class="give"><span data-fr="Tiroir le plus proche" data-en="Closest drawer">Tiroir le plus proche</span><b id="drillbig">—</b></div>
+      <div class="give"><span data-fr="Le tiroir" data-en="Closest drawer">Tiroir le plus proche</span><b id="drillbig">—</b></div>
+      <p class="subn" id="drillgap"></p>
       <div class="cols" id="drillcols"></div>
       <h3>Lettres <button class="help" data-help="letter">?</button></h3>
       <div class="drillgrid" id="letters"></div>
@@ -156,7 +157,7 @@ dialog button{margin:0 16px 16px;border:0;background:#e2a322;border-radius:8px;p
 
   <section class="panel" id="oring">
     <div class="card">
-      <p class="lead">On te demande un joint par un numéro. Ce numéro n'est pas la taille du tuyau. <button class="help" data-help="oring">?</button></p>
+      <p class="lead">Un numéro de joint, ce n'est pas la grosseur du tuyau. <button class="help" data-help="oring">?</button></p>
       <div class="chips" id="cs"></div>
       <label>dash</label>
       <input id="oq" class="search" placeholder="214" />
@@ -166,7 +167,7 @@ dialog button{margin:0 16px 16px;border:0;background:#e2a322;border-radius:8px;p
 
   <section class="panel" id="fit">
     <div class="card">
-      <p class="lead">Le code sur la boîte, par exemple 2404. Le schéma dit la forme, pas la marque. <button class="help" data-help="fit">?</button></p>
+      <p class="lead">Le numéro écrit sur la boîte. Le dessin dit si c'est droit, un coude ou un T. <button class="help" data-help="fit">?</button></p>
       <label data-fr="code ou nom" data-en="code or name">code ou nom</label>
       <input id="fq" class="search" placeholder="2404, JIC, ORFS, 90, bride" />
       <div class="chips" id="fitfams"></div>
@@ -200,10 +201,10 @@ const DESK=[
  {say:"1",dash:"-16",tube:"1 po",jic:"1-5/16-12",orfs:"1-7/16-12",npt:"1 NPT, OD ~1.32 po",note:"Filet droit UNF ≠ filet conique NPT"}
 ];
 const ID=[
- {id:"jic",fr:"JIC 37°",en:"JIC 37°",txt:"Siège conique 37°. Écrou qui tourne, pas de joint sur le nez. Filet UNF."},
- {id:"orfs",fr:"ORFS face plate",en:"ORFS flat face",txt:"Face plate + joint visible dans la gorge. Ne visse pas sur un JIC, même dash."},
- {id:"npt",fr:"NPT conique",en:"NPT taper",txt:"Filet conique, se serre en forçant. Pas de dash. Le nom (1/2) n'est pas le diamètre du tube."},
- {id:"orb",fr:"ORB / SAE",en:"ORB / SAE",txt:"Filet droit, joint à la base, contre un port plat. Pas un siège 37°."}
+ {id:"jic",fr:"JIC 37°",en:"JIC 37°",txt:"Le bout est pointu, comme un chapeau. Pas de rond en caoutchouc sur le nez."},
+ {id:"orfs",fr:"ORFS face plate",en:"ORFS flat face",txt:"Le bout est plat, avec un anneau de caoutchouc dedans. Ça ne visse pas sur le bout pointu."},
+ {id:"npt",fr:"NPT conique",en:"NPT taper",txt:"Le filet est en cône. Plus tu visses, plus ça serre. Le nom 1/2 n'est pas la grosseur du tuyau."},
+ {id:"orb",fr:"ORB / SAE",en:"ORB / SAE",txt:"Le filet est droit. L'anneau est à la base, pas sur le nez."}
 ];
 const ENDS=[
  {fam:"JIC",dash:"-4",thread:"7/16-20",od:0.4375,tpi:20,tell:"siège 37°, écrou libre"},
@@ -341,21 +342,26 @@ function closest(map, inches, prefix){
   }
   return best;
 }
+function gapWords(asked, drill){
+  const dmm=(drill.v-asked)*IN;
+  if(Math.abs(dmm)<0.02) return drill.name+" fait pile "+(drill.v*IN).toFixed(2)+" mm";
+  return drill.name+" est "+(dmm>0?"plus grosse":"plus petite")+" de "+Math.abs(dmm).toFixed(2)+" mm";
+}
 function renderDrillFind(){
   const inches=parseSize(document.getElementById("dsize").value, dUnit);
-  if(inches==null){document.getElementById("drillbig").textContent="—";document.getElementById("drillcols").innerHTML="";return;}
+  if(inches==null){document.getElementById("drillbig").textContent="—";document.getElementById("drillgap").textContent="";document.getElementById("drillcols").innerHTML="";return;}
   const letter=closest(LETTERS, inches, "");
   const number=closest(NUMBERS, inches, "#");
-  const fracIn=Math.round(inches*64)/64;
-  const picks=[letter, number, {name:frac(fracIn), v:fracIn, d:Math.abs(fracIn-inches)}].sort((a,b)=>a.d-b.d);
-  const top=picks[0];
-  document.getElementById("drillbig").textContent=top.name+"  ·  écart "+(top.d*IN).toFixed(2)+" mm";
+  const best=letter.d<=number.d?letter:number;
+  const other=best===letter?number:letter;
+  document.getElementById("drillbig").textContent=best.name;
+  document.getElementById("drillgap").textContent="Tu as demandé "+(inches*IN).toFixed(2)+" mm. "+gapWords(inches, best)+". L'autre tiroir : "+gapWords(inches, other)+".";
   document.getElementById("drillcols").innerHTML=[
-    ["Lettre", letter.name+" · "+letter.v.toFixed(4)+" po"],
-    ["Numéro", number.name+" · "+number.v.toFixed(4)+" po"],
-    ["Fraction", frac(fracIn)+" · "+(inches*IN).toFixed(2)+" mm"]
+    ["Lettre", gapWords(inches, letter)],
+    ["Numéro", gapWords(inches, number)],
+    ["En fraction", frac(inches)+" · "+inches.toFixed(4)+" po"]
   ].map(x=>`<article><div class="k">${x[0]}</div><div class="v">${x[1]}</div></article>`).join("");
-  document.querySelectorAll(".drillgrid button").forEach(b=>b.classList.toggle("on", b.dataset.k===top.name || "#"+b.dataset.k===top.name));
+  document.querySelectorAll(".drillgrid button").forEach(b=>b.classList.toggle("on", b.dataset.k===best.name));
 }
 let dUnit="po";
 const dfracs=["1/16","3/32","1/8","5/32","3/16","7/32","1/4","5/16","3/8","7/16","1/2","9/16","5/8","3/4","7/8"];
@@ -363,27 +369,27 @@ document.getElementById("dfracs").innerHTML=dfracs.map(f=>`<button data-f="${f}"
 document.getElementById("dfracs").onclick=e=>{const b=e.target.closest("button");if(!b)return;dUnit="po";document.querySelectorAll("#dunit button").forEach(x=>x.classList.toggle("on",x.dataset.u==="po"));document.getElementById("dsize").value=b.dataset.f;renderDrillFind();};
 document.getElementById("dsize").addEventListener("input",renderDrillFind);
 document.getElementById("dunit").onclick=e=>{const b=e.target.closest("button");if(!b)return;dUnit=b.dataset.u;document.querySelectorAll("#dunit button").forEach(x=>x.classList.toggle("on",x===b));renderDrillFind();};
-document.getElementById("letters").onclick=document.getElementById("numbers").onclick=e=>{const b=e.target.closest("button");if(!b)return;dUnit="po";document.querySelectorAll("#dunit button").forEach(x=>x.classList.toggle("on",x.dataset.u==="po"));document.getElementById("dsize").value=b.dataset.v;renderDrillFind();};
+document.getElementById("letters").onclick=document.getElementById("numbers").onclick=e=>{const b=e.target.closest("button");if(!b||b.classList.contains("help"))return;dUnit="po";document.querySelectorAll("#dunit button").forEach(x=>x.classList.toggle("on",x.dataset.u==="po"));document.getElementById("dsize").value=b.dataset.v;renderDrillFind();};
 document.getElementById("cs").innerHTML=[["","tous"],["0.070","1/16"],["0.103","3/32"],["0.139","1/8"],["0.210","3/16"]].map((c,i)=>`<button data-cs="${c[0]}" class="${i===0?"on":""}">${c[1]}</button>`).join("");
 document.getElementById("cs").onclick=e=>{const b=e.target.closest("button");if(!b)return;document.querySelectorAll("#cs button").forEach(x=>x.classList.toggle("on",x===b));renderOring();};
 document.getElementById("oq").oninput=renderOring;
 document.getElementById("fq").oninput=renderFits;
 document.getElementById("lang").onclick=()=>{lang=lang==="fr"?"en":"fr";localStorage.setItem("ak-lang",lang);document.getElementById("lang").textContent=lang==="fr"?"EN":"FR";document.querySelectorAll("[data-fr]").forEach(el=>{el.textContent=lang==="fr"?el.dataset.fr:el.dataset.en;});renderDesk();};
 const HELP={
- od:{t:"Diamètre du filet",b:"Pose le vernier sur l'extérieur du filet mâle, sur les premiers filets complets. Pas dans le creux, pas sur l'hex. 0,562 po peut être un JIC -6, un ORFS -4 ou un ORB -6. Le bout tranche."},
- tpi:{t:"Filets au pouce",b:"Compte les crêtes sur un pouce. 20, 18, 16, 14. Si tu ne les as pas comptés, laisse vide. Un 9/16-18 et un 1/4 NPT sont proches en diamètre : le nombre de filets les sépare."},
- said:{t:"Il a dit 1/2",b:"Au comptoir, 1/2 veut souvent dire le tube, dash -8. Le 1/2 NPT est un autre filet, plus gros, environ 0,84 po dehors. Ne sors pas la boîte avant d'avoir vu le bout."},
- end:{t:"Le bout",b:"JIC : cône 37°, écrou qui tourne, pas de joint sur le nez. ORFS : face plate, joint dans la gorge. NPT : filet conique, se serre en forçant. ORB : filet droit, joint à la base, contre un port plat."},
- convert:{t:"mm et pouces",b:"25,4 mm = 1 po. Le plan métrique et le tiroir impérial ne portent pas le même nom pour le même trou. La fraction 1/2, c'est 0,500 po, pas 12 mm."},
- tap:{t:"Taraud et foret",b:"Le taraud coupe le filet femelle. Avant, on perce. Le trou est plus petit que le boulon, sinon il n'y a plus de filet. Le machiniste dit 1/4-20. Toi, tu sors le foret #7."},
- threadname:{t:"1/4-20",b:"1/4, c'est le diamètre extérieur du boulon. 20, c'est le nombre de filets sur un pouce. Ce n'est pas le diamètre du foret."},
- pct:{t:"75 %",b:"Part du filet qu'on garde. 100 % tient plus fort, le taraud force et casse. 75 % est le réglage d'atelier. Pour un 1/4-20, le trou fait 0,201 po."},
- fams:{t:"Familles",b:"UNC : filet gros, vis et boulons ordinaires. UNF : filet fin, souvent hydraulique. Métrique : M6, M8, M10. NPT : filet conique de tuyau. BSPP : filet gaz droit, fréquent sur l'équipement européen."},
- drill:{t:"Lettre, numéro, fraction",b:"Trois façons de nommer le même trou. 5/32 est une fraction. #22 est un numéro. A est une lettre. Entre ce qu'on t'a dit, prends le tiroir le plus proche."},
- letter:{t:"Forets lettre",b:"A à Z, de 0,234 po à 0,413 po. On les demande par la lettre, pas par le diamètre. A est plus petit que Z."},
- number:{t:"Forets numéro",b:"#1 à #80. Le plus gros numéro est le plus petit foret. #7 fait 0,201 po, c'est le trou du 1/4-20."},
- oring:{t:"Dash du joint",b:"-214 est un numéro AS568, pas un dash de tuyau. La section (1/16, 3/32, 1/8) se mesure sur l'épaisseur du rond. L'ID, c'est le trou du joint."},
- fit:{t:"Code de boîte",b:"2404 est une série JIC droit mâle NPT. FS devant, c'est souvent ORFS. Le schéma montre droit, 45°, 90° ou té. Il ne remplace pas la mesure du filet."}
+ od:{t:"Mesurer le bout",b:"Comme mesurer un crayon : tu prends le tour, pas le creux des rainures. Le chiffre du vernier dit quelle boîte ouvrir."},
+ tpi:{t:"Compter les traits",b:"Sur un pouce, compte les petites bosses du filet. 18 ou 20. Si tu ne sais pas, laisse vide."},
+ said:{t:"Il a dit un demi",b:"Un demi peut être le tuyau, ou un autre filet plus gros. Regarde le bout avant de sortir la boîte."},
+ end:{t:"Le bout",b:"Pointu : JIC. Plat avec un anneau : ORFS. En cône qui serre fort : NPT. Droit avec l'anneau à la base : ORB."},
+ convert:{t:"mm et pouces",b:"25 millimètres, c'est à peu près un pouce. Ici tu changes une mesure dans l'autre."},
+ tap:{t:"Taraud",b:"Le taraud grave le filet dans le trou. Avant, on perce. Le trou est plus petit que la vis, sinon ça ne tient pas. On te dit 1/4-20, tu sors la mèche #7."},
+ threadname:{t:"1/4-20",b:"1/4, c'est la grosseur de la vis. 20, c'est le nombre de traits sur un pouce. Ce n'est pas le nom de la mèche."},
+ pct:{t:"75",b:"On ne perce pas aussi gros que la vis. 75, c'est le trou normal. Plus gros, le filet est faible. Plus petit, l'outil casse."},
+ fams:{t:"Les familles",b:"Gros : vis ordinaires. Fin : filet serré, souvent sur les boyaux. Métrique : M6, M8. Tuyau : filet en cône. Gaz : filet droit, souvent sur les machines d'Europe."},
+ drill:{t:"Les mèches",b:"Trois noms pour la même mèche : une lettre, un numéro, ou une fraction comme 5/32. Entre ce qu'on t'a dit. On te dit quel tiroir, et de combien il est à côté."},
+ letter:{t:"Lettres",b:"De A à Z. A est plus petite que Z. On les demande par la lettre."},
+ number:{t:"Numéros",b:"De 1 à 80. Le gros numéro est la petite mèche. #7 sert pour la vis 1/4-20."},
+ oring:{t:"Joint",b:"Le numéro du joint n'est pas la grosseur du tuyau. L'épaisseur, c'est le rond. Le trou, c'est le milieu."},
+ fit:{t:"Boîte",b:"2404 est un numéro de boîte. Le dessin dit droit, coude ou T. Mesure quand même le filet."}
 };
 document.body.addEventListener("click",e=>{
   const b=e.target.closest(".help");
