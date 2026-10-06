@@ -4,7 +4,8 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>AtelierKit — connexions hydrauliques</title>
-<meta name="description" content="Aide magasinier : le client dit 1/2, tu vois le dash, le filet JIC, ORFS ou NPT, le foret de taraud et la conversion pouce/mm." />
+<link rel="canonical" href="https://atelierkit.faitle.net/" />
+<meta name="description" content="Assistant de comptoir : mesurez le filet, choisissez le raccord, la mèche et l'o-ring." />
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet" />
 <style>
 :root{--bg:#efeae2;--ink:#1c1915;--muted:#6d655c;--line:#d9d0c4;--card:#fffdf9;--accent:#9a4f12;--hi:#fff4df}
@@ -55,6 +56,7 @@ tr.sel{background:var(--hi)} tr{cursor:pointer}
 .meta{color:var(--muted);font-size:12px}
 footer{padding:18px;color:var(--muted);font-size:12px;text-align:center}
 footer a{color:var(--muted)}
+@media(max-width:720px){.pair,.cols,.readout{grid-template-columns:1fr}.idgrid{grid-template-columns:1fr 1fr}.big{font-size:28px}header{flex-wrap:wrap}#lang{margin-left:0}}
 .help{display:inline-grid;place-items:center;width:18px;height:18px;margin-left:6px;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--accent);font-size:12px;font-weight:700;cursor:pointer;vertical-align:middle}
 dialog{border:0;border-radius:14px;padding:0;max-width:420px;width:calc(100% - 32px);background:#fffdf9;color:#1c1915}
 dialog::backdrop{background:#1c191544}
@@ -446,20 +448,20 @@ document.getElementById("oq").oninput=renderOring;
 document.getElementById("fq").oninput=renderFits;
 document.getElementById("lang").onclick=()=>{lang=lang==="fr"?"en":"fr";localStorage.setItem("ak-lang",lang);document.getElementById("lang").textContent=lang==="fr"?"EN":"FR";document.querySelectorAll("[data-fr]").forEach(el=>{el.textContent=lang==="fr"?el.dataset.fr:el.dataset.en;});renderDesk();};
 const HELP={
- od:{t:"Mesurer",b:"Mâle : le vernier dehors, sur les premiers filets. Femelle : le vernier dedans, dans l'ouverture. Pas dans le creux du filet."},
- sex:{t:"Mâle ou femelle",b:"Mâle : le filet est dehors, ça rentre dans l'autre. Femelle : le filet est dedans, l'écrou ou le port. Un boyau a souvent une femelle droite NPSM, pas une femelle NPT."},
- tpi:{t:"Filets",b:"Compte les filets sur un pouce. 18 ou 20. Ce n'est pas la grosseur. Si tu ne sais pas, laisse vide."},
+ od:{t:"Mesurer",b:"Mâle : placez le vernier à l'extérieur, sur les premiers filets. Femelle : placez-le à l'intérieur de l'ouverture. Ne mesurez pas dans le creux du filet."},
+ sex:{t:"Mâle ou femelle",b:"Mâle : le filet est à l'extérieur. Femelle : le filet est à l'intérieur, écrou ou port. Un boyau a souvent une femelle droite NPSM, pas une femelle NPT."},
+ tpi:{t:"Filets",b:"Comptez les filets sur un pouce. 18 ou 20. Ce n'est pas la grosseur. Si vous ne le savez pas, laissez le champ vide."},
  said:{t:"Taille demandée",b:"Un 1/2 po peut désigner le boyau ou le filet. Ce n'est pas le même raccord. Vérifiez le bout, puis choisissez."},
  end:{t:"Le bout",b:"Pointu : JIC. Plat avec un o-ring : ORFS. En cône qui serre fort : NPT. Droit avec l'o-ring à la base : ORB."},
- convert:{t:"mm et pouces",b:"25 millimètres, c'est à peu près un pouce. Ici tu changes une mesure dans l'autre."},
- tap:{t:"Taraud",b:"Le taraud grave le filet dans le trou. Avant, on perce. Le trou est plus petit que la vis, sinon ça ne tient pas. On te dit 1/4-20, tu sors la mèche #7."},
- threadname:{t:"1/4-20",b:"1/4, c'est la grosseur de la vis. 20, c'est le nombre de filets sur un pouce. Ce n'est pas le nom de la mèche."},
- pct:{t:"75",b:"On ne perce pas aussi gros que la vis. 75, c'est le trou normal. Plus gros, le filet est faible. Plus petit, l'outil casse."},
- fams:{t:"Les familles",b:"Gros : vis ordinaires. Fin : filet serré, souvent sur les boyaux. Métrique : M6, M8. Tuyau : filet en cône. Gaz : filet droit, souvent sur les machines d'Europe."},
- drill:{t:"Les mèches",b:"Trois noms pour la même mèche : une lettre, un numéro, ou une fraction comme 5/32. Entre ce qu'on t'a dit. On te dit la lettre et le numéro les plus proches, et de combien ils sont à côté."},
- letter:{t:"Lettres",b:"De A à Z. A est plus petite que Z. On les demande par la lettre."},
- number:{t:"Numéros",b:"De 1 à 80. Le gros numéro est la petite mèche. #7 sert pour la vis 1/4-20."},
- oring:{t:"O-ring",b:"Le numéro de l'o-ring n'est pas la grosseur du tuyau. L'épaisseur, c'est le rond. Le trou, c'est le milieu."},
+ convert:{t:"mm et pouces",b:"25 millimètres valent environ un pouce. Entrez une mesure. L'autre s'affiche."},
+ tap:{t:"Taraud",b:"Le taraud grave le filet dans le trou. Percez d'abord. Le trou est plus petit que la vis. Pour un 1/4-20, sortez la mèche #7."},
+ threadname:{t:"1/4-20",b:"1/4 est la grosseur de la vis. 20 est le nombre de filets sur un pouce. Ce n'est pas le nom de la mèche."},
+ pct:{t:"75 %",b:"Ne percez pas aussi gros que la vis. 75 % est le trou habituel. Plus gros, le filet est faible. Plus petit, l'outil casse."},
+ fams:{t:"Les familles",b:"Gros : vis ordinaires. Fin : filet serré, souvent sur les boyaux. Métrique : M6, M8. Tuyau : filet en cône. Gaz : filet droit, souvent sur les machines européennes."},
+ drill:{t:"Les mèches",b:"Une mèche peut s'appeler par une lettre, un numéro ou une fraction, comme 5/32. Entrez la grosseur demandée. L'outil propose la plus petite et la plus grosse."},
+ letter:{t:"Lettres",b:"De A à Z. A est plus petite que Z."},
+ number:{t:"Numéros",b:"De 1 à 80. Plus le numéro est grand, plus la mèche est petite. #7 sert pour la vis 1/4-20."},
+ oring:{t:"O-ring",b:"Le numéro de l'o-ring n'est pas la grosseur du boyau. L'épaisseur est le rond. Le trou est le milieu."},
  fit:{t:"Numéro",b:"2404 est le numéro du raccord, écrit sur la pièce ou la fiche. Le dessin dit droit, coude ou T."},
  dash:{t:"dash",b:"C'est le numéro de l'o-ring, comme -214. Ce n'est pas la grosseur du tuyau."},
  id:{t:"ID",b:"ID, c'est le trou au milieu de l'o-ring. En pouces, puis en millimètres."},
