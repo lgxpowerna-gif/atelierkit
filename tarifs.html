@@ -1,40 +1,17 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>AtelierKit — impression</title>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet" />
-<style>
-body{margin:0;background:#efeae2;color:#1c1915;font-family:"IBM Plex Sans",system-ui,sans-serif}
-main{max-width:640px;margin:0 auto;padding:32px 16px}
-a{color:#9a4f12}
-.card{background:#fffdf9;border:1px solid #d9d0c4;border-radius:12px;padding:16px;margin-top:12px}
-</style>
-</head>
-<body>
-<main>
-  <p><a href="/">← AtelierKit</a></p>
-  <h1>Impression</h1>
-  <p>Les chartes et le convertisseur restent gratuits. L'impression sans filigrane est à 9 $/mois ou 79 $/an, taxes en sus.</p>
-  <div class="card">
-    <p>Interac : lgxpowerna@gmail.com · motif ATELIERKIT</p>
-    <p>Code reçu par courriel :</p>
-    <input id="code" style="width:100%;padding:10px;border-radius:8px;border:1px solid #d9d0c4" placeholder="AK-BENCH-79" />
-    <p><button id="go">Activer sur cet appareil</button></p>
-    <p id="msg"></p>
-  </div>
-</main>
-<footer style="text-align:center;color:#6d655c;font-size:12px;padding-bottom:24px">
-  <a href="https://facturepro.faitle.net">FacturePro</a> · <a href="https://tradequote.faitle.net">TradeQuote</a>
-</footer>
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AtelierKit — 9 $ par mois</title>
+<style>body{font-family:system-ui,sans-serif;background:#f4f1ea;color:#1c1915;margin:0}main{max-width:640px;margin:40px auto;padding:24px;background:#fff;border-radius:16px}a{color:#8a5a12}button,input{font:inherit;padding:10px;border-radius:8px}button{background:#8a5a12;color:#fff;border:0}</style></head>
+<body><main><p><a href="/">Retour</a></p><h1>7 jours gratuits, puis 9 $ par mois</h1>
+<p>Le comptoir sert à sortir la bonne boîte : le filet, la mèche, l'o-ring. Les 7 premiers jours, tout est ouvert. Après, la réponse se ferme.</p>
+<p>9 $ CAD par mois pour un comptoir. Pas d'impression. FacturePro et TradeQuote restent à part.</p>
+<p>Pour activer, écris à <a href="mailto:lgxpowerna@gmail.com?subject=AtelierKit%209">lgxpowerna@gmail.com</a>. Tu reçois un code.</p>
+<label>Code reçu</label><br><input id="code" placeholder="le code"><button id="go">Activer cet appareil</button>
+<p id="msg"></p>
 <script>
-const CODES=["AK-BENCH-79","AK-SHOP-9","ATELIER-PRO"];
 document.getElementById("go").onclick=()=>{
-  const c=document.getElementById("code").value.trim().toUpperCase();
-  if(CODES.includes(c)){localStorage.setItem("ak-pro","1"); document.getElementById("msg").textContent="Actif sur cet appareil.";}
-  else document.getElementById("msg").textContent="Code refusé.";
+  if(document.getElementById("code").value.trim().toUpperCase()==="COMPTOIR9"){
+    localStorage.setItem("ak-pro","oui");
+    document.getElementById("msg").textContent="C'est ouvert.";
+    setTimeout(()=>location.href="/",600);
+  } else document.getElementById("msg").textContent="Ce code n'ouvre pas.";
 };
-</script>
-</body>
-</html>
+</script></main></body></html>

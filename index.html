@@ -179,7 +179,7 @@ dialog button{margin:0 16px 16px;border:0;background:#e2a322;border-radius:8px;p
     </div>
   </section>
 </main>
-<footer>AtelierKit · <a href="/tarifs">impression</a> · <a href="https://facturepro.faitle.net">FacturePro</a> · <a href="https://tradequote.faitle.net">TradeQuote</a></footer>
+<footer>AtelierKit · <a href="/tarifs">7 jours, puis 9 $/mois</a> · <a href="https://facturepro.faitle.net">FacturePro</a> · <a href="https://tradequote.faitle.net">TradeQuote</a></footer>
 <dialog id="pop">
   <header id="poptitle">Aide</header>
   <p id="popbody"></p>
@@ -492,7 +492,20 @@ document.getElementById("odhits").addEventListener("change",e=>{if(e.target.id!=
 document.getElementById("otable").addEventListener("change",e=>{if(e.target.id!=="opick")return;document.getElementById("oq").value=e.target.value;renderOring();});
 document.getElementById("fits").addEventListener("change",e=>{if(e.target.id!=="fpick")return;document.getElementById("fq").value=e.target.value;renderFits();});
 document.getElementById("drillcols").addEventListener("click",e=>{const b=e.target.closest("#dpick button");if(!b||!b.dataset.v)return;dUnit="po";document.getElementById("dsize").value=b.dataset.v;renderDrillFind();});
-renderDesk();renderConv();renderTap();const t14=[...document.getElementById("thread").options].findIndex(o=>o.textContent.startsWith("1/4-20"));if(t14>=0)document.getElementById("thread").value=t14;renderTap();renderOring();renderOd();renderDrillFind();
+function trialOk(){
+  const pro=localStorage.getItem("ak-pro");
+  if(pro==="oui") return true;
+  let start=localStorage.getItem("ak-trial");
+  if(!start){start=String(Date.now());localStorage.setItem("ak-trial",start);}
+  return Date.now()-Number(start)<7*86400000;
+}
+function lockIfNeeded(){
+  if(trialOk()) return;
+  document.getElementById("pay").style.display="block";
+  ["odgive","drillbig","give"].forEach(id=>{const n=document.getElementById(id);if(n)n.textContent="essai fini";});
+  const fits=document.getElementById("fits"); if(fits) fits.innerHTML="";
+}
+renderDesk();renderConv();renderTap();const t14=[...document.getElementById("thread").options].findIndex(o=>o.textContent.startsWith("1/4-20"));if(t14>=0)document.getElementById("thread").value=t14;renderTap();renderOring();renderOd();renderDrillFind();lockIfNeeded();
 </script>
-</body>
+<div id="pay" class="card" style="display:none;margin:16px"><b>Les 7 jours sont finis.</b><p class="lead">La mesure, la mèche et les planches restent là. Pour les revoir, 9 $ par mois pour le comptoir.</p><p><a class="btn" href="/tarifs">Activer</a></p></div></body>
 </html>
