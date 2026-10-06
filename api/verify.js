@@ -4,7 +4,7 @@ export default async function handler(req, res) {
     res.status(400).json({ paid: false });
     return;
   }
-  const key = process.env.STRIPE_SECRET_KEY;
+  const key = process.env.STRIPE_SECRET_KEY || process.env.STRIPE_atelierpro_SECRET_KEY;
   if (!key) {
     res.status(503).json({ paid: false, reason: "stripe-key-missing" });
     return;
