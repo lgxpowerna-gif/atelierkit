@@ -55,6 +55,12 @@ tr.sel{background:var(--hi)} tr{cursor:pointer}
 .meta{color:var(--muted);font-size:12px}
 footer{padding:18px;color:var(--muted);font-size:12px;text-align:center}
 footer a{color:var(--muted)}
+.help{display:inline-grid;place-items:center;width:18px;height:18px;margin-left:6px;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--accent);font-size:12px;font-weight:700;cursor:pointer;vertical-align:middle}
+dialog{border:0;border-radius:14px;padding:0;max-width:420px;width:calc(100% - 32px);background:#fffdf9;color:#1c1915}
+dialog::backdrop{background:#1c191544}
+dialog header{background:#1c1915;color:#f6f1ea;border-radius:14px 14px 0 0}
+dialog p{margin:0;padding:16px;line-height:1.45}
+dialog button{margin:0 16px 16px;border:0;background:#e2a322;border-radius:8px;padding:8px 12px;font-weight:600;cursor:pointer}
 .search{font-size:16px}
 @media(max-width:800px){.pair,.readout,.cols,.idgrid{grid-template-columns:1fr 1fr}.big{font-size:30px}}
 </style>
@@ -75,10 +81,10 @@ footer a{color:var(--muted)}
 <main>
   <section class="panel on" id="desk">
     <div class="card">
-      <p class="lead" data-fr="Mesure le diamètre extérieur du filet mâle, sur les premiers filets complets. Le nom que le client donne vient après." data-en="Measure the male thread outside diameter, on the first full threads. The name the customer gives comes after.">Mesure le diamètre extérieur du filet mâle, sur les premiers filets complets. Le nom que le client donne vient après.</p>
+      <p class="lead">Mesure le diamètre extérieur du filet mâle, sur les premiers filets complets. Le nom que le client donne vient après. <button class="help" data-help="od">?</button></p>
       <div class="pair">
-        <div><label data-fr="diamètre mesuré" data-en="measured diameter">diamètre mesuré</label><input id="od" inputmode="decimal" value="0.562" /></div>
-        <div><label data-fr="filets au pouce, si tu les as comptés" data-en="threads per inch, if counted">filets au pouce, si tu les as comptés</label><input id="tpi" inputmode="decimal" placeholder="18" /></div>
+        <div><label>diamètre mesuré <button class="help" data-help="od">?</button></label><input id="od" inputmode="decimal" value="0.562" /></div>
+        <div><label>filets au pouce, si tu les as comptés <button class="help" data-help="tpi">?</button></label><input id="tpi" inputmode="decimal" placeholder="18" /></div>
       </div>
       <div class="chips" id="odunit">
         <button class="on" data-u="po">po</button>
@@ -88,12 +94,12 @@ footer a{color:var(--muted)}
       <div id="odhits"></div>
     </div>
     <div class="card" style="margin-top:12px">
-      <p class="lead" data-fr="S'il a donné un nom de tuyau, pas une pièce. 1/2 veut souvent dire le tube, pas le NPT." data-en="If he gave a hose name, not a part. 1/2 usually means the tube, not the NPT.">S'il a donné un nom de tuyau, pas une pièce. 1/2 veut souvent dire le tube, pas le NPT.</p>
+      <p class="lead">S'il a donné un nom de tuyau, pas une pièce. 1/2 veut souvent dire le tube, pas le NPT. <button class="help" data-help="said">?</button></p>
       <label data-fr="il a dit" data-en="they said">il a dit</label>
       <div class="chips" id="said"></div>
       <div class="give"><span data-fr="À vérifier au comptoir" data-en="Check at the counter">À vérifier au comptoir</span><b id="give">—</b></div>
       <div class="cols" id="deskcols"></div>
-      <h3 data-fr="Reconnaître le bout" data-en="Recognize the end">Reconnaître le bout</h3>
+      <h3>Reconnaître le bout <button class="help" data-help="end">?</button></h3>
       <div class="idgrid" id="idgrid"></div>
       <p id="idtext" class="lead"></p>
     </div>
@@ -101,6 +107,7 @@ footer a{color:var(--muted)}
 
   <section class="panel" id="convert">
     <div class="card">
+      <p class="lead">Le plan est en mm, le tiroir est en pouces, ou l'inverse. <button class="help" data-help="convert">?</button></p>
       <div class="pair">
         <div><label>mm</label><input id="mm" inputmode="decimal" value="25.4" /></div>
         <div><label data-fr="pouces" data-en="inches">pouces</label><input id="inch" inputmode="decimal" value="1" /></div>
@@ -115,11 +122,12 @@ footer a{color:var(--muted)}
 
   <section class="panel" id="tap">
     <div class="card">
-      <p class="lead" data-fr="75 % de filet. Le chiffre en gros est le foret à prendre dans le tiroir." data-en="75% thread. The big number is the drill to pull.">75 % de filet. Le chiffre en gros est le foret à prendre dans le tiroir.</p>
+      <p class="lead">Le machiniste demande un taraud. Toi, tu sors le foret qui perce le trou avant. <button class="help" data-help="tap">?</button></p>
       <div class="chips" id="fams"></div>
+      <p class="meta">UNC, UNF, métrique, NPT, BSPP <button class="help" data-help="fams">?</button></p>
       <div class="pair">
-        <div><label data-fr="filet" data-en="thread">filet</label><select id="thread"></select></div>
-        <div><label data-fr="engagement %" data-en="engagement %">engagement %</label><input id="pct" type="number" min="50" max="100" value="75" /></div>
+        <div><label>filet <button class="help" data-help="threadname">?</button></label><select id="thread"></select></div>
+        <div><label>engagement % <button class="help" data-help="pct">?</button></label><input id="pct" type="number" min="50" max="100" value="75" /></div>
       </div>
       <div class="give"><span data-fr="Prends ce foret" data-en="Pull this drill">Prends ce foret</span><b id="tapbig">—</b></div>
       <div class="subn" id="tapsub"></div>
@@ -129,7 +137,7 @@ footer a{color:var(--muted)}
 
   <section class="panel" id="drill">
     <div class="card">
-      <p class="lead" data-fr="Le machiniste dit une mesure. Le tiroir est marqué lettre, numéro ou fraction. Entre la mesure, prends le plus proche." data-en="The machinist says a size. The drawer is marked letter, number or fraction. Enter the size, pull the closest.">Le machiniste dit une mesure. Le tiroir est marqué lettre, numéro ou fraction. Entre la mesure, prends le plus proche.</p>
+      <p class="lead">Le machiniste dit une mesure. Le tiroir est marqué lettre, numéro ou fraction. <button class="help" data-help="drill">?</button></p>
       <label data-fr="diamètre : 5/32, 9/16, 0.156 ou 4" data-en="diameter: 5/32, 9/16, 0.156 or 4">diamètre : 5/32, 9/16, 0.156 ou 4</label>
       <input id="dsize" value="5/32" />
       <div class="chips" id="dunit">
@@ -139,16 +147,16 @@ footer a{color:var(--muted)}
       <div class="chips" id="dfracs"></div>
       <div class="give"><span data-fr="Tiroir le plus proche" data-en="Closest drawer">Tiroir le plus proche</span><b id="drillbig">—</b></div>
       <div class="cols" id="drillcols"></div>
-      <h3 data-fr="Lettres" data-en="Letters">Lettres</h3>
+      <h3>Lettres <button class="help" data-help="letter">?</button></h3>
       <div class="drillgrid" id="letters"></div>
-      <h3 data-fr="Numéros" data-en="Numbers">Numéros</h3>
+      <h3>Numéros <button class="help" data-help="number">?</button></h3>
       <div class="drillgrid" id="numbers"></div>
     </div>
   </section>
 
   <section class="panel" id="oring">
     <div class="card">
-      <p class="lead" data-fr="Section d'abord, dash ensuite. Le dash n'est pas la taille du tuyau." data-en="Cross-section first, then dash. The dash is not the hose size.">Section d'abord, dash ensuite. Le dash n'est pas la taille du tuyau.</p>
+      <p class="lead">On te demande un joint par un numéro. Ce numéro n'est pas la taille du tuyau. <button class="help" data-help="oring">?</button></p>
       <div class="chips" id="cs"></div>
       <label>dash</label>
       <input id="oq" class="search" placeholder="214" />
@@ -158,7 +166,7 @@ footer a{color:var(--muted)}
 
   <section class="panel" id="fit">
     <div class="card">
-      <p class="lead" data-fr="Schéma du bout, pas une photo catalogue. Cherche le code ou la famille." data-en="End sketch, not a catalog photo. Search the code or family.">Schéma du bout, pas une photo catalogue. Cherche le code ou la famille.</p>
+      <p class="lead">Le code sur la boîte, par exemple 2404. Le schéma dit la forme, pas la marque. <button class="help" data-help="fit">?</button></p>
       <label data-fr="code ou nom" data-en="code or name">code ou nom</label>
       <input id="fq" class="search" placeholder="2404, JIC, ORFS, 90, bride" />
       <div class="chips" id="fitfams"></div>
@@ -166,7 +174,12 @@ footer a{color:var(--muted)}
     </div>
   </section>
 </main>
-<footer>AtelierKit · <a href="/tarifs" data-fr="impression" data-en="print">impression</a> · <a href="https://facturepro.faitle.net">FacturePro</a> · <a href="https://tradequote.faitle.net">TradeQuote</a></footer>
+<footer>AtelierKit · <a href="/tarifs">impression</a> · <a href="https://facturepro.faitle.net">FacturePro</a> · <a href="https://tradequote.faitle.net">TradeQuote</a></footer>
+<dialog id="pop">
+  <header id="poptitle">Aide</header>
+  <p id="popbody"></p>
+  <button id="popclose">Fermer</button>
+</dialog>
 <script>
 const IN=25.4;
 const LETTERS={"A":0.234,"B":0.238,"C":0.242,"D":0.246,"E":0.250,"F":0.257,"G":0.261,"H":0.266,"I":0.272,"J":0.277,"K":0.281,"L":0.290,"M":0.295,"N":0.302,"O":0.316,"P":0.323,"Q":0.332,"R":0.339,"S":0.348,"T":0.358,"U":0.368,"V":0.377,"W":0.386,"X":0.397,"Y":0.404,"Z":0.413};
@@ -355,6 +368,34 @@ document.getElementById("cs").onclick=e=>{const b=e.target.closest("button");if(
 document.getElementById("oq").oninput=renderOring;
 document.getElementById("fq").oninput=renderFits;
 document.getElementById("lang").onclick=()=>{lang=lang==="fr"?"en":"fr";localStorage.setItem("ak-lang",lang);document.getElementById("lang").textContent=lang==="fr"?"EN":"FR";document.querySelectorAll("[data-fr]").forEach(el=>{el.textContent=lang==="fr"?el.dataset.fr:el.dataset.en;});renderDesk();};
+const HELP={
+ od:{t:"Diamètre du filet",b:"Pose le vernier sur l'extérieur du filet mâle, sur les premiers filets complets. Pas dans le creux, pas sur l'hex. 0,562 po peut être un JIC -6, un ORFS -4 ou un ORB -6. Le bout tranche."},
+ tpi:{t:"Filets au pouce",b:"Compte les crêtes sur un pouce. 20, 18, 16, 14. Si tu ne les as pas comptés, laisse vide. Un 9/16-18 et un 1/4 NPT sont proches en diamètre : le nombre de filets les sépare."},
+ said:{t:"Il a dit 1/2",b:"Au comptoir, 1/2 veut souvent dire le tube, dash -8. Le 1/2 NPT est un autre filet, plus gros, environ 0,84 po dehors. Ne sors pas la boîte avant d'avoir vu le bout."},
+ end:{t:"Le bout",b:"JIC : cône 37°, écrou qui tourne, pas de joint sur le nez. ORFS : face plate, joint dans la gorge. NPT : filet conique, se serre en forçant. ORB : filet droit, joint à la base, contre un port plat."},
+ convert:{t:"mm et pouces",b:"25,4 mm = 1 po. Le plan métrique et le tiroir impérial ne portent pas le même nom pour le même trou. La fraction 1/2, c'est 0,500 po, pas 12 mm."},
+ tap:{t:"Taraud et foret",b:"Le taraud coupe le filet femelle. Avant, on perce. Le trou est plus petit que le boulon, sinon il n'y a plus de filet. Le machiniste dit 1/4-20. Toi, tu sors le foret #7."},
+ threadname:{t:"1/4-20",b:"1/4, c'est le diamètre extérieur du boulon. 20, c'est le nombre de filets sur un pouce. Ce n'est pas le diamètre du foret."},
+ pct:{t:"75 %",b:"Part du filet qu'on garde. 100 % tient plus fort, le taraud force et casse. 75 % est le réglage d'atelier. Pour un 1/4-20, le trou fait 0,201 po."},
+ fams:{t:"Familles",b:"UNC : filet gros, vis et boulons ordinaires. UNF : filet fin, souvent hydraulique. Métrique : M6, M8, M10. NPT : filet conique de tuyau. BSPP : filet gaz droit, fréquent sur l'équipement européen."},
+ drill:{t:"Lettre, numéro, fraction",b:"Trois façons de nommer le même trou. 5/32 est une fraction. #22 est un numéro. A est une lettre. Entre ce qu'on t'a dit, prends le tiroir le plus proche."},
+ letter:{t:"Forets lettre",b:"A à Z, de 0,234 po à 0,413 po. On les demande par la lettre, pas par le diamètre. A est plus petit que Z."},
+ number:{t:"Forets numéro",b:"#1 à #80. Le plus gros numéro est le plus petit foret. #7 fait 0,201 po, c'est le trou du 1/4-20."},
+ oring:{t:"Dash du joint",b:"-214 est un numéro AS568, pas un dash de tuyau. La section (1/16, 3/32, 1/8) se mesure sur l'épaisseur du rond. L'ID, c'est le trou du joint."},
+ fit:{t:"Code de boîte",b:"2404 est une série JIC droit mâle NPT. FS devant, c'est souvent ORFS. Le schéma montre droit, 45°, 90° ou té. Il ne remplace pas la mesure du filet."}
+};
+document.body.addEventListener("click",e=>{
+  const b=e.target.closest(".help");
+  if(!b) return;
+  e.preventDefault();
+  e.stopPropagation();
+  const h=HELP[b.dataset.help];
+  if(!h) return;
+  document.getElementById("poptitle").textContent=h.t;
+  document.getElementById("popbody").textContent=h.b;
+  document.getElementById("pop").showModal();
+});
+document.getElementById("popclose").onclick=()=>document.getElementById("pop").close();
 fetch("fittings.json").then(r=>r.json()).then(data=>{
   fittings=data;
   const fams=[...new Set(data.map(f=>f.family))];
