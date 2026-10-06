@@ -9,7 +9,7 @@ export default async function handler(req, res) {
     res.status(503).json({ paid: false, reason: "stripe-key-missing" });
     return;
   }
-  const stripeRes = await fetch("https://api.stripe.com/v1/checkout/sessions/" + sessionId, {
+  const stripeRes = await fetch("https://api.stripe.com/v1/checkout/sessions/" + encodeURIComponent(sessionId), {
     headers: { Authorization: "Bearer " + key }
   });
   if (!stripeRes.ok) {
@@ -17,6 +17,10 @@ export default async function handler(req, res) {
     return;
   }
   const session = await stripeRes.json();
-  const paid = session.payment_status === "paid" || session.status === "complete";
+  if (session.metadata && session.metadata.app && session.metadata.app !== "atelierkit") {
+    res.status(403).json({ paid: false, reason: "wrong_app" });
+    return;
+  }
+  const paid = (session.payment_status === "paid" || session.payment_status === "no_payment_required") && session.status === "complete";
   res.status(paid ? 200 : 402).json({ paid });
 }
