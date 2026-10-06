@@ -179,7 +179,7 @@ dialog button{margin:0 16px 16px;border:0;background:#e2a322;border-radius:8px;p
     </div>
   </section>
 </main>
-<footer>AtelierKit · <a href="/tarifs">7 jours, puis 9 $/mois</a> · <a href="https://facturepro.faitle.net">FacturePro</a> · <a href="https://tradequote.faitle.net">TradeQuote</a></footer>
+<footer>AtelierKit · <a href="/tarifs">1 mois, puis 9 $/mois</a> · <a href="https://facturepro.faitle.net">FacturePro</a> · <a href="https://tradequote.faitle.net">TradeQuote</a></footer>
 <dialog id="pop">
   <header id="poptitle">Aide</header>
   <p id="popbody"></p>
@@ -492,20 +492,36 @@ document.getElementById("odhits").addEventListener("change",e=>{if(e.target.id!=
 document.getElementById("otable").addEventListener("change",e=>{if(e.target.id!=="opick")return;document.getElementById("oq").value=e.target.value;renderOring();});
 document.getElementById("fits").addEventListener("change",e=>{if(e.target.id!=="fpick")return;document.getElementById("fq").value=e.target.value;renderFits();});
 document.getElementById("drillcols").addEventListener("click",e=>{const b=e.target.closest("#dpick button");if(!b||!b.dataset.v)return;dUnit="po";document.getElementById("dsize").value=b.dataset.v;renderDrillFind();});
+function startTrial(){
+  if(!localStorage.getItem("ak-trial")) localStorage.setItem("ak-trial", String(Date.now()));
+}
 function trialOk(){
-  const pro=localStorage.getItem("ak-pro");
-  if(pro==="oui") return true;
-  let start=localStorage.getItem("ak-trial");
-  if(!start){start=String(Date.now());localStorage.setItem("ak-trial",start);}
-  return Date.now()-Number(start)<7*86400000;
+  if(localStorage.getItem("ak-pro")==="oui") return true;
+  const start=Number(localStorage.getItem("ak-trial")||0);
+  if(!start) return true;
+  return Date.now()-start<30*86400000;
+}
+function trialNote(){
+  const n=document.getElementById("trialnote");
+  if(!n) return;
+  if(localStorage.getItem("ak-pro")==="oui"){n.textContent="Comptoir ouvert.";return;}
+  const start=Number(localStorage.getItem("ak-trial")||0);
+  if(!start){n.textContent="1 mois gratuit, à partir de la première recherche.";return;}
+  const left=Math.max(0, Math.ceil((30*86400000-(Date.now()-start))/86400000));
+  n.textContent=left?`Essai : ${left} jour${left>1?"s":""} restant${left>1?"s":""}. La boîte reste ouverte.`:"Le mois est fini. Le dessin reste, la boîte est fermée.";
 }
 function lockIfNeeded(){
+  trialNote();
   if(trialOk()) return;
-  document.getElementById("pay").style.display="block";
-  ["odgive","drillbig","give"].forEach(id=>{const n=document.getElementById(id);if(n)n.textContent="essai fini";});
-  const fits=document.getElementById("fits"); if(fits) fits.innerHTML="";
+  const pay=document.getElementById("pay");
+  if(pay) pay.style.display="block";
+  ["odgive","drillbig","give"].forEach(id=>{const n=document.getElementById(id);if(n)n.textContent="mois fini";});
 }
-renderDesk();renderConv();renderTap();const t14=[...document.getElementById("thread").options].findIndex(o=>o.textContent.startsWith("1/4-20"));if(t14>=0)document.getElementById("thread").value=t14;renderTap();renderOring();renderOd();renderDrillFind();lockIfNeeded();
+const _od=renderOd, _drill=renderDrillFind, _oring=renderOring;
+renderOd=function(){startTrial();_od();lockIfNeeded();};
+renderDrillFind=function(){startTrial();_drill();lockIfNeeded();};
+renderOring=function(){startTrial();_oring();lockIfNeeded();};
+renderDesk();renderConv();renderTap();const t14=[...document.getElementById("thread").options].findIndex(o=>o.textContent.startsWith("1/4-20"));if(t14>=0)document.getElementById("thread").value=t14;renderTap();renderOring();renderOd();renderDrillFind();trialNote();
 </script>
-<div id="pay" class="card" style="display:none;margin:16px"><b>Les 7 jours sont finis.</b><p class="lead">La mesure, la mèche et les planches restent là. Pour les revoir, 9 $ par mois pour le comptoir.</p><p><a class="btn" href="/tarifs">Activer</a></p></div></body>
+<p id="trialnote" class="lead" style="text-align:center"></p><div id="pay" class="card" style="display:none;margin:16px"><b>Le mois gratuit est fini.</b><p class="lead">Les dessins restent. La boîte, la mèche et le numéro d'o-ring se rouvrent à 9 $ par mois.</p><p><a class="btn" href="/tarifs">Activer</a></p></div></body>
 </html>
