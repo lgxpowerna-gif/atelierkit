@@ -403,18 +403,23 @@ function gapWords(asked, drill){
   if(Math.abs(dmm)<0.005) return drill.name+" fait pile "+(drill.v*IN).toFixed(2)+" mm";
   return drill.name+" est plus "+(dmm>0?"grosse":"petite")+" que ta mesure, de "+Math.abs(dmm).toFixed(2)+" mm";
 }
+function allDrills(){
+  return [...Object.entries(LETTERS).map(([k,v])=>({name:k,v})), ...Object.entries(NUMBERS).map(([k,v])=>({name:"#"+k,v}))].sort((a,b)=>a.v-b.v);
+}
 function renderDrillFind(){
   const inches=parseSize(document.getElementById("dsize").value, dUnit);
   if(inches==null){document.getElementById("drillbig").textContent="—";document.getElementById("drillgap").textContent="";document.getElementById("drillcols").innerHTML="";return;}
-  const letter=closest(LETTERS, inches, "");
-  const number=closest(NUMBERS, inches, "#");
-  const best=letter.d<=number.d?letter:number;
-  const other=best===letter?number:letter;
-  document.getElementById("drillbig").textContent=best.name;
-  document.getElementById("drillgap").textContent="Tu as demandé "+(inches*IN).toFixed(2)+" mm. "+gapWords(inches, best)+". L'autre nom, même grosseur : "+gapWords(inches, other)+".";
-  document.getElementById("drillcols").innerHTML=`<label>lettre ou numéro</label><select id="dpick"><option value="${letter.v}">${gapWords(inches, letter)}</option><option value="${number.v}">${gapWords(inches, number)}</option></select>`+[
-    ["Lettre", gapWords(inches, letter)],
-    ["Numéro", gapWords(inches, number)],
+  const all=allDrills();
+  const smaller=[...all].reverse().find(d=>d.v<inches-0.0002);
+  const bigger=all.find(d=>d.v>inches+0.0002);
+  const pile=all.find(d=>Math.abs(d.v-inches)<0.0002);
+  const best=pile||(smaller&&bigger? (inches-smaller.v<=bigger.v-inches?smaller:bigger) : smaller||bigger);
+  document.getElementById("drillbig").textContent=best?best.name:"—";
+  const bits=[smaller,bigger].filter(Boolean);
+  document.getElementById("drillgap").textContent="Tu as demandé "+(inches*IN).toFixed(2)+" mm. Pour un trou avant taraud, prends la plus petite. Pour un trou qui laisse passer, prends la plus grosse.";
+  document.getElementById("drillcols").innerHTML=`<label>la prochaine</label><select id="dpick">${bits.map(d=>`<option value="${d.v}">${gapWords(inches,d)}</option>`).join("")}</select>`+[
+    ["Prochaine plus petite", smaller?gapWords(inches,smaller):"aucune plus petite"],
+    ["Prochaine plus grosse", bigger?gapWords(inches,bigger):"aucune plus grosse"],
     ["En fraction", frac(inches)+" · "+inches.toFixed(4)+" po"]
   ].map(x=>`<article><div class="k">${x[0]}</div><div class="v">${x[1]}</div></article>`).join("");
   document.querySelectorAll(".drillgrid button").forEach(b=>b.classList.toggle("on", b.dataset.k===best.name));
