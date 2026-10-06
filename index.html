@@ -49,7 +49,7 @@ tr.sel{background:var(--hi)} tr{cursor:pointer}
 .drillgrid button.on{background:#1e4d5c;color:#fff;border-color:#1e4d5c}
 .fits{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px;margin-top:12px}
 .fits article{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}
-.fits svg,.part{width:100%;height:78px;display:block;background:#f4f1eb}
+.part{width:100%;height:92px;object-fit:contain;display:block;background:#fff}
 .fits div{padding:8px 10px 10px}
 .code{font-family:"IBM Plex Mono",monospace;font-weight:600}
 .meta{color:var(--muted);font-size:12px}
@@ -255,21 +255,15 @@ function td(major,pitch,pct){return major-1.299038105676658*pitch*(pct/100);}
 function table(){return {UNC,UNF,MET,NPT,BSPP}[family];}
 function part(kind, angle){
   const k = (kind||"jic").toLowerCase();
-  const hex = "<polygon points='46,26 66,26 76,48 66,70 46,70 36,48' fill='#d5d8de' stroke='#222'/>";
-  const body = "<rect x='66' y='36' width='28' height='24' fill='#8e949c' stroke='#222'/>";
-  const threads = "<g stroke='#222' stroke-width='1.2'><path d='M96 40 H128 M96 46 H128 M96 52 H128 M96 58 H128'/></g>";
-  let nose = "<rect x='94' y='38' width='36' height='20' fill='#6f757c' stroke='#222'/>"+threads;
-  if(k==="jic") nose += "<path d='M128 40 L150 48 L128 56 Z' fill='#f2efe8' stroke='#222'/>";
-  if(k==="orfs") nose += "<rect x='128' y='40' width='8' height='16' fill='#f2efe8' stroke='#222'/><ellipse cx='132' cy='48' rx='3.2' ry='2.2' fill='none' stroke='#111' stroke-width='1.6'/>";
-  if(k==="npt") nose = "<path d='M94 34 L146 44 L146 52 L94 62 Z' fill='#6f757c' stroke='#222'/><g stroke='#222'><path d='M102 42 H132 M104 48 H130 M106 54 H128'/></g>";
-  if(k==="orb") nose += "<ellipse cx='90' cy='48' rx='5' ry='3.2' fill='none' stroke='#111' stroke-width='2'/>";
-  if(k==="bspp") nose += "<rect x='128' y='42' width='7' height='12' fill='#f2efe8' stroke='#222'/>";
-  let drawn = hex+body+nose;
-  if(angle==="90°") drawn = hex+"<path d='M66 40 H100 V74 H128' fill='none' stroke='#8e949c' stroke-width='20' stroke-linejoin='miter'/>"+"<rect x='120' y='66' width='24' height='14' fill='#6f757c' stroke='#222'/>";
-  if(angle==="45°") drawn = hex+"<path d='M66 52 L118 24' fill='none' stroke='#8e949c' stroke-width='16'/>"+"<rect x='112' y='14' width='22' height='12' transform='rotate(-35 123 20)' fill='#6f757c' stroke='#222'/>";
-  if(angle==="Té") drawn = hex+"<path d='M28 48 H132 M80 24 V74' fill='none' stroke='#8e949c' stroke-width='16'/>";
-  const word = {jic:"bout pointu",orfs:"face plate",npt:"cône",orb:"anneau à la base",bspp:"face avec joint",unc:"filet de vis",unf:"filet fin",metric:"filet métrique"}[k]||"";
-  return `<svg class="part" viewBox="0 0 160 96" aria-hidden="true">${drawn}<text x="8" y="90" font-size="11" fill="#6d655c">${word}</text></svg>`;
+  let file = "img/jic.jpg";
+  if(k.includes("orfs")) file = "img/orfs.jpg";
+  else if(k.includes("npt")) file = "img/npt.jpg";
+  else if(k.includes("orb")) file = "img/orb.jpg";
+  else if(k.includes("bspp")) file = "img/orfs.jpg";
+  if(angle==="90°") file = "img/elbow.jpg";
+  if(angle==="45°") file = "img/elbow45.jpg";
+  if(angle==="Té") file = "img/tee.jpg";
+  return `<img class="part" alt="" src="${file}">`;
 }
 function icon(kind, angle){ return part(kind, angle); }
 function renderDesk(){
