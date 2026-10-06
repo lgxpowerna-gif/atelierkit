@@ -98,8 +98,8 @@ dialog button{margin:0 16px 16px;border:0;background:#e2a322;border-radius:8px;p
       <div id="odhits"></div>
     </div>
     <div class="card" style="margin-top:12px">
-      <p class="lead">Il a dit une taille, sans te donner la pièce. Un demi, ce n'est pas toujours la même boîte. <button class="help" data-help="said">?</button></p>
-      <label data-fr="il a dit" data-en="they said">il a dit</label>
+      <p class="lead">Y'a dit un demi. Des fois c'est le boyau. Des fois c'est le bout, pis c'est pas la même boîte. <button class="help" data-help="said">?</button></p>
+      <label data-fr="y'a dit" data-en="they said">y'a dit</label>
       <div class="chips" id="said"></div>
       <div class="give"><span data-fr="Regarde ça avant de sortir la boîte" data-en="Check at the counter">À vérifier au comptoir</span><b id="give">—</b></div>
       <div class="cols" id="deskcols"></div>
@@ -111,7 +111,7 @@ dialog button{margin:0 16px 16px;border:0;background:#e2a322;border-radius:8px;p
 
   <section class="panel" id="convert">
     <div class="card">
-      <p class="lead">Un côté parle en millimètres, l'autre en pouces. Ici tu traduis. <button class="help" data-help="convert">?</button></p>
+      <p class="lead">Un parle en millimètres, l'autre en pouces. Ici tu changes. <button class="help" data-help="convert">?</button></p>
       <div class="pair">
         <div><label>mm</label><input id="mm" inputmode="decimal" value="25.4" /></div>
         <div><label data-fr="pouces" data-en="inches">pouces</label><input id="inch" value="1-1/2"" placeholder="1-1/2"" /></div>
@@ -126,7 +126,7 @@ dialog button{margin:0 16px 16px;border:0;background:#e2a322;border-radius:8px;p
 
   <section class="panel" id="tap">
     <div class="card">
-      <p class="lead">On te demande un taraud. Toi tu sors la mèche qui fait le trou avant. <button class="help" data-help="tap">?</button></p>
+      <p class="lead">Y'a demandé un taraud. Toi tu sors la mèche qui perce avant. <button class="help" data-help="tap">?</button></p>
       <div class="chips" id="fams"></div>
       <p class="meta">gros, fin, métrique, tuyau, gaz <button class="help" data-help="fams">?</button></p>
       <div class="pair">
@@ -141,7 +141,7 @@ dialog button{margin:0 16px 16px;border:0;background:#e2a322;border-radius:8px;p
 
   <section class="panel" id="drill">
     <div class="card">
-      <p class="lead">On te dit une grosseur. La mèche peut s'appeler par une lettre ou par un numéro. <button class="help" data-help="drill">?</button></p>
+      <p class="lead">Y'a dit une grosseur. La mèche a un nom de lettre ou de numéro. <button class="help" data-help="drill">?</button></p>
       <label data-fr="la grosseur : 5/32, 9/16, 0.160 ou 4" data-en="diameter: 5/32, 9/16, 0.156 or 4">diamètre : 5/32, 9/16, 0.156 ou 4</label>
       <input id="dsize" value="5/32" />
       <div class="chips" id="dunit">
@@ -161,7 +161,7 @@ dialog button{margin:0 16px 16px;border:0;background:#e2a322;border-radius:8px;p
 
   <section class="panel" id="oring">
     <div class="card">
-      <p class="lead">Un numéro d'o-ring, ce n'est pas la grosseur du tuyau. <button class="help" data-help="oring">?</button></p>
+      <p class="lead">Le numéro de l'o-ring, c'est pas la grosseur du boyau. <button class="help" data-help="oring">?</button></p>
       <div class="chips" id="cs"></div>
       <label>dash</label>
       <input id="oq" class="search" placeholder="214" />
@@ -171,7 +171,7 @@ dialog button{margin:0 16px 16px;border:0;background:#e2a322;border-radius:8px;p
 
   <section class="panel" id="fit">
     <div class="card">
-      <p class="lead">Le numéro écrit sur la boîte. Le dessin dit si c'est droit, un coude ou un T. <button class="help" data-help="fit">?</button></p>
+      <p class="lead">Le numéro sur la boîte. Le dessin montre si c'est droit, un coude ou un T. <button class="help" data-help="fit">?</button></p>
       <label data-fr="code ou nom" data-en="code or name">code ou nom</label>
       <input id="fq" class="search" placeholder="2404, JIC, ORFS, 90, bride" />
       <div class="chips" id="fitfams"></div>
@@ -449,7 +449,7 @@ const HELP={
  od:{t:"Mesurer",b:"Mâle : le vernier dehors, sur les premiers filets. Femelle : le vernier dedans, dans l'ouverture. Pas dans le creux du filet."},
  sex:{t:"Mâle ou femelle",b:"Mâle : le filet est dehors, ça rentre dans l'autre. Femelle : le filet est dedans, l'écrou ou le port. Un boyau a souvent une femelle droite NPSM, pas une femelle NPT."},
  tpi:{t:"Filets",b:"Compte les filets sur un pouce. 18 ou 20. Ce n'est pas la grosseur. Si tu ne sais pas, laisse vide."},
- said:{t:"Il a dit un demi",b:"Un demi peut être le tuyau, ou un autre filet plus gros. Regarde le bout avant de sortir la boîte."},
+ said:{t:"Un demi",b:"Un demi, des fois c'est le boyau. Des fois c'est le filet, pis il est plus gros. Regarde le bout avant de prendre la boîte."},
  end:{t:"Le bout",b:"Pointu : JIC. Plat avec un o-ring : ORFS. En cône qui serre fort : NPT. Droit avec l'o-ring à la base : ORB."},
  convert:{t:"mm et pouces",b:"25 millimètres, c'est à peu près un pouce. Ici tu changes une mesure dans l'autre."},
  tap:{t:"Taraud",b:"Le taraud grave le filet dans le trou. Avant, on perce. Le trou est plus petit que la vis, sinon ça ne tient pas. On te dit 1/4-20, tu sors la mèche #7."},
