@@ -110,7 +110,7 @@ dialog button{margin:0 16px 16px;border:0;background:#e2a322;border-radius:8px;p
       <p class="lead">Un côté parle en millimètres, l'autre en pouces. Ici tu traduis. <button class="help" data-help="convert">?</button></p>
       <div class="pair">
         <div><label>mm</label><input id="mm" inputmode="decimal" value="25.4" /></div>
-        <div><label data-fr="pouces" data-en="inches">pouces</label><input id="inch" inputmode="decimal" value="1" /></div>
+        <div><label data-fr="pouces" data-en="inches">pouces</label><input id="inch" value="1-1/2"" placeholder="1-1/2"" /></div>
       </div>
       <div class="chips" id="fracs"></div>
       <div class="readout">
@@ -254,30 +254,24 @@ function nearest(inches){let best=frac(inches),bd=Math.abs(Math.round(inches*64)
 function td(major,pitch,pct){return major-1.299038105676658*pitch*(pct/100);}
 function table(){return {UNC,UNF,MET,NPT,BSPP}[family];}
 function part(kind, angle){
-  const k = kind || "jic";
-  const nose = k==="npt"
-    ? "<path d='M112 36 L146 44 L146 62 L112 70 Z' fill='#7c8188' stroke='#2b2e32'/><path d='M118 46 H140 M118 52 H138 M118 58 H136' stroke='#2b2e32' stroke-width='1.4'/>"
-    : "<rect x='112' y='38' width='30' height='24' rx='2' fill='#7c8188' stroke='#2b2e32'/><path d='M116 44 H140 M116 50 H140 M116 56 H140' stroke='#2b2e32' stroke-width='1.3'/>";
-  const seat = k==="jic" ? "<path d='M138 42 L154 50 L138 58 Z' fill='#e6e1d8' stroke='#2b2e32'/>"
-    : k==="orfs" ? "<rect x='140' y='42' width='10' height='16' fill='#e6e1d8' stroke='#2b2e32'/><ellipse cx='145' cy='50' rx='3' ry='2' fill='none' stroke='#111' stroke-width='1.4'/>"
-    : k==="orb" ? "<ellipse cx='108' cy='50' rx='5' ry='3' fill='none' stroke='#111' stroke-width='2'/>"
-    : k==="bspp" ? "<rect x='140' y='44' width='8' height='12' fill='#e6e1d8' stroke='#2b2e32'/>"
-    : "";
-  const hex = "<polygon points='58,28 76,28 86,50 76,72 58,72 48,50' fill='#c5c8ce' stroke='#2b2e32'/>";
-  const barrel = "<rect x='76' y='38' width='38' height='24' fill='#9aa0a8' stroke='#2b2e32'/>";
-  let body = hex+barrel+nose+seat;
-  if(angle==="90°") body = "<path d='M78 50 H104 V78 H132' fill='none' stroke='#9aa0a8' stroke-width='18' stroke-linejoin='miter'/>"+hex+"<rect x='124' y='70' width='22' height='12' fill='#7c8188' stroke='#2b2e32'/>";
-  if(angle==="45°") body = "<path d='M78 58 L124 28' fill='none' stroke='#9aa0a8' stroke-width='16'/>"+hex+"<rect x='118' y='18' width='20' height='14' transform='rotate(-32 128 25)' fill='#7c8188' stroke='#2b2e32'/>";
-  if(angle==="Té") body = "<path d='M36 50 H124 M80 28 V74' fill='none' stroke='#9aa0a8' stroke-width='16'/>"+hex;
-  return `<svg class="part" viewBox="0 0 160 96" aria-hidden="true">${body}</svg>`;
+  const k = (kind||"jic").toLowerCase();
+  const hex = "<polygon points='46,26 66,26 76,48 66,70 46,70 36,48' fill='#d5d8de' stroke='#222'/>";
+  const body = "<rect x='66' y='36' width='28' height='24' fill='#8e949c' stroke='#222'/>";
+  const threads = "<g stroke='#222' stroke-width='1.2'><path d='M96 40 H128 M96 46 H128 M96 52 H128 M96 58 H128'/></g>";
+  let nose = "<rect x='94' y='38' width='36' height='20' fill='#6f757c' stroke='#222'/>"+threads;
+  if(k==="jic") nose += "<path d='M128 40 L150 48 L128 56 Z' fill='#f2efe8' stroke='#222'/>";
+  if(k==="orfs") nose += "<rect x='128' y='40' width='8' height='16' fill='#f2efe8' stroke='#222'/><ellipse cx='132' cy='48' rx='3.2' ry='2.2' fill='none' stroke='#111' stroke-width='1.6'/>";
+  if(k==="npt") nose = "<path d='M94 34 L146 44 L146 52 L94 62 Z' fill='#6f757c' stroke='#222'/><g stroke='#222'><path d='M102 42 H132 M104 48 H130 M106 54 H128'/></g>";
+  if(k==="orb") nose += "<ellipse cx='90' cy='48' rx='5' ry='3.2' fill='none' stroke='#111' stroke-width='2'/>";
+  if(k==="bspp") nose += "<rect x='128' y='42' width='7' height='12' fill='#f2efe8' stroke='#222'/>";
+  let drawn = hex+body+nose;
+  if(angle==="90°") drawn = hex+"<path d='M66 40 H100 V74 H128' fill='none' stroke='#8e949c' stroke-width='20' stroke-linejoin='miter'/>"+"<rect x='120' y='66' width='24' height='14' fill='#6f757c' stroke='#222'/>";
+  if(angle==="45°") drawn = hex+"<path d='M66 52 L118 24' fill='none' stroke='#8e949c' stroke-width='16'/>"+"<rect x='112' y='14' width='22' height='12' transform='rotate(-35 123 20)' fill='#6f757c' stroke='#222'/>";
+  if(angle==="Té") drawn = hex+"<path d='M28 48 H132 M80 24 V74' fill='none' stroke='#8e949c' stroke-width='16'/>";
+  const word = {jic:"bout pointu",orfs:"face plate",npt:"cône",orb:"anneau à la base",bspp:"face avec joint",unc:"filet de vis",unf:"filet fin",metric:"filet métrique"}[k]||"";
+  return `<svg class="part" viewBox="0 0 160 96" aria-hidden="true">${drawn}<text x="8" y="90" font-size="11" fill="#6d655c">${word}</text></svg>`;
 }
 function icon(kind, angle){ return part(kind, angle); }
-function measurePic(){
-  return `<svg class="part" viewBox="0 0 160 96" aria-hidden="true"><path d="M18 24 H142 M18 24 V74 M142 24 V74" fill="none" stroke="#1c1915" stroke-width="3"/><rect x="58" y="42" width="44" height="16" rx="2" fill="#9aa0a8" stroke="#2b2e32"/><path d="M62 48 H98 M62 54 H98" stroke="#2b2e32"/></svg>`;
-}
-function ringPic(){
-  return `<svg class="part" viewBox="0 0 160 96" aria-hidden="true"><ellipse cx="80" cy="48" rx="34" ry="22" fill="none" stroke="#1c1915" stroke-width="8"/><ellipse cx="80" cy="48" rx="20" ry="12" fill="none" stroke="#9aa0a8" stroke-width="3"/></svg>`;
-}
 function renderDesk(){
   const d=DESK[said];
   document.getElementById("give").textContent=lang==="fr"?`Dash ${d.dash} · tube ${d.tube}. ${d.note}`:`Dash ${d.dash} · tube ${d.tube}. ${d.note}`;
@@ -290,10 +284,10 @@ function renderDesk(){
 }
 function renderConv(){
   let mm,inch;
-  if(src==="mm"){mm=parseFloat(document.getElementById("mm").value)||0;inch=mm/IN;document.getElementById("inch").value=inch.toFixed(4);}
-  else {inch=parseFloat(document.getElementById("inch").value)||0;mm=inch*IN;document.getElementById("mm").value=mm.toFixed(3);}
+  if(src==="mm"){mm=parseFloat(String(document.getElementById("mm").value).replace(",","."))||0;inch=mm/IN;document.getElementById("inch").value=inch.toFixed(4);}
+  else {inch=parseSize(document.getElementById("inch").value,"po"); if(inch==null) return; mm=inch*IN; document.getElementById("mm").value=mm.toFixed(3);}
   const feet=Math.floor(inch/12), rem=inch-feet*12;
-  document.getElementById("bigmm").innerHTML=measurePic()+mm.toFixed(3)+" mm";
+  document.getElementById("bigmm").textContent=mm.toFixed(3)+" mm";
   document.getElementById("bigin").textContent=inch.toFixed(4)+" po";
   document.getElementById("bigfrac").textContent=frac(rem);
   document.getElementById("bigft").textContent=feet+" pi  "+rem.toFixed(3)+" po";
@@ -318,7 +312,7 @@ function renderOring(){
   const q=document.getElementById("oq").value.trim();
   const cs=document.querySelector("#cs button.on")?.dataset.cs;
   const rows=ORINGS.filter(o=>(!q||o[0].includes(q.replace("-",""))) && (!cs||Math.abs(o[2]-parseFloat(cs))<0.01));
-  document.getElementById("otable").innerHTML="<tr><th></th><th>dash</th><th>ID po</th><th>CS po</th><th>ID mm</th></tr>"+rows.map(o=>`<tr><td>${ringPic()}</td><td>-${o[0]}</td><td>${o[1].toFixed(3)}</td><td>${o[2].toFixed(3)}</td><td>${(o[1]*IN).toFixed(2)}</td></tr>`).join("");
+  document.getElementById("otable").innerHTML="<tr><th>dash <button class=\"help\" data-help=\"dash\">?</button></th><th>ID po <button class=\"help\" data-help=\"id\">?</button></th><th>CS po <button class=\"help\" data-help=\"cs\">?</button></th><th>ID mm <button class=\"help\" data-help=\"id\">?</button></th></tr>"+rows.map(o=>`<tr><td>-${o[0]}</td><td>${o[1].toFixed(3)}</td><td>${o[2].toFixed(3)}</td><td>${(o[1]*IN).toFixed(2)}</td></tr>`).join("");
 }
 function kindOf(f){const s=(f.family||"").toUpperCase();if(s.includes("ORFS"))return "orfs";if(s.includes("NPT"))return "npt";if(s.includes("ORB"))return "orb";if(s.includes("JIC"))return "jic";return "jic";}
 function renderFits(){
@@ -335,7 +329,7 @@ document.getElementById("inch").addEventListener("input",()=>{src="inch";renderC
 const fracs=[[0,"0"],[1/64,"1/64"],[1/32,"1/32"],[1/16,"1/16"],[1/8,"1/8"],[1/4,"1/4"],[3/8,"3/8"],[1/2,"1/2"],[3/4,"3/4"]];
 document.getElementById("fracs").innerHTML=fracs.map((f,i)=>`<button data-i="${i}">${f[1]}</button>`).join("");
 document.getElementById("fracs").onclick=e=>{const b=e.target.closest("button");if(!b)return;src="inch";const whole=Math.floor(parseFloat(document.getElementById("inch").value)||0);document.getElementById("inch").value=(whole+fracs[+b.dataset.i][0]).toFixed(4);renderConv();};
-document.getElementById("fams").innerHTML=[["UNC","unc"],["UNF","unf"],["MET","metric"],["NPT","npt"],["BSPP","bspp"]].map(f=>`<button data-f="${f[0]}" class="${f[0]==="UNC"?"on":""}">${part(f[1],"Droit")}${f[0]}</button>`).join("");
+document.getElementById("fams").innerHTML=["UNC","UNF","MET","NPT","BSPP"].map(f=>`<button data-f="${f}" class="${f==="UNC"?"on":""}">${f}</button>`).join("");
 document.getElementById("fams").onclick=e=>{const b=e.target.closest("button");if(!b)return;family=b.dataset.f;document.querySelectorAll("#fams button").forEach(x=>x.classList.toggle("on",x===b));document.getElementById("thread").innerHTML="";renderTap();};
 document.getElementById("thread").onchange=renderTap;
 document.getElementById("pct").oninput=renderTap;
@@ -373,7 +367,7 @@ function renderDrillFind(){
   const number=closest(NUMBERS, inches, "#");
   const best=letter.d<=number.d?letter:number;
   const other=best===letter?number:letter;
-  document.getElementById("drillbig").innerHTML=measurePic()+best.name;
+  document.getElementById("drillbig").textContent=best.name;
   document.getElementById("drillgap").textContent="Tu as demandé "+(inches*IN).toFixed(2)+" mm. "+gapWords(inches, best)+". L'autre tiroir : "+gapWords(inches, other)+".";
   document.getElementById("drillcols").innerHTML=[
     ["Lettre", gapWords(inches, letter)],
@@ -408,7 +402,10 @@ const HELP={
  letter:{t:"Lettres",b:"De A à Z. A est plus petite que Z. On les demande par la lettre."},
  number:{t:"Numéros",b:"De 1 à 80. Le gros numéro est la petite mèche. #7 sert pour la vis 1/4-20."},
  oring:{t:"Joint",b:"Le numéro du joint n'est pas la grosseur du tuyau. L'épaisseur, c'est le rond. Le trou, c'est le milieu."},
- fit:{t:"Boîte",b:"2404 est un numéro de boîte. Le dessin dit droit, coude ou T. Mesure quand même le filet."}
+ fit:{t:"Boîte",b:"2404 est un numéro de boîte. Le dessin dit droit, coude ou T. Mesure quand même le filet."},
+ dash:{t:"dash",b:"C'est le numéro du joint, comme -214. Ce n'est pas la grosseur du tuyau."},
+ id:{t:"ID",b:"ID, c'est le trou au milieu du joint. En pouces, puis en millimètres."},
+ cs:{t:"CS",b:"CS, c'est l'épaisseur du rond. 0,070 po, c'est un joint mince. 0,139 po, c'est plus gros."}
 };
 document.body.addEventListener("click",e=>{
   const b=e.target.closest(".help");
