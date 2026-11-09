@@ -12,8 +12,8 @@
     { id: "UNC", fr: "Gros (UNC)", en: "Coarse (UNC)" },
     { id: "UNF", fr: "Fin (UNF)", en: "Fine (UNF)" },
     { id: "MET", fr: "Métrique", en: "Metric" },
-    { id: "NPT", fr: "Tuyau (NPT)", en: "Pipe (NPT)" },
-    { id: "BSPP", fr: "Gaz (BSP)", en: "Gas (BSP)" }
+    { id: "NPT", fr: "Pipe (NPT)", en: "Pipe (NPT)" },
+    { id: "BSPP", fr: "BSP (gaz)", en: "BSP (gas)" }
   ];
 
   var COMMON_TAPS = [
@@ -111,11 +111,11 @@
     var call = o.name + (o.family === "NPT" ? " NPT" : o.family === "BSPP" ? " BSP" : "");
     var action = en(lang)
       ? "Drill with a " + sized + " bit, then tap " + call + "."
-      : "Perce avec une mèche " + sized + ", puis taraude " + call + ".";
+      : "Prends la mèche " + sized + ". Taraude " + call + ".";
     if (pipe) {
       action += en(lang)
         ? " No clearance hole: this is not a bolt."
-        : " Pas de trou de passage : ce n'est pas un boulon.";
+        : " Pas de trou de passage : c'est du pipe, pas une vis.";
     }
     return { bit: o.shop, action: action };
   }
@@ -136,7 +136,7 @@
       : "";
     var action = en(lang)
       ? "Pull a " + sized + " drill. The " + bolt + " bolt passes through. Do not tap this hole. " + fit + " fit." + usual
-      : "Sors la mèche " + sized + ". Le boulon " + bolt + " traverse. Ne taraude pas ce trou. Jeu " + fit + "." + usual;
+      : "Prends la mèche " + sized + ". La vis " + bolt + " passe. Taraude pas ce trou. Jeu " + fit + "." + usual;
     return {
       bit: metric ? hit.drill : hit.drill + (en(lang) ? " in" : " po"),
       action: action
@@ -153,11 +153,11 @@
       var near = both(o.bitInches, lang);
       action = en(lang)
         ? "You asked for " + asked + ". Closest letter or number bit: " + name + " (" + near + "). This is not the tap drill and not the clearance hole. To cut a thread, open Taps."
-        : "Tu as demandé " + asked + ". La mèche lettre ou numéro la plus proche : " + name + " (" + near + "). Ce n'est pas la mèche avant taraud, ni le trou de passage. Pour un filet, ouvre Tarauds.";
+        : "Tu as demandé " + asked + ". La mèche (drill) la plus proche : " + name + " (" + near + "). C'est pas la mèche de taraud, pis c'est pas le trou de passage. Pour un filet, ouvre Tarauds.";
     } else {
       action = en(lang)
         ? "Bit " + name + ": " + asked + ". This is not the tap drill and not the clearance hole. To cut a thread, open Taps. To let a bolt through, open Clearance."
-        : "Mèche " + name + " : " + asked + ". Ce n'est pas la mèche avant taraud, ni le trou de passage. Pour un filet, ouvre Tarauds. Pour un boulon qui traverse, ouvre Passage.";
+        : "Mèche " + name + " : " + asked + ". C'est pas la mèche de taraud, pis c'est pas le trou de passage. Pour un taraud, ouvre Tarauds. Pour une vis qui passe, ouvre Passage.";
     }
     return { bit: name, action: action };
   }
@@ -172,15 +172,15 @@
     if (!o.close) {
       action = en(lang)
         ? "Not within 1.5 mm (off by " + o.distanceMm + " mm). Check in or mm, and measure on the threads, not in the groove. Closest: " + name + ", thread " + thread + "."
-        : "Pas dans 1,5 mm (écart " + o.distanceMm + " mm). Vérifie po ou mm, et mesure sur les filets, pas dans le creux. Le plus près : " + name + ", filet " + thread + ".";
+        : "C'est loin (" + o.distanceMm + " mm). Vérifie po ou mm. Mesure sur le filet, pas dans le fond. Le plus proche : " + name + ", filet " + thread + ".";
     } else if (o.many) {
       action = en(lang)
         ? "Several fittings are close. Look at the nose before you pull a part: pointed = JIC, flat with a ring = ORFS, tapered = NPT. Closest: " + name + ", thread " + thread + "."
-        : "Plusieurs raccords sont proches. Regarde le bout avant de sortir la pièce : pointu = JIC, plat avec un joint = ORFS, cône = NPT. Le plus près : " + name + ", filet " + thread + ".";
+        : "Sors le plus proche : " + name + ", filet " + thread + ". Y'en a d'autres. Regarde le bout : pointu = JIC, plat avec O-ring = ORFS, cône = NPT.";
     } else {
       action = en(lang)
         ? "Pull: " + name + ", thread " + thread + "."
-        : "Sors : " + name + ", filet " + thread + ".";
+        : "Sors le fitting : " + name + ", filet " + thread + ".";
     }
     return { bit: bit, action: action };
   }
@@ -190,7 +190,7 @@
     var bit = (en(lang) ? "Dash " : "Numéro ") + o.dash;
     var action = en(lang)
       ? "Hose " + o.tube + ". Pull dash " + o.dash + ", then check the nose. " + o.note
-      : "Boyau " + o.tube + ". Sors le numéro " + o.dash + ", puis vérifie le bout. " + o.note;
+      : "Boyau " + o.tube + ". Sors le dash " + o.dash + ", pis check le bout. " + o.note;
     return { bit: bit, action: action };
   }
 
@@ -208,13 +208,13 @@
 
   function emptyHint(kind, lang) {
     var fr = {
-      "bad-measure": "Je ne lis pas cette mesure. Essaie 0.562 po, 14.3 mm ou 9/16. Le point et la virgule marchent. Pour un filet comme 1/4-20 ou M10x1.5, ouvre Tarauds.",
-      drill: "Je ne lis pas cette grosseur. Essaie 0.250 po, 5/32 ou 6.5 mm. Pour un filet, ouvre Tarauds. Pour un boulon qui traverse, ouvre Passage.",
-      "drill-thread": "Ça ressemble à un filet, pas à une mèche. Ouvre Tarauds pour 1/4-20, M10x1.5 ou 3/8 NPT. Pour un trou où le boulon passe, ouvre Passage.",
-      oring: "Aucun dash exact. Essaie 214 sans tiret, ou choisis l'épaisseur (souvent 1/8 po sur un boyau) puis le trou.",
-      fitting: "Aucun raccord avec tous ces mots. Essaie un seul : JIC, ORFS, NPT, 90, bride ou bouchon. Ou un numéro comme 2404.",
-      "clear-missing": "Pas dans la table, et aucune mèche n'est devinée. Essaie 1/4 po, 3/8 po, 1/2 po, M6, M8 ou M10. #12, 9/16 po, 11/16 po, 2 po, NPT et BSP ne sont pas des boulons ici.",
-      "clear-aside": "Pas de mèche devinée pour #12, 9/16 po, 11/16 po, 2 po, NPT ou BSP. Pour un tuyau, ouvre Tarauds."
+      "bad-measure": "Je lis pas ça. Essaie 0.562 po, 14.3 mm ou 9/16. Le point ou la virgule, les deux marchent. Pour un filet comme 1/4-20 ou M10x1.5, ouvre Tarauds.",
+      drill: "Je lis pas cette grosseur. Essaie 0.250 po, 5/32 ou 6.5 mm. Pour un taraud, ouvre Tarauds. Pour une vis qui passe, ouvre Passage.",
+      "drill-thread": "Ça a l'air d'un filet, pas d'une mèche. Ouvre Tarauds pour 1/4-20, M10x1.5 ou 3/8 NPT. Pour une vis qui passe, ouvre Passage.",
+      oring: "Pas de dash exact. Essaie 214 sans le tiret, ou prends l'épaisseur (souvent 1/8 po sur un boyau).",
+      fitting: "Rien avec tous ces mots. Essaie un seul : JIC, ORFS, NPT, 90, bride ou bouchon. Ou un numéro comme 2404.",
+      "clear-missing": "Pas dans la table, pis on devine pas de mèche. Essaie 1/4 po, 3/8 po, 1/2 po, M6, M8 ou M10. #12, 9/16 po, 11/16 po, 2 po, NPT et BSP, c'est pas des vis ici.",
+      "clear-aside": "Pas de mèche devinée pour #12, 9/16 po, 11/16 po, 2 po, NPT ou BSP. Pour du pipe, ouvre Tarauds."
     };
     var english = {
       "bad-measure": "Can't read that measurement. Try 0.562 in, 14.3 mm or 9/16. Dot and comma both work. For a thread such as 1/4-20 or M10x1.5, open Taps.",
@@ -232,8 +232,8 @@
   function fitAdvice(fit, lang) {
     var fr = {
       close: "Jeu serré (H12) : peu de jeu. Les trous sont alignés, souvent percés ensemble.",
-      normal: "Jeu normal (H13) : le choix habituel. Laisse celui-ci si on ne te dit pas autre chose.",
-      loose: "Jeu large, aussi appelé libre (H14) : plus de jeu. Peinture, trous un peu décalés, assemblage sur le tas."
+      normal: "Jeu normal (H13) : choix habituel au shop. Laisse-le si on t'a rien dit d'autre.",
+      loose: "Jeu large, aussi appelé libre (H14) : plus de jeu. Peinture, trous un peu croches, montage sur le tas."
     };
     var english = {
       close: "Close fit (H12): little play. Holes line up, often drilled together.",
@@ -259,15 +259,15 @@
       ];
     }
     return [
-      { word: "Taraud", plain: "L'outil qui coupe le filet dans le trou. Tu perces d'abord avec la mèche, puis tu passes le taraud." },
-      { word: "Passage", plain: "Trou plus grand que le boulon, sans filet. Le boulon traverse la pièce." },
-      { word: "Pas", plain: "L'écart entre les filets. 1/4-20 veut dire 20 filets par pouce. M10×1.5 veut dire 1,5 mm entre les filets. Le pas change la mèche avant taraud, pas le trou de passage." },
-      { word: "NPT", plain: "Filet de tuyau américain, en cône. Plus tu visses, plus ça serre. Ce n'est pas un boulon. Ne le mélange pas avec le BSP." },
-      { word: "BSP", plain: "Filet de tuyau gaz, souvent droit (BSPP) avec un joint plat. Un NPT ne scelle pas bien dans un BSP." },
-      { word: "Section (CS)", plain: "L'épaisseur du rond de l'o-ring. Mesure-la en premier. 1/8 po est courant sur les boyaux." },
+      { word: "Taraud", plain: "Le taraud (tap) coupe le filet dans le trou. Tu perces d'abord avec la mèche (drill), pis tu passes le taraud." },
+      { word: "Passage", plain: "Trou de passage (clearance) : plus grand que la vis, sans filet. La vis passe au travers." },
+      { word: "Pas", plain: "L'écart entre les filets. 1/4-20, c'est 20 filets par pouce. M10×1.5, c'est 1,5 mm entre les filets. Le pas change la mèche de taraud, pas le trou de passage." },
+      { word: "NPT", plain: "Filet de pipe américain, en cône. Plus tu visses, plus ça serre. C'est pas un bolt. Mélange pas ça avec du BSP." },
+      { word: "BSP", plain: "Filet de pipe gaz, souvent droit (BSPP) avec un joint plat. Un NPT scelle pas bien dans un BSP." },
+      { word: "Section (CS)", plain: "L'épaisseur du rond du O-ring. Mesure ça en premier. 1/8 po, c'est courant sur les boyaux." },
       { word: "Jeu serré", plain: "Peu de jeu. Les trous sont alignés, souvent percés ensemble." },
-      { word: "Jeu normal", plain: "Le choix habituel. Laisse Normal si on ne te dit pas autre chose." },
-      { word: "Jeu large", plain: "Plus de jeu (aussi appelé libre). Peinture, trous un peu décalés, assemblage sur le tas." }
+      { word: "Jeu normal", plain: "Le choix habituel au shop. Laisse Normal si on t'a rien dit." },
+      { word: "Jeu large", plain: "Plus de jeu (aussi appelé libre). Peinture, trous un peu croches, montage sur le tas." }
     ];
   }
 

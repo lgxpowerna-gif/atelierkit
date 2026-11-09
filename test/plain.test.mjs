@@ -20,8 +20,8 @@ test("tap answer says what to do, with units, and coarse differs from fine", () 
   assert.equal(fineBit, "#3");
   const coarse = P.describeTap({ lang: "fr", family: "UNC", name: "1/4-20", shop: coarseBit, inches: coarseIn });
   const fine = P.describeTap({ lang: "fr", family: "UNF", name: "1/4-28", shop: fineBit, inches: fineIn });
-  assert.match(coarse.action, /Perce avec une mèche #7/);
-  assert.match(coarse.action, /puis taraude 1\/4-20/);
+  assert.match(coarse.action, /Prends la mèche #7/);
+  assert.match(coarse.action, /Taraude 1\/4-20/);
   assert.match(coarse.action, /po/);
   assert.match(coarse.action, /mm/);
   assert.match(fine.action, /#3/);
@@ -52,10 +52,10 @@ test("clearance answer uses the table drill and tells you not to tap", () => {
   const hit = H.lookupClearance("IN", "1/4", P.DEFAULT_FIT);
   const job = P.describeClearance(hit, "fr");
   assert.equal(P.DEFAULT_FIT, "normal");
-  assert.match(job.action, /Sors la mèche 9\/32 po/);
+  assert.match(job.action, /Prends la mèche 9\/32 po/);
   assert.match(job.action, /mm/);
-  assert.match(job.action, /boulon 1\/4 po traverse/);
-  assert.match(job.action, /Ne taraude pas/);
+  assert.match(job.action, /vis 1\/4 po passe/);
+  assert.match(job.action, /Taraude pas/);
   assert.match(job.action, /Choix habituel/);
   assert.doesNotMatch(job.action, /#7/);
   assert.equal(P.describeClearance.toString().includes("tapDrill"), false);

@@ -46,11 +46,15 @@ test("the service worker is versioned and caches the shell, not the payment API"
 test("the page registers the worker only for subscribers and starts with one question", () => {
   assert.match(html, /AKOffline\.access/);
   assert.match(html, /AKOffline\.sync/);
-  assert.match(html, /Qu'est-ce que tu cherches/);
-  assert.match(html, /J'ai un boulon \/ une vis/);
-  assert.match(html, /Je dois percer un trou/);
-  assert.match(html, /Je cherche un raccord/);
-  assert.match(html, /Je cherche un o-ring/);
+  assert.match(html, /T'as quoi en main/);
+  assert.match(html, /J'ai un raccord, c'est quoi/);
+  assert.match(html, /Quel O-ring il me faut/);
+  assert.match(html, /Quelle mèche pour ce taraud/);
+  assert.match(html, /Quel trou de passage pour ma vis/);
+  assert.match(html, /data-go="desk"/);
+  assert.match(html, /data-go="tap"/);
+  assert.match(html, /data-go="clear"/);
+  assert.match(html, /data-go="oring"/);
   assert.match(html, /Quelle mèche je prends/);
   assert.match(html, /Quelle pièce je sors/);
   assert.match(html, /showTab\("start"\)/);
