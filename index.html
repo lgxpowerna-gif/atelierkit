@@ -72,6 +72,11 @@ body.bench-mode .panel.bench-stack > .card{margin-top:0}
 .bench-label{display:none;font-size:13px;font-weight:600;color:var(--accent);margin:0 0 8px;text-transform:uppercase;letter-spacing:.04em}
 body.bench-mode .bench-label{display:block}
 #tapclearbtn,#cleartapbtn{border:1px solid var(--line);background:#fff;border-radius:12px;padding:10px 12px;cursor:pointer;font-weight:600}
+.give b.locked{font-size:16px;font-weight:500;line-height:1.35}
+.give b.locked a{color:#e2a322}
+#otable a,#fits .locked-note a,#taptable a{color:var(--accent);font-weight:600}
+#pay a.btn{display:inline-block;margin-top:4px;background:#e2a322;color:#1c1406;text-decoration:none;border-radius:8px;padding:10px 14px;font-weight:600}
+#fits .locked-note{margin:0 0 10px}
 @media(max-width:720px){.triple{grid-template-columns:1fr}}
 </style>
 </head>
@@ -239,7 +244,12 @@ body.bench-mode .bench-label{display:block}
   <p id="popbody"></p>
   <button id="popclose">Fermer</button>
 </dialog>
-<p id="trialnote" class="lead" style="text-align:center"></p><div id="pay" class="card" style="display:none;margin:16px"><b>Le mois gratuit est fini.</b><p class="lead">Les dessins restent. Le raccord, la mèche et le numéro d'o-ring se rouvrent à 9 $ par mois.</p><p><a class="btn" href="/tarifs">Voir les abonnements</a></p></div>
+<p id="trialnote" class="lead" style="text-align:center"></p>
+<div id="pay" class="card" style="display:none;margin:16px">
+  <b data-fr="L'essai gratuit de 30 jours est fini." data-en="The free 30-day trial is over.">L'essai gratuit de 30 jours est fini.</b>
+  <p class="lead" data-fr="Le raccord, la mèche et le numéro d'o-ring sont réservés aux abonnés, à 9 $ par mois. Les dessins et la conversion restent gratuits." data-en="The fitting, the drill and the O-ring number are for subscribers, at $9 a month. Drawings and conversion stay free.">Le raccord, la mèche et le numéro d'o-ring sont réservés aux abonnés, à 9 $ par mois. Les dessins et la conversion restent gratuits.</p>
+  <p><a class="btn" href="/tarifs" data-fr="Voir les abonnements" data-en="See the plans">Voir les abonnements</a></p>
+</div>
 <script src="js/holes.js"></script>
 <script>
 const IN=25.4;
@@ -504,9 +514,8 @@ function renderClearance(){
   note.textContent=fits[clearFit];
   document.querySelectorAll("#clearfit button").forEach(b=>b.classList.toggle("on", b.dataset.fit===clearFit));
   const src=document.getElementById("clearsource");
-  src.textContent=lang==="fr"
-    ?"Sources : "+AKHoles.SOURCES.metric+" "+AKHoles.SOURCES.inch+" "+AKHoles.SOURCES.fits+" La formule de taraudage n'est pas utilisée ici."
-    :"Sources: "+AKHoles.SOURCES.metric+" "+AKHoles.SOURCES.inch+" "+AKHoles.SOURCES.fits+" The tapping formula is not used here.";
+  const S=lang==="fr"?AKHoles.SOURCES.fr:AKHoles.SOURCES;
+  src.textContent=(lang==="fr"?"Sources : ":"Sources: ")+S.metric+" "+S.inch+" "+S.fits+(lang==="fr"?" La formule de taraudage ne donne pas le trou de passage.":" The tapping formula is not used for the clearance hole.");
   document.getElementById("clearmissing").textContent=lang==="fr"
     ?"Pas de mèche proposée pour #12, 9/16 po, 11/16 po et 2 po : absents de ASME B18.2.8. NPT et BSP ne sont pas offerts ici."
     :"No drill is offered for #12, 9/16 in, 11/16 in and 2 in: not in ASME B18.2.8. NPT and BSP are not offered here.";
@@ -725,7 +734,7 @@ document.getElementById("oq").oninput=renderOring;
 document.getElementById("oid").oninput=renderOring;
 document.getElementById("ood").oninput=renderOring;
 document.getElementById("fq").oninput=renderFits;
-document.getElementById("lang").onclick=()=>{lang=lang==="fr"?"en":"fr";localStorage.setItem("ak-lang",lang);document.getElementById("lang").textContent=lang==="fr"?"EN":"FR";document.querySelectorAll("[data-fr]").forEach(el=>{el.textContent=lang==="fr"?el.dataset.fr:el.dataset.en;});renderDesk();renderTap();renderDrillFind();renderClearance();};
+document.getElementById("lang").onclick=()=>{lang=lang==="fr"?"en":"fr";localStorage.setItem("ak-lang",lang);document.getElementById("lang").textContent=lang==="fr"?"EN":"FR";document.querySelectorAll("[data-fr]").forEach(el=>{el.textContent=lang==="fr"?el.dataset.fr:el.dataset.en;});renderDesk();renderOd();renderTap();renderDrillFind();renderClearance();renderOring();renderFits();};
 const HELP={
  od:{t:"Mesurer",b:"Mâle : placez le vernier à l'extérieur, sur les premiers filets. Femelle : placez-le à l'intérieur de l'ouverture. Ne mesurez pas dans le creux du filet."},
  sex:{t:"Mâle ou femelle",b:"Mâle : le filet est à l'extérieur. Femelle : le filet est à l'intérieur, écrou ou port. Un boyau a souvent une femelle droite NPSM, pas une femelle NPT."},
@@ -781,42 +790,70 @@ function startTrial(){
 function trialOk(){
   return AKHoles.entitlement(localStorage.getItem("ak-pro"), localStorage.getItem("ak-trial"), Date.now())!=="expired";
 }
+function lockedHtml(){
+  return lang==="fr"
+    ? 'Essai de 30 jours fini. Réservé aux abonnés. <a href="/tarifs">S\'abonner</a>'
+    : '30-day trial is over. Subscribers only. <a href="/tarifs">Subscribe</a>';
+}
+function lockedShort(){
+  return lang==="fr"?"Réservé aux abonnés":"Subscribers only";
+}
+function setLocked(id){
+  const n=document.getElementById(id);
+  if(!n) return;
+  n.classList.add("locked");
+  n.innerHTML=lockedHtml();
+}
 function trialNote(){
   const n=document.getElementById("trialnote");
   if(!n) return;
+  const fr=lang!=="en";
   const state=AKHoles.entitlement(localStorage.getItem("ak-pro"), localStorage.getItem("ak-trial"), Date.now());
-  if(state==="pro"){n.textContent="Comptoir ouvert.";return;}
-  if(state==="empty"){n.textContent="1 mois gratuit, à partir de la première recherche.";return;}
-  if(state==="expired"){n.textContent="Le mois est fini. Le dessin reste, la réponse est fermée.";return;}
+  if(state==="pro"){n.textContent=fr?"Comptoir ouvert.":"Bench is open.";return;}
+  if(state==="empty"){n.textContent=fr?"1 mois gratuit, à partir de la première recherche.":"1 free month, from the first search.";return;}
+  if(state==="expired"){n.textContent="";return;}
   const start=Number(localStorage.getItem("ak-trial")||0);
   const left=Math.max(0, Math.ceil((AKHoles.TRIAL_MS-(Date.now()-start))/86400000));
-  n.textContent=`Essai : ${left} jour${left>1?"s":""} restant${left>1?"s":""}. La réponse reste ouverte.`;
+  n.textContent=fr
+    ?`Essai : ${left} jour${left>1?"s":""} restant${left>1?"s":""}. La réponse reste ouverte.`
+    :`Trial: ${left} day${left>1?"s":""} left. Answers stay open.`;
 }
 function lockIfNeeded(){
   trialNote();
-  if(trialOk()) return;
+  document.querySelectorAll(".locked").forEach(n=>n.classList.remove("locked"));
   const pay=document.getElementById("pay");
+  if(trialOk()){
+    if(pay) pay.style.display="none";
+    return;
+  }
   if(pay) pay.style.display="block";
-  ["odgive","drillbig","give","clearbig","tapbig"].forEach(id=>{const n=document.getElementById(id);if(n)n.textContent="mois fini";});
+  ["odgive","drillbig","give","clearbig","tapbig"].forEach(setLocked);
   ["clearsub","clearcols","drillgap","drillcols"].forEach(id=>{const n=document.getElementById(id);if(n) n.textContent="";});
   document.querySelectorAll(".drillgrid button.on").forEach(b=>b.classList.remove("on"));
   const tapsub=document.getElementById("tapsub");
   if(tapsub) [...tapsub.childNodes].forEach(n=>{if(n.nodeType===3) n.textContent="";});
-  document.querySelectorAll("#taptable td:nth-child(2), #taptable td:nth-child(3)").forEach(n=>{n.textContent="—";});
-  document.querySelectorAll("#deskcols .v, #odhits .k, #odhits .v").forEach(n=>{n.textContent="mois fini";});
+  const taptable=document.getElementById("taptable");
+  if(taptable) taptable.innerHTML="";
+  document.querySelectorAll("#deskcols .v, #odhits .k, #odhits .v").forEach(n=>{n.textContent=lockedShort();});
   const odpick=document.getElementById("odpick");
-  if(odpick) odpick.innerHTML="<option>mois fini</option>";
+  if(odpick) odpick.innerHTML=`<option>${lockedShort()}</option>`;
   const ot=document.getElementById("otable");
-  if(ot && ot.innerHTML.trim()) ot.innerHTML="<tr><td>mois fini</td></tr>";
-  document.querySelectorAll("#fits article").forEach(a=>{
-    const img=a.querySelector("img");
-    a.innerHTML="";
-    if(img) a.appendChild(img);
-    const d=document.createElement("div");
-    d.className="meta";
-    d.textContent="mois fini";
-    a.appendChild(d);
-  });
+  if(ot) ot.innerHTML=`<tr><td>${lockedHtml()}</td></tr>`;
+  const fits=document.getElementById("fits");
+  if(fits){
+    fits.querySelectorAll(".locked-note").forEach(n=>n.remove());
+    fits.querySelectorAll("article").forEach(a=>{
+      const img=a.querySelector("img");
+      a.innerHTML="";
+      if(img) a.appendChild(img);
+    });
+    if(fits.querySelector("img")){
+      const note=document.createElement("p");
+      note.className="lead locked-note";
+      note.innerHTML=lockedHtml();
+      fits.prepend(note);
+    }
+  }
   const fp=document.getElementById("fpick");
   if(fp) fp.remove();
 }

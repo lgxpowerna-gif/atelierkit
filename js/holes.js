@@ -28,7 +28,12 @@
   var SOURCES = {
     inch: "ASME B18.2.8-1999 Table 1a (close, normal, loose). Also Machinery's Handbook, clearance holes for inch fasteners.",
     metric: "ISO 273:1979 (fine, medium, coarse), still current after the 2024 review. Same nominal drills in ASME B18.2.8 Table 3.",
-    fits: "H12 serré / close / fine. H13 normal / medium. H14 libre / loose / coarse."
+    fits: "H12 close / serré. H13 normal. H14 loose / libre.",
+    fr: {
+      inch: "ASME B18.2.8-1999, tableau 1a (serré, normal, libre). Aussi dans le Machinery's Handbook, trous de passage des vis en pouces.",
+      metric: "ISO 273:1979, séries fine, moyenne et grosse. Toujours en vigueur après la revue de 2024. Mêmes mèches nominales dans ASME B18.2.8, tableau 3.",
+      fits: "H12 pour serré, H13 pour normal, H14 pour libre."
+    }
   };
 
   function fitHole(drill, min, max) {

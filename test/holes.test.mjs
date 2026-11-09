@@ -144,7 +144,13 @@ test("page separates the two jobs and keeps the paywall", () => {
   assert.match(html, /change avec le pas/);
   assert.match(html, /1\/4-20 prend #7, 1\/4-28 prend #3/);
   assert.match(html, /ak-pro/);
-  assert.match(html, /mois fini/);
+  assert.equal(html.includes("mois fini"), false);
+  assert.match(html, /Essai de 30 jours fini/);
+  assert.match(html, /Réservé aux abonnés/);
+  assert.match(html, /href="\/tarifs"/);
+  assert.match(H.SOURCES.fr.metric, /ISO 273:1979/);
+  assert.match(H.SOURCES.fr.inch, /ASME B18\.2\.8-1999/);
+  assert.equal(/still current/.test(H.SOURCES.fr.metric), false);
   assert.match(html, /taille demandée/);
   assert.match(html, /id="feet"/);
   assert.match(html, /tokens\.every/);
