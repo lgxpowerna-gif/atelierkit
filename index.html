@@ -107,7 +107,7 @@ body.bench-mode .bench-label{display:block}
 #fits .locked-note{margin:0 0 10px}
 .backhome{display:inline-flex;align-items:center;min-height:44px;margin:0 0 12px;padding:8px 14px;border-radius:12px;border:1px solid var(--line);background:#fff;font-weight:600;font-size:16px;cursor:pointer}
 .morelinks{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
-.morelinks button{background:transparent;border:0;color:var(--accent);font-weight:600;font-size:16px;padding:8px 4px;cursor:pointer;min-height:44px}
+.morelinks button,.morelinks a{background:transparent;border:0;color:var(--accent);font-weight:600;font-size:16px;padding:8px 4px;cursor:pointer;min-height:44px;text-decoration:none;display:inline-flex;align-items:center}
 h2.task{font-size:26px;line-height:1.2;margin:0 0 8px}
 @media(max-width:720px){
   nav button:not([data-tab="start"]){display:none}
@@ -157,6 +157,7 @@ h2.task{font-size:26px;line-height:1.2;margin:0 0 8px}
         <button type="button" data-go="convert" data-fr="Pouces ou mm?" data-en="Inches or mm?">Pouces ou mm?</button>
         <button type="button" data-go="fit" data-fr="J'ai le numéro du fitting" data-en="I have the fitting number">J'ai le numéro du fitting</button>
         <button type="button" data-go="drill" data-fr="Juste le nom d'une mèche" data-en="Just the drill name">Juste le nom d'une mèche</button>
+        <a href="/guides" data-fr="Guides (mèche M8, JIC, O-ring)" data-en="Guides (M8 drill, JIC, O-ring)">Guides (mèche M8, JIC, O-ring)</a>
       </div>
     </div>
     <details class="card guide" id="guide">
@@ -373,7 +374,7 @@ h2.task{font-size:26px;line-height:1.2;margin:0 0 8px}
     <dl id="lexlist"></dl>
   </details>
 </main>
-<footer>AtelierKit · <a href="#lexicon" data-fr="Mots du comptoir" data-en="Shop words">Mots du comptoir</a> · <a href="/tarifs" data-fr="Essai de 30 jours, puis 9 $/mois" data-en="30-day trial, then $9/month">Essai de 30 jours, puis 9 $/mois</a> · <a href="https://facturepro.faitle.net">FacturePro</a> · <a href="https://tradequote.faitle.net">TradeQuote</a></footer>
+<footer>AtelierKit · <a href="/guides" data-fr="Guides" data-en="Guides">Guides</a> · <a href="#lexicon" data-fr="Mots du comptoir" data-en="Shop words">Mots du comptoir</a> · <a href="/tarifs" data-fr="Essai de 30 jours, puis 9 $/mois" data-en="30-day trial, then $9/month">Essai de 30 jours, puis 9 $/mois</a> · <a href="https://facturepro.faitle.net">FacturePro</a> · <a href="https://tradequote.faitle.net">TradeQuote</a></footer>
 <dialog id="pop">
   <header id="poptitle">Aide</header>
   <p id="popbody"></p>
@@ -1138,6 +1139,9 @@ renderTap=paid(_tap);
 renderDesk=paid(_desk);
 renderFits=paid(_fits);
 showTab("start");renderDesk();renderConv();renderTap();const t14=[...document.getElementById("thread").options].findIndex(o=>o.textContent.startsWith("1/4-20"));if(t14>=0)document.getElementById("thread").value=t14;renderTap();renderOring();renderOd();renderDrillFind();renderClearance();paintLex();applyLang();trialNote();
+const TOOL_HASH={taraud:"tap",passage:"clear",oring:"oring",fitting:"desk",convertir:"convert",numero:"fit",meche:"drill"};
+const wanted=TOOL_HASH[(location.hash||"").replace(/^#/,"")];
+if(wanted) showTab(wanted);
 function syncNet(){AKOffline.sync(localStorage.getItem("ak-pro"), navigator.onLine);}
 window.addEventListener("online", function(){renderDesk();renderTap();renderClearance();renderDrillFind();renderOring();renderOd();renderFits();syncNet();});
 window.addEventListener("offline", function(){lockIfNeeded();});
