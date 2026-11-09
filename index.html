@@ -17,16 +17,32 @@ header{display:flex;align-items:center;gap:14px;padding:12px 16px;background:#1c
 nav{display:flex;gap:4px;flex-wrap:wrap}
 nav button{background:transparent;color:#f6f1ea;border:0;padding:8px 10px;border-radius:8px;cursor:pointer}
 nav button.on{background:#e2a322;color:#1c1406}
-#lang{margin-left:auto;background:transparent;color:#f6f1ea;border:1px solid #4a433b;border-radius:8px;padding:6px 10px;cursor:pointer}
+.headtools{margin-left:auto;display:flex;gap:6px;align-items:center}
+#lang,#guidebtn{background:transparent;color:#f6f1ea;border:1px solid #4a433b;border-radius:8px;padding:6px 10px;cursor:pointer;font-weight:600}
+.why{margin:0 0 8px;font-size:15px;line-height:1.35}
+.ex{margin:2px 0 0;color:var(--muted);font-size:13px}
+.guide{margin:0 0 12px;border-color:#e2a322}
+.guide ol{margin:8px 0 0;padding-left:1.25em}
+.guide li{margin:6px 0;font-size:16px;line-height:1.4}
+.guide-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+#guidedismiss{border:0;background:#e2a322;color:#1c1406;border-radius:8px;padding:8px 12px;font-weight:600;cursor:pointer}
+.advanced{margin-top:8px}
+.advanced summary,.lexicon summary{cursor:pointer;font-weight:600;padding:10px 0}
+.lexicon{margin-top:12px}
+.lexicon dt{font-weight:600;margin-top:10px}
+.lexicon dd{margin:2px 0 0;color:var(--ink);line-height:1.4}
+.give b .bit{display:block;font-size:26px;line-height:1.15}
+.give b .do{display:block;font-size:16px;font-weight:500;line-height:1.35;margin-top:6px}
+nav button{min-height:36px}
 main{max-width:1080px;margin:0 auto;padding:16px 16px 48px}
 .panel{display:none}.panel.on{display:block}
 .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
 .lead{margin:0 0 10px;color:var(--muted)}
 .pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-label{display:block;font-size:12px;color:var(--muted);margin:8px 0 4px}
+label{display:block;font-size:14px;color:var(--muted);margin:8px 0 4px}
 input,select{width:100%;border:1px solid var(--line);background:#fff;border-radius:10px;padding:12px;font-size:20px;font-family:"IBM Plex Mono",monospace}
 .chips{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}
-.chips button{border:1px solid var(--line);background:#fff;border-radius:12px;padding:7px 11px;cursor:pointer}.chips button svg{width:78px;height:42px;background:transparent}
+.chips button{border:1px solid var(--line);background:#fff;border-radius:12px;padding:8px 12px;min-height:36px;cursor:pointer}.chips button svg{width:78px;height:42px;background:transparent}
 .chips button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
 .give{background:#1c1915;color:#f6f1ea;border-radius:12px;padding:14px 16px;margin-top:12px}
 .give b{display:block;font-size:22px;margin-top:4px}
@@ -58,7 +74,7 @@ tr.sel{background:var(--hi)} tr{cursor:pointer}
 footer{padding:18px;color:var(--muted);font-size:12px;text-align:center}
 footer a{color:var(--muted)}
 @media(max-width:720px){.pair,.cols,.readout{grid-template-columns:1fr}.idgrid{grid-template-columns:1fr 1fr}.big{font-size:28px}header{flex-wrap:wrap}#lang{margin-left:0}}
-.help{display:inline-grid;place-items:center;width:18px;height:18px;margin-left:6px;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--accent);font-size:12px;font-weight:700;cursor:pointer;vertical-align:middle}
+.help{display:inline-grid;place-items:center;width:28px;height:28px;margin-left:6px;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--accent);font-size:14px;font-weight:700;cursor:pointer;vertical-align:middle}
 dialog{border:0;border-radius:14px;padding:0;max-width:420px;width:calc(100% - 32px);background:#fffdf9;color:#1c1915}
 dialog::backdrop{background:#1c191544}
 dialog header{background:#1c1915;color:#f6f1ea;border-radius:14px 14px 0 0}
@@ -77,7 +93,16 @@ body.bench-mode .bench-label{display:block}
 #otable a,#fits .locked-note a,#taptable a{color:var(--accent);font-weight:600}
 #pay a.btn{display:inline-block;margin-top:4px;background:#e2a322;color:#1c1406;text-decoration:none;border-radius:8px;padding:10px 14px;font-weight:600}
 #fits .locked-note{margin:0 0 10px}
-@media(max-width:720px){.triple{grid-template-columns:1fr}}
+@media(max-width:720px){
+  .triple,.pair,.readout,.cols{grid-template-columns:1fr}
+  nav button,#lang,#guidebtn,.chips button,#tapclearbtn,#cleartapbtn,#guidedismiss,dialog button{min-height:44px;padding:10px 12px}
+  #guidedismiss{width:100%}
+  .guide-top{flex-wrap:wrap}
+  .help{width:36px;height:36px;font-size:16px}
+  input,select{min-height:48px}
+  .drillgrid button{min-height:44px;font-size:16px}
+  .give b .bit{font-size:24px}
+}
 </style>
 </head>
 <body>
@@ -89,24 +114,40 @@ body.bench-mode .bench-label{display:block}
     <button data-tab="convert" data-fr="Convertir" data-en="Convert">Convertir</button>
     <button data-tab="clear" data-fr="Passage" data-en="Clearance">Passage</button>
     <button data-tab="tap" data-fr="Tarauds" data-en="Taps">Tarauds</button>
-    <button data-tab="drill" data-fr="Forets" data-en="Drills">Forets</button>
+    <button data-tab="drill" data-fr="Mèches" data-en="Drills">Mèches</button>
     <button data-tab="oring" data-fr="O-rings" data-en="O-rings">O-rings</button>
     <button data-tab="fit" data-fr="Raccords" data-en="Fittings">Raccords</button>
   </nav>
-  <button id="lang">EN</button>
+  <div class="headtools">
+    <button type="button" id="guidebtn" data-fr="Aide" data-en="Help">Aide</button>
+    <button id="lang">EN</button>
+  </div>
 </header>
 <main>
+  <section class="card guide" id="guide">
+    <div class="guide-top">
+      <b data-fr="Comment ça marche" data-en="How it works">Comment ça marche</b>
+      <button type="button" id="guidedismiss" data-fr="J'ai compris" data-en="Got it">J'ai compris</button>
+    </div>
+    <ol>
+      <li data-fr="Choisis l'outil : Hydraulique, Passage, Taraud, Mèche, O-ring ou Raccord." data-en="Pick the tool: Hydraulic, Clearance, Tap, Drill, O-ring or Fitting.">Choisis l'outil : Hydraulique, Passage, Taraud, Mèche, O-ring ou Raccord.</li>
+      <li data-fr="Entre la taille comme sur le bon : 1/4-20, M10x1.5, 3/8 NPT ou 0.250 po." data-en="Type the size as written on the order: 1/4-20, M10x1.5, 3/8 NPT or 0.250 in.">Entre la taille comme sur le bon : 1/4-20, M10x1.5, 3/8 NPT ou 0.250 po.</li>
+      <li data-fr="Lis la bande noire. Elle dit quelle mèche sortir, et quoi faire ensuite." data-en="Read the black bar. It says which bit to pull, and what to do next.">Lis la bande noire. Elle dit quelle mèche sortir, et quoi faire ensuite.</li>
+    </ol>
+    <p class="ex"><span data-fr="Un mot bloque ?" data-en="Stuck on a word?">Un mot bloque ?</span> <a href="#lexicon" data-fr="Mots du comptoir" data-en="Shop words">Mots du comptoir</a>. <span data-fr="Les habitués peuvent fermer ce guide." data-en="Regulars can close this guide.">Les habitués peuvent fermer ce guide.</span></p>
+  </section>
   <section class="panel" id="desk">
     <div class="card">
       <div class="bench-label" data-fr="Hydraulique — mesure et taille" data-en="Hydraulic — measure and size">Hydraulique — mesure et taille</div>
-      <p class="lead">Pas de numéro de pièce. Mesurez. Étape 1. Choisissez mâle ou femelle. Mâle : à l'extérieur du filet. Femelle : à l'intérieur. <button class="help" data-help="sex">?</button></p>
+      <p class="why" data-fr="À quoi ça sert : nommer le raccord quand tu n'as pas le numéro de pièce." data-en="What it's for: name the fitting when you don't have the part number.">À quoi ça sert : nommer le raccord quand tu n'as pas le numéro de pièce.</p>
+      <p class="lead"><span data-fr="Étape 1. Mâle : le filet est dehors. Femelle : le filet est dedans. Mesure sur les filets, pas dans le creux." data-en="Step 1. Male: the thread is outside. Female: the thread is inside. Measure on the threads, not in the groove.">Étape 1. Mâle : le filet est dehors. Femelle : le filet est dedans. Mesure sur les filets, pas dans le creux.</span> <button class="help" data-help="sex">?</button></p>
       <div class="chips" id="sex">
-        <button class="on" data-s="M">mâle</button>
-        <button data-s="F">femelle</button>
+        <button class="on" data-s="M" data-fr="mâle" data-en="male">mâle</button>
+        <button data-s="F" data-fr="femelle" data-en="female">femelle</button>
       </div>
       <div class="pair">
-        <div><label id="odlabel">dehors, sur le filet <button class="help" data-help="od">?</button></label><input id="od" inputmode="decimal" value="0.562" /></div>
-        <div><label>combien de filets sur un pouce <button class="help" data-help="tpi">?</button></label><input id="tpi" inputmode="decimal" placeholder="18" /></div>
+        <div><label id="odlabel"><span id="odlabtext" data-fr="Dehors, sur le filet" data-en="Outside, on the thread">Dehors, sur le filet</span> <button class="help" data-help="od">?</button></label><input id="od" inputmode="decimal" value="0.562" placeholder="0.562 po" /><p class="ex" data-fr="Exemple déjà rempli : 0.562 po. Efface et mets ta mesure." data-en="Example already filled in: 0.562 in. Clear it and type your measurement.">Exemple déjà rempli : 0.562 po. Efface et mets ta mesure.</p></div>
+        <div><label><span data-fr="Filets sur 1 po (ex. 18). Vide si tu ne sais pas." data-en="Threads per inch (ex. 18). Leave empty if you don't know.">Filets sur 1 po (ex. 18). Vide si tu ne sais pas.</span> <button class="help" data-help="tpi">?</button></label><input id="tpi" inputmode="decimal" placeholder="18" /></div>
       </div>
       <div class="chips" id="odunit">
         <button class="on" data-u="po">po</button>
@@ -116,12 +157,12 @@ body.bench-mode .bench-label{display:block}
       <div id="odhits"></div>
     </div>
     <div class="card" style="margin-top:12px">
-      <p class="lead">Étape 2. On vous a donné une taille, pas la pièce. Un 1/2 po peut être le boyau ou le filet. Vérifiez le bout avant de choisir le raccord. <button class="help" data-help="said">?</button></p>
+      <p class="lead"><span data-fr="Étape 2. La taille dite (ex. 1/2 po) peut être le boyau ou le filet. Regarde le bout avant de sortir le raccord." data-en="Step 2. The size you were told (ex. 1/2 in) may be the hose or the thread. Look at the nose before you pull the fitting.">Étape 2. La taille dite (ex. 1/2 po) peut être le boyau ou le filet. Regarde le bout avant de sortir le raccord.</span> <button class="help" data-help="said">?</button></p>
       <label data-fr="taille demandée" data-en="size given">taille demandée</label>
       <div class="chips" id="said"></div>
       <div class="give"><span data-fr="À vérifier avant de choisir" data-en="Check before choosing">À vérifier avant de choisir</span><b id="give">—</b></div>
       <div class="cols" id="deskcols"></div>
-      <h3>C'est quoi le bout <button class="help" data-help="end">?</button></h3>
+      <h3><span data-fr="C'est quoi le bout" data-en="What is the nose">C'est quoi le bout</span> <button class="help" data-help="end">?</button></h3>
       <div class="idgrid" id="idgrid"></div>
       <p id="idtext" class="lead"></p>
     </div>
@@ -130,11 +171,12 @@ body.bench-mode .bench-label{display:block}
   <section class="panel" id="convert">
     <div class="card">
       <div class="bench-label" data-fr="Convertir — mm, pouces, pieds" data-en="Convert — mm, inches, feet">Convertir — mm, pouces, pieds</div>
-      <p class="lead">Entrez la mesure en mm, pouces ou pieds. Les autres unités suivent. <button class="help" data-help="convert">?</button></p>
+      <p class="why" data-fr="À quoi ça sert : passer des mm aux pouces, ou l'inverse, sans calculatrice." data-en="What it's for: turn mm into inches, or the other way, without a calculator.">À quoi ça sert : passer des mm aux pouces, ou l'inverse, sans calculatrice.</p>
+      <p class="lead"><span data-fr="Entre la mesure en mm, pouces ou pieds. Les autres unités suivent. Le point et la virgule marchent." data-en="Enter the measurement in mm, inches or feet. The other units follow. Dot and comma both work.">Entre la mesure en mm, pouces ou pieds. Les autres unités suivent. Le point et la virgule marchent.</span> <button class="help" data-help="convert">?</button></p>
       <div class="triple">
-        <div><label data-fr="pieds" data-en="feet">pieds</label><input id="feet" inputmode="decimal" value="0" /></div>
+        <div><label data-fr="pieds" data-en="feet">pieds</label><input id="feet" inputmode="decimal" value="0" placeholder="2" /></div>
         <div><label data-fr="pouces" data-en="inches">pouces</label><input id="inch" value="1-1/2" placeholder="1-1/2" /></div>
-        <div><label>mm</label><input id="mm" inputmode="decimal" value="25.4" /></div>
+        <div><label>mm</label><input id="mm" inputmode="decimal" value="25.4" placeholder="25.4" /></div>
       </div>
       <div class="chips" id="fracs"></div>
       <div class="readout">
@@ -147,19 +189,22 @@ body.bench-mode .bench-label{display:block}
   <section class="panel" id="clear">
     <div class="card">
       <div class="bench-label" data-fr="Passage — le boulon traverse, sans filet" data-en="Clearance — the bolt passes through, no thread">Passage — le boulon traverse, sans filet</div>
-      <p class="lead"><span data-fr="Trou de passage : la vis traverse la pièce. On ne taraude pas ce trou. Le diamètre nominal (1/4, M10) n'est pas la mèche. Choisis l'ajustement. NPT et BSP ne sont pas des boulons." data-en="Clearance hole: the bolt passes through the part. This hole is not tapped. Nominal diameter (1/4, M10) is not the drill. Pick the fit. NPT and BSP are not bolts.">Trou de passage : la vis traverse la pièce. On ne taraude pas ce trou. Le diamètre nominal (1/4, M10) n'est pas la mèche. Choisis l'ajustement. NPT et BSP ne sont pas des boulons.</span> <button class="help" data-help="clear">?</button></p>
+      <p class="why" data-fr="À quoi ça sert : choisir la mèche d'un trou où le boulon passe, sans le tarauder." data-en="What it's for: pick the drill for a hole the bolt passes through, with no thread.">À quoi ça sert : choisir la mèche d'un trou où le boulon passe, sans le tarauder.</p>
+      <p class="lead"><span data-fr="Trou de passage : la vis traverse la pièce. On ne taraude pas ce trou. Le diamètre nominal (1/4, M10) n'est pas la mèche. En cas de doute, laisse Normal. NPT et BSP ne sont pas des boulons." data-en="Clearance hole: the bolt passes through the part. This hole is not tapped. Nominal diameter (1/4, M10) is not the drill. If unsure, leave Normal. NPT and BSP are not bolts.">Trou de passage : la vis traverse la pièce. On ne taraude pas ce trou. Le diamètre nominal (1/4, M10) n'est pas la mèche. En cas de doute, laisse Normal. NPT et BSP ne sont pas des boulons.</span> <button class="help" data-help="clear">?</button></p>
+      <p class="meta" data-fr="Tailles courantes" data-en="Common sizes">Tailles courantes</p>
+      <div class="chips" id="clearcommon"></div>
       <div class="chips" id="clearfam">
         <button class="on" data-f="IN" data-fr="UNC / UNF" data-en="UNC / UNF">UNC / UNF</button>
         <button data-f="MM" data-fr="Métrique" data-en="Metric">Métrique</button>
       </div>
       <div class="pair">
-        <div><label data-fr="diamètre nominal du boulon" data-en="nominal bolt diameter">diamètre nominal du boulon</label><select id="clearsize"></select></div>
+        <div><label data-fr="diamètre du boulon (ex. 1/4 ou M10)" data-en="bolt diameter (ex. 1/4 or M10)">diamètre du boulon (ex. 1/4 ou M10)</label><select id="clearsize"></select></div>
         <div>
-          <label data-fr="ajustement du trou" data-en="hole fit">ajustement du trou</label>
+          <label data-fr="Jeu du trou. En cas de doute : normal." data-en="Hole fit. If unsure: normal.">Jeu du trou. En cas de doute : normal.</label>
           <div class="chips" id="clearfit">
             <button data-fit="close" data-fr="serré" data-en="close">serré</button>
             <button class="on" data-fit="normal" data-fr="normal" data-en="normal">normal</button>
-            <button data-fit="loose" data-fr="libre" data-en="loose">libre</button>
+            <button data-fit="loose" data-fr="large" data-en="loose">large</button>
           </div>
         </div>
       </div>
@@ -167,8 +212,11 @@ body.bench-mode .bench-label{display:block}
       <div class="give"><span data-fr="Mèche de passage" data-en="Clearance drill">Mèche de passage</span><b id="clearbig">—</b></div>
       <p class="subn" id="clearsub"></p>
       <div class="cols" id="clearcols"></div>
-      <p class="meta" id="clearsource"></p>
       <p class="meta" id="clearmissing"></p>
+      <details class="advanced">
+        <summary data-fr="D'où viennent les chiffres" data-en="Where the numbers come from">D'où viennent les chiffres</summary>
+        <p class="meta" id="clearsource"></p>
+      </details>
       <p><button type="button" id="cleartapbtn" data-goto="tap" data-fr="Voir la mèche avant taraud" data-en="See the drill before tapping">Voir la mèche avant taraud</button></p>
     </div>
   </section>
@@ -176,12 +224,21 @@ body.bench-mode .bench-label{display:block}
   <section class="panel" id="tap">
     <div class="card">
       <div class="bench-label" data-fr="Taraudage — trou plus petit, filet dedans" data-en="Tapping — smaller hole, thread cut inside">Taraudage — trou plus petit, filet dedans</div>
+      <p class="why" data-fr="À quoi ça sert : savoir quelle mèche percer avant de passer le taraud." data-en="What it's for: which bit to drill before you run the tap.">À quoi ça sert : savoir quelle mèche percer avant de passer le taraud.</p>
       <p class="lead"><span data-fr="Avant de tarauder : perce un trou plus petit que la vis. Le taraud coupe le filet dans ce trou. Ce n'est pas un trou de passage." data-en="Before tapping: drill a hole smaller than the bolt. The tap cuts the thread in that hole. This is not a clearance hole.">Avant de tarauder : perce un trou plus petit que la vis. Le taraud coupe le filet dans ce trou. Ce n'est pas un trou de passage.</span> <button class="help" data-help="tap">?</button></p>
+      <p class="meta" data-fr="Tailles courantes" data-en="Common sizes">Tailles courantes</p>
+      <div class="chips" id="tapcommon"></div>
       <div class="chips" id="fams"></div>
-      <p class="meta">gros, fin, métrique, tuyau, gaz <button class="help" data-help="fams">?</button></p>
+      <p class="meta"><span data-fr="Gros = vis ordinaire. Fin = filet plus serré. Le pas change la mèche." data-en="Coarse = ordinary bolt. Fine = tighter thread. Pitch changes the bit.">Gros = vis ordinaire. Fin = filet plus serré. Le pas change la mèche.</span> <button class="help" data-help="fams">?</button></p>
       <div class="pair">
-        <div><label>taraud demandé <button class="help" data-help="threadname">?</button></label><select id="thread"></select></div>
-        <div><label>quelle part du filet on garde <button class="help" data-help="pct">?</button></label><input id="pct" type="number" min="50" max="100" value="75" /></div>
+        <div><label><span data-fr="Taraud demandé (ex. 1/4-20)" data-en="Tap called for (ex. 1/4-20)">Taraud demandé (ex. 1/4-20)</span> <button class="help" data-help="threadname">?</button></label><select id="thread"></select></div>
+        <div>
+          <details class="advanced">
+            <summary data-fr="% de filet — laisse 75" data-en="Thread percent — leave 75">% de filet — laisse 75</summary>
+            <label><span data-fr="Laisse 75, c'est le trou habituel." data-en="Leave 75, that is the usual hole.">Laisse 75, c'est le trou habituel.</span> <button class="help" data-help="pct">?</button></label>
+            <input id="pct" type="number" min="50" max="100" value="75" placeholder="75" />
+          </details>
+        </div>
       </div>
       <div class="give"><span data-fr="Mèche avant taraud" data-en="Tap drill">Mèche avant taraud</span><b id="tapbig">—</b></div>
       <p class="subn" id="tapintent"></p>
@@ -193,20 +250,24 @@ body.bench-mode .bench-label{display:block}
 
   <section class="panel" id="drill">
     <div class="card">
-      <p class="lead"><span data-fr="Entrez la grosseur de la mèche. L'outil montre la mèche du tiroir juste plus petite et juste plus grosse. Ce n'est ni le trou avant taraud, ni le trou de passage du boulon." data-en="Enter the drill size. The tool shows the next smaller and next larger bit in the drawer. This is neither the tap drill nor the bolt clearance hole.">Entrez la grosseur de la mèche. L'outil montre la mèche du tiroir juste plus petite et juste plus grosse. Ce n'est ni le trou avant taraud, ni le trou de passage du boulon.</span> <button class="help" data-help="drill">?</button></p>
-      <label data-fr="la grosseur : 5/32, 9/16, 0.160 ou 4" data-en="diameter: 5/32, 9/16, 0.156 or 4">diamètre : 5/32, 9/16, 0.156 ou 4</label>
-      <input id="dsize" value="5/32" />
+      <p class="why" data-fr="À quoi ça sert : trouver la lettre ou le numéro de mèche le plus proche d'une mesure." data-en="What it's for: find the letter or number drill closest to a measurement.">À quoi ça sert : trouver la lettre ou le numéro de mèche le plus proche d'une mesure.</p>
+      <p class="lead"><span data-fr="Entre la grosseur de la mèche. L'outil montre la mèche du tiroir juste plus petite et juste plus grosse. Ce n'est ni le trou avant taraud, ni le trou de passage du boulon." data-en="Enter the drill size. The tool shows the next smaller and next larger bit in the drawer. This is neither the tap drill nor the bolt clearance hole.">Entre la grosseur de la mèche. L'outil montre la mèche du tiroir juste plus petite et juste plus grosse. Ce n'est ni le trou avant taraud, ni le trou de passage du boulon.</span> <button class="help" data-help="drill">?</button></p>
+      <label data-fr="Grosseur (ex. 5/32, 0.250 po ou 6.5 mm)" data-en="Size (ex. 5/32, 0.250 in or 6.5 mm)">Grosseur (ex. 5/32, 0.250 po ou 6.5 mm)</label>
+      <input id="dsize" value="5/32" placeholder="0.250 po" />
+      <p class="ex" data-fr="Exemple déjà rempli : 5/32. Tu peux taper 0.250 po ou 6.5 mm." data-en="Example already filled in: 5/32. You can type 0.250 in or 6.5 mm.">Exemple déjà rempli : 5/32. Tu peux taper 0.250 po ou 6.5 mm.</p>
       <div class="chips" id="dunit">
         <button class="on" data-u="po">po</button>
         <button data-u="mm">mm</button>
       </div>
+      <p class="meta" data-fr="Tailles courantes" data-en="Common sizes">Tailles courantes</p>
       <div class="chips" id="dfracs"></div>
+      <div class="chips" id="dmm"></div>
       <div class="give"><span data-fr="La mèche" data-en="The drill">La mèche</span><b id="drillbig">—</b></div>
       <p class="subn" id="drillgap"></p>
       <div class="cols" id="drillcols"></div>
-      <h3>Lettres <button class="help" data-help="letter">?</button></h3>
+      <h3><span data-fr="Lettres" data-en="Letters">Lettres</span> <button class="help" data-help="letter">?</button></h3>
       <div class="drillgrid" id="letters"></div>
-      <h3>Numéros <button class="help" data-help="number">?</button></h3>
+      <h3><span data-fr="Numéros" data-en="Numbers">Numéros</span> <button class="help" data-help="number">?</button></h3>
       <div class="drillgrid" id="numbers"></div>
     </div>
   </section>
@@ -214,15 +275,17 @@ body.bench-mode .bench-label{display:block}
   <section class="panel" id="oring">
     <div class="card">
       <div class="bench-label" data-fr="O-rings — CS d'abord, puis ID / OD" data-en="O-rings — CS first, then ID / OD">O-rings — CS d'abord, puis ID / OD</div>
-      <p class="lead">Mesurez d'abord l'épaisseur (CS), puis le trou (ID). L'OD = ID + 2×CS. Le dash n'est pas la grosseur du boyau. <button class="help" data-help="oring">?</button></p>
-      <label data-fr="épaisseur CS" data-en="cross-section CS">épaisseur CS</label>
+      <p class="why" data-fr="À quoi ça sert : trouver le numéro (dash) du joint à partir de l'épaisseur CS et du trou." data-en="What it's for: find the O-ring dash from the cross-section and the hole.">À quoi ça sert : trouver le numéro (dash) du joint à partir de l'épaisseur CS et du trou.</p>
+      <p class="lead"><span data-fr="Mesure d'abord l'épaisseur du rond (section, CS), puis le trou (ID). L'OD = ID + 2×CS. Le dash n'est pas la grosseur du boyau. Sur un boyau, commence par 1/8 po." data-en="Measure the ring thickness first (cross-section, CS), then the hole (ID). OD = ID + 2×CS. The dash is not the hose size. On a hose, start with 1/8 in.">Mesure d'abord l'épaisseur du rond (section, CS), puis le trou (ID). L'OD = ID + 2×CS. Le dash n'est pas la grosseur du boyau. Sur un boyau, commence par 1/8 po.</span> <button class="help" data-help="oring">?</button></p>
+      <label data-fr="Épaisseur du rond — épaisseur CS (ex. 1/8 po)" data-en="Ring thickness — cross-section CS (ex. 1/8 in)">Épaisseur du rond — épaisseur CS (ex. 1/8 po)</label>
       <div class="chips" id="cs"></div>
       <div class="pair">
-        <div><label data-fr="ID mesuré (po)" data-en="measured ID (in)">ID mesuré (po)</label><input id="oid" inputmode="decimal" placeholder="0.984" /></div>
-        <div><label data-fr="OD mesuré (po)" data-en="measured OD (in)">OD mesuré (po)</label><input id="ood" inputmode="decimal" placeholder="1.262" /></div>
+        <div><label data-fr="Trou du rond, ID (po) ex. 0.984" data-en="Ring hole, ID (in) ex. 0.984">Trou du rond, ID (po) ex. 0.984</label><input id="oid" inputmode="decimal" placeholder="0.984 po" /></div>
+        <div><label data-fr="Dehors du rond, OD (po) ex. 1.262" data-en="Outside of the ring, OD (in) ex. 1.262">Dehors du rond, OD (po) ex. 1.262</label><input id="ood" inputmode="decimal" placeholder="1.262 po" /></div>
       </div>
-      <label>dash</label>
+      <label data-fr="Numéro dash (ex. 214)" data-en="Dash number (ex. 214)">Numéro dash (ex. 214)</label>
       <input id="oq" class="search" placeholder="214" />
+      <div class="chips" id="oringcommon"></div>
       <table id="otable"></table>
     </div>
   </section>
@@ -230,15 +293,21 @@ body.bench-mode .bench-label{display:block}
   <section class="panel" id="fit">
     <div class="card">
       <div class="bench-label" data-fr="Raccords — recherche ET (tous les mots)" data-en="Fittings — AND search (all words)">Raccords — recherche ET (tous les mots)</div>
-      <p class="lead">Entrez le numéro ou plusieurs mots (ex. JIC 90). Tous les mots doivent matcher. Le dessin indique droit, coude ou T. <button class="help" data-help="fit">?</button></p>
+      <p class="why" data-fr="À quoi ça sert : voir le dessin du raccord à partir du numéro ou de mots comme JIC 90." data-en="What it's for: see the fitting picture from the number or from words like JIC 90.">À quoi ça sert : voir le dessin du raccord à partir du numéro ou de mots comme JIC 90.</p>
+      <p class="lead"><span data-fr="Entre le numéro ou plusieurs mots (ex. JIC 90). Tous les mots doivent être sur la fiche. Bouchon cherche aussi plug. Le dessin indique droit, coude ou T." data-en="Enter the number or several words (ex. JIC 90). Every word has to be on the card. Plug also finds caps. The picture shows straight, elbow or tee.">Entre le numéro ou plusieurs mots (ex. JIC 90). Tous les mots doivent être sur la fiche. Bouchon cherche aussi plug. Le dessin indique droit, coude ou T.</span> <button class="help" data-help="fit">?</button></p>
       <label data-fr="code ou nom" data-en="code or name">code ou nom</label>
-      <input id="fq" class="search" placeholder="JIC 90, 2404 ORFS, bride" />
+      <input id="fq" class="search" placeholder="JIC 90, 2404, 3/8 NPT" />
+      <div class="chips" id="fitquick"></div>
       <div class="chips" id="fitfams"></div>
       <div class="fits" id="fits"></div>
     </div>
   </section>
+  <details class="card lexicon" id="lexicon">
+    <summary data-fr="Mots du comptoir" data-en="Shop words">Mots du comptoir</summary>
+    <dl id="lexlist"></dl>
+  </details>
 </main>
-<footer>AtelierKit · <a href="/tarifs">1 mois, puis 9 $/mois</a> · <a href="https://facturepro.faitle.net">FacturePro</a> · <a href="https://tradequote.faitle.net">TradeQuote</a></footer>
+<footer>AtelierKit · <a href="#lexicon" data-fr="Mots du comptoir" data-en="Shop words">Mots du comptoir</a> · <a href="/tarifs">1 mois, puis 9 $/mois</a> · <a href="https://facturepro.faitle.net">FacturePro</a> · <a href="https://tradequote.faitle.net">TradeQuote</a></footer>
 <dialog id="pop">
   <header id="poptitle">Aide</header>
   <p id="popbody"></p>
@@ -251,6 +320,7 @@ body.bench-mode .bench-label{display:block}
   <p><a class="btn" href="/tarifs" data-fr="Voir les abonnements" data-en="See the plans">Voir les abonnements</a></p>
 </div>
 <script src="js/holes.js"></script>
+<script src="js/plain.js"></script>
 <script>
 const IN=25.4;
 const LETTERS={"A":0.234,"B":0.238,"C":0.242,"D":0.246,"E":0.250,"F":0.257,"G":0.261,"H":0.266,"I":0.272,"J":0.277,"K":0.281,"L":0.290,"M":0.295,"N":0.302,"O":0.316,"P":0.323,"Q":0.332,"R":0.339,"S":0.348,"T":0.358,"U":0.368,"V":0.377,"W":0.386,"X":0.397,"Y":0.404,"Z":0.413};
@@ -262,19 +332,19 @@ const NPT=[["1/16-27","C",0.242],["1/8-27","Q",0.332],["1/4-18","7/16",0.4375],[
 const BSPP=[["G1/8-28","11/32",0.344],["G1/4-19","29/64",0.453],["G3/8-19","19/32",0.594],["G1/2-14","47/64",0.734],["G3/4-14","31/32",0.969],["G1-11","1-13/64",1.203]];
 const ORINGS=[["001",0.029,0.04],["002",0.042,0.05],["003",0.056,0.06],["004",0.07,0.07],["005",0.101,0.07],["006",0.114,0.07],["007",0.145,0.07],["008",0.176,0.07],["009",0.208,0.07],["010",0.239,0.07],["011",0.301,0.07],["012",0.364,0.07],["013",0.426,0.07],["014",0.489,0.07],["015",0.551,0.07],["016",0.614,0.07],["017",0.676,0.07],["018",0.739,0.07],["019",0.801,0.07],["020",0.864,0.07],["021",0.926,0.07],["022",0.989,0.07],["023",1.051,0.07],["024",1.114,0.07],["025",1.176,0.07],["026",1.239,0.07],["027",1.301,0.07],["028",1.364,0.07],["029",1.489,0.07],["030",1.614,0.07],["031",1.739,0.07],["032",1.864,0.07],["033",1.989,0.07],["034",2.114,0.07],["035",2.239,0.07],["036",2.364,0.07],["037",2.489,0.07],["038",2.614,0.07],["039",2.739,0.07],["040",2.864,0.07],["041",2.989,0.07],["042",3.239,0.07],["043",3.489,0.07],["044",3.739,0.07],["045",3.989,0.07],["046",4.239,0.07],["047",4.489,0.07],["048",4.739,0.07],["049",4.989,0.07],["050",5.239,0.07],["102",0.049,0.103],["103",0.081,0.103],["104",0.112,0.103],["105",0.143,0.103],["106",0.174,0.103],["107",0.206,0.103],["108",0.237,0.103],["109",0.299,0.103],["110",0.362,0.103],["111",0.424,0.103],["112",0.487,0.103],["113",0.549,0.103],["114",0.612,0.103],["115",0.674,0.103],["116",0.737,0.103],["117",0.799,0.103],["118",0.862,0.103],["119",0.924,0.103],["120",0.987,0.103],["121",1.049,0.103],["122",1.112,0.103],["123",1.174,0.103],["124",1.237,0.103],["125",1.299,0.103],["126",1.362,0.103],["127",1.424,0.103],["128",1.487,0.103],["129",1.549,0.103],["130",1.612,0.103],["131",1.674,0.103],["132",1.737,0.103],["133",1.799,0.103],["134",1.862,0.103],["135",1.925,0.103],["136",1.987,0.103],["137",2.05,0.103],["138",2.112,0.103],["139",2.175,0.103],["140",2.237,0.103],["141",2.3,0.103],["142",2.362,0.103],["143",2.425,0.103],["144",2.487,0.103],["145",2.55,0.103],["146",2.612,0.103],["147",2.675,0.103],["148",2.737,0.103],["149",2.8,0.103],["150",2.862,0.103],["151",2.987,0.103],["152",3.237,0.103],["153",3.487,0.103],["154",3.737,0.103],["155",3.987,0.103],["156",4.237,0.103],["157",4.487,0.103],["158",4.737,0.103],["159",4.987,0.103],["160",5.237,0.103],["161",5.487,0.103],["162",5.737,0.103],["163",5.987,0.103],["164",6.237,0.103],["165",6.487,0.103],["166",6.737,0.103],["167",6.987,0.103],["168",7.237,0.103],["169",7.487,0.103],["170",7.737,0.103],["171",7.987,0.103],["172",8.237,0.103],["173",8.487,0.103],["174",8.737,0.103],["175",8.987,0.103],["176",9.237,0.103],["177",9.487,0.103],["178",9.737,0.103],["201",0.171,0.139],["202",0.234,0.139],["203",0.296,0.139],["204",0.359,0.139],["205",0.421,0.139],["206",0.484,0.139],["207",0.546,0.139],["208",0.609,0.139],["209",0.671,0.139],["210",0.734,0.139],["211",0.796,0.139],["212",0.859,0.139],["213",0.921,0.139],["214",0.984,0.139],["215",1.046,0.139],["216",1.109,0.139],["217",1.171,0.139],["218",1.234,0.139],["219",1.296,0.139],["220",1.359,0.139],["221",1.421,0.139],["222",1.484,0.139],["223",1.609,0.139],["224",1.734,0.139],["225",1.859,0.139],["226",1.984,0.139],["227",2.109,0.139],["228",2.234,0.139],["229",2.359,0.139],["230",2.484,0.139],["231",2.609,0.139],["232",2.734,0.139],["233",2.859,0.139],["234",2.984,0.139],["235",3.109,0.139],["236",3.234,0.139],["237",3.359,0.139],["238",3.484,0.139],["239",3.609,0.139],["240",3.734,0.139],["241",3.859,0.139],["242",3.984,0.139],["243",4.109,0.139],["244",4.234,0.139],["245",4.359,0.139],["246",4.484,0.139],["247",4.609,0.139],["248",4.734,0.139],["249",4.859,0.139],["250",4.984,0.139],["251",5.109,0.139],["252",5.234,0.139],["253",5.359,0.139],["254",5.484,0.139],["255",5.609,0.139],["256",5.734,0.139],["257",5.859,0.139],["258",5.984,0.139],["259",6.234,0.139],["260",6.484,0.139],["261",6.734,0.139],["262",6.984,0.139],["263",7.234,0.139],["264",7.484,0.139],["265",7.734,0.139],["266",7.984,0.139],["267",8.234,0.139],["268",8.484,0.139],["269",8.734,0.139],["270",8.984,0.139],["271",9.234,0.139],["272",9.484,0.139],["273",9.734,0.139],["274",9.984,0.139],["275",10.484,0.139],["276",10.984,0.139],["277",11.484,0.139],["278",11.984,0.139],["279",12.984,0.139],["280",13.984,0.139],["281",14.984,0.139],["282",15.955,0.139],["283",16.955,0.139],["284",17.955,0.139],["309",0.412,0.21],["310",0.475,0.21],["311",0.537,0.21],["312",0.6,0.21],["313",0.662,0.21],["314",0.725,0.21],["315",0.787,0.21],["316",0.85,0.21],["317",0.912,0.21],["318",0.975,0.21],["319",1.037,0.21],["320",1.1,0.21],["321",1.162,0.21],["322",1.225,0.21],["323",1.287,0.21],["324",1.35,0.21],["325",1.475,0.21],["326",1.6,0.21],["327",1.725,0.21],["328",1.85,0.21],["329",1.975,0.21],["330",2.1,0.21],["331",2.225,0.21],["332",2.35,0.21],["333",2.475,0.21],["334",2.6,0.21],["335",2.725,0.21],["336",2.85,0.21],["337",2.975,0.21],["338",3.1,0.21],["339",3.225,0.21],["340",3.35,0.21],["341",3.475,0.21],["342",3.6,0.21],["343",3.725,0.21],["344",3.85,0.21],["345",3.975,0.21],["346",4.1,0.21],["347",4.225,0.21],["348",4.35,0.21],["349",4.475,0.21],["350",4.6,0.21],["351",4.725,0.21],["352",4.85,0.21],["353",4.975,0.21],["354",5.1,0.21],["355",5.225,0.21],["356",5.35,0.21],["357",5.475,0.21],["358",5.6,0.21],["359",5.725,0.21],["360",5.85,0.21],["361",5.975,0.21],["362",6.225,0.21],["363",6.475,0.21],["364",6.725,0.21],["365",6.975,0.21],["366",7.225,0.21],["367",7.475,0.21],["368",7.725,0.21],["369",7.975,0.21],["370",8.225,0.21],["371",8.475,0.21],["372",8.725,0.21],["373",8.975,0.21],["374",9.225,0.21],["375",9.475,0.21],["376",9.725,0.21],["377",9.975,0.21],["378",10.475,0.21],["379",10.975,0.21],["380",11.475,0.21],["381",11.975,0.21],["382",12.975,0.21],["383",13.975,0.21],["384",14.975,0.21],["385",15.955,0.21],["386",16.955,0.21],["387",17.955,0.21],["388",18.955,0.21],["389",19.955,0.21],["390",20.955,0.21],["391",21.955,0.21],["392",22.94,0.21],["393",23.94,0.21],["394",24.94,0.21],["395",25.94,0.21],["425",4.475,0.275],["426",4.6,0.275],["427",4.725,0.275],["428",4.85,0.275],["429",4.975,0.275],["430",5.1,0.275],["431",5.225,0.275],["432",5.35,0.275],["433",5.475,0.275],["434",5.6,0.275],["435",5.725,0.275],["436",5.85,0.275],["437",5.975,0.275],["438",6.225,0.275],["439",6.475,0.275],["440",6.725,0.275],["441",6.975,0.275],["442",7.225,0.275],["443",7.475,0.275],["444",7.725,0.275],["445",7.975,0.275],["446",8.475,0.275],["447",8.975,0.275],["448",9.475,0.275],["449",9.975,0.275],["450",10.475,0.275],["451",10.975,0.275],["452",11.475,0.275],["453",11.975,0.275],["454",12.475,0.275],["455",12.975,0.275],["456",13.475,0.275],["457",13.975,0.275],["458",14.475,0.275],["459",14.975,0.275],["460",15.475,0.275],["461",15.955,0.275],["462",16.455,0.275],["463",16.955,0.275],["464",17.455,0.275],["465",17.955,0.275],["466",18.455,0.275],["467",18.955,0.275],["468",19.455,0.275],["469",19.955,0.275],["470",20.955,0.275],["471",21.955,0.275],["472",22.94,0.275],["473",23.94,0.275],["474",24.94,0.275],["475",25.94,0.275]];
 const DESK=[
- {say:"1/4",dash:"-4",tube:"1/4 po",jic:"7/16-20",orfs:"9/16-18",npt:"1/8 NPT, OD ~0.41 po",note:"Tube 1/4 ≠ NPT 1/4"},
- {say:"5/16",dash:"-5",tube:"5/16 po",jic:"1/2-20",orfs:"—",npt:"souvent confondu avec 1/4",note:"Dash -5 existe en JIC, rare en ORFS"},
- {say:"3/8",dash:"-6",tube:"3/8 po",jic:"9/16-18",orfs:"11/16-16",npt:"1/4 NPT, OD ~0.54 po",note:"Le -6 JIC n'entre pas sur un -6 ORFS"},
- {say:"1/2",dash:"-8",tube:"1/2 po",jic:"3/4-16",orfs:"13/16-16",npt:"3/8 NPT, OD ~0.68 po",note:"le 1/2 NPT est plus gros, environ 0,84 po dehors"},
- {say:"5/8",dash:"-10",tube:"5/8 po",jic:"7/8-14",orfs:"1-14",npt:"1/2 NPT proche, mesure l'OD",note:"Mesure le diamètre extérieur avant de choisir le raccord"},
- {say:"3/4",dash:"-12",tube:"3/4 po",jic:"1-1/16-12",orfs:"1-3/16-12",npt:"3/4 NPT, OD ~1.05 po",note:"ORFS -12 a un plus gros filet que JIC -12"},
- {say:"1",dash:"-16",tube:"1 po",jic:"1-5/16-12",orfs:"1-7/16-12",npt:"1 NPT, OD ~1.32 po",note:"Filet droit UNF ≠ filet conique NPT"}
+ {say:"1/4",dash:"-4",tube:"1/4 po",jic:"7/16-20",orfs:"9/16-18",npt:"1/8 NPT, OD ~0.41 po",note:"Tube 1/4 ≠ NPT 1/4",noteEn:"1/4 tube is not 1/4 NPT"},
+ {say:"5/16",dash:"-5",tube:"5/16 po",jic:"1/2-20",orfs:"—",npt:"souvent confondu avec 1/4",note:"Dash -5 existe en JIC, rare en ORFS",noteEn:"Dash -5 exists in JIC, rare in ORFS"},
+ {say:"3/8",dash:"-6",tube:"3/8 po",jic:"9/16-18",orfs:"11/16-16",npt:"1/4 NPT, OD ~0.54 po",note:"Le -6 JIC n'entre pas sur un -6 ORFS",noteEn:"JIC -6 does not mate with ORFS -6"},
+ {say:"1/2",dash:"-8",tube:"1/2 po",jic:"3/4-16",orfs:"13/16-16",npt:"3/8 NPT, OD ~0.68 po",note:"le 1/2 NPT est plus gros, environ 0,84 po dehors",noteEn:"1/2 NPT is larger, about 0.84 in outside"},
+ {say:"5/8",dash:"-10",tube:"5/8 po",jic:"7/8-14",orfs:"1-14",npt:"1/2 NPT proche, mesure l'OD",note:"Mesure le diamètre extérieur avant de choisir le raccord",noteEn:"Measure the outside diameter before you pick the fitting"},
+ {say:"3/4",dash:"-12",tube:"3/4 po",jic:"1-1/16-12",orfs:"1-3/16-12",npt:"3/4 NPT, OD ~1.05 po",note:"ORFS -12 a un plus gros filet que JIC -12",noteEn:"ORFS -12 has a larger thread than JIC -12"},
+ {say:"1",dash:"-16",tube:"1 po",jic:"1-5/16-12",orfs:"1-7/16-12",npt:"1 NPT, OD ~1.32 po",note:"Filet droit UNF ≠ filet conique NPT",noteEn:"Straight UNF is not tapered NPT"}
 ];
 const ID=[
- {id:"jic",fr:"JIC 37°",en:"JIC 37°",txt:"Le bout est pointu, comme un chapeau. Pas de rond en caoutchouc sur le nez."},
- {id:"orfs",fr:"ORFS face plate",en:"ORFS flat face",txt:"Le bout est plat, avec un o-ring dans la face. Ça ne visse pas sur le bout pointu."},
- {id:"npt",fr:"NPT conique",en:"NPT taper",txt:"Le filet est en cône. Plus tu visses, plus ça serre. Le nom 1/2 n'est pas la grosseur du tuyau."},
- {id:"orb",fr:"ORB / SAE",en:"ORB / SAE",txt:"Le filet est droit. L'o-ring est à la base, pas sur le nez."}
+ {id:"jic",fr:"JIC 37°",en:"JIC 37°",txt:"Le bout est pointu, comme un chapeau. Pas de rond en caoutchouc sur le nez.",enTxt:"The nose is pointed, like a hat. No rubber ring on the nose."},
+ {id:"orfs",fr:"ORFS face plate",en:"ORFS flat face",txt:"Le bout est plat, avec un o-ring dans la face. Ça ne visse pas sur le bout pointu.",enTxt:"The nose is flat, with an O-ring in the face. It will not screw onto the pointed nose."},
+ {id:"npt",fr:"NPT conique",en:"NPT taper",txt:"Le filet est en cône. Plus tu visses, plus ça serre. Le nom 1/2 n'est pas la grosseur du tuyau.",enTxt:"The thread is tapered. The more you tighten, the harder it seals. The name 1/2 is not the pipe size."},
+ {id:"orb",fr:"ORB / SAE",en:"ORB / SAE",txt:"Le filet est droit. L'o-ring est à la base, pas sur le nez.",enTxt:"The thread is straight. The O-ring sits at the base, not on the nose."}
 ];
 const ENDS=[
  {fam:"JIC",sex:"M",dash:"-4",thread:"7/16-20",od:0.4375,tpi:20,tell:"mâle, siège 37°"},
@@ -330,23 +400,49 @@ const ENDS=[
 let sex="M";
 let odUnit="po";
 let lang=localStorage.getItem("ak-lang")||"fr";
-let src="inch", family="UNC", fittings=[], fitFam="", said=3, idk="jic";
+let src="inch", family="UNC", fittings=[], fitFamilies=[], fitFam="", said=3, idk="jic";
+function tr(fr,en){return lang==="en"?en:fr;}
+function setAnswer(id, bit, action){
+  const n=document.getElementById(id);
+  if(!n) return;
+  n.classList.remove("locked");
+  n.innerHTML='<span class="bit"></span><span class="do"></span>';
+  n.querySelector(".bit").textContent=bit||"—";
+  n.querySelector(".do").textContent=action||"";
+}
 function cardEnd(e){return `<article style="margin-top:8px">${part(e.fam.toLowerCase(),"Droit")}<div class="k">${e.sex==="F"?"femelle":"mâle"} ${e.fam} ${e.dash} · à ${(e.d*IN).toFixed(1)} mm</div><div class="v">${e.thread}</div><div class="meta">${e.tell}</div></article>`;}
 function renderOd(){
-  const inches=parseSize(document.getElementById("od").value, odUnit);
-  if(inches==null){document.getElementById("odgive").textContent="—";document.getElementById("odhits").innerHTML="";return;}
+  const raw=document.getElementById("od").value;
+  const inches=parseSize(raw, odUnit);
+  const lab=document.getElementById("odlabtext");
+  if(lab){
+    lab.textContent=sex==="F"
+      ?tr("Dedans, dans le filet","Inside, in the thread")
+      :tr("Dehors, sur le filet","Outside, on the thread");
+    lab.dataset.fr="Dedans, dans le filet";
+    lab.dataset.en="Inside, in the thread";
+    if(sex!=="F"){lab.dataset.fr="Dehors, sur le filet";lab.dataset.en="Outside, on the thread";}
+  }
+  if(inches==null){
+    setAnswer("odgive","—",AKPlain.emptyHint("bad-measure", lang));
+    document.getElementById("odhits").innerHTML="";
+    return;
+  }
   const tpi=parseFloat(String(document.getElementById("tpi").value).replace(",","."));
   const all=ENDS.filter(e=>e.sex===sex).map(e=>({...e,d:Math.abs(e.od-inches),tpiOk:!tpi||Math.abs(e.tpi-tpi)<=1})).filter(e=>e.tpiOk).sort((a,b)=>a.d-b.d);
   const hits=all.filter(e=>e.d<(sex==="F"?0.05:0.06));
-  document.getElementById("odlabel").firstChild.textContent=sex==="F"?"dedans, dans le filet ":"dehors, sur le filet ";
   const list=hits.length?hits:all.slice(0,8);
   window.__odlist=list;
-  const pick=`<label>${hits.length?"plusieurs raccords":"rien dans 1,5 mm — choisis"}</label><select id="odpick">${list.map((e,i)=>`<option value="${i}">${e.fam} ${e.dash} ${e.thread} · ${(e.d*IN).toFixed(1)} mm</option>`).join("")}</select>`;
-  document.getElementById("odgive").textContent=list[0]?`${list[0].sex==="F"?"femelle":"mâle"} ${list[0].fam} ${list[0].dash}`:"—";
+  const top=list[0];
+  if(!top){setAnswer("odgive","—",AKPlain.emptyHint("bad-measure", lang));document.getElementById("odhits").innerHTML="";return;}
+  const job=AKPlain.describeFitting({lang, sex:top.sex, fam:top.fam, dash:top.dash, thread:top.thread, close:hits.length>0, many:hits.length>1, distanceMm:(top.d*IN).toFixed(1)});
+  setAnswer("odgive", job.bit, job.action);
+  const pickLabel=hits.length>1?tr("Plusieurs proches. Choisis après le bout.","Several are close. Pick after you check the nose."):hits.length?tr("Dans la tolérance.","Within tolerance."):tr("Rien dans 1,5 mm. Vérifie po ou mm.","Nothing within 1.5 mm. Check in or mm.");
+  const pick=`<label>${pickLabel}</label><select id="odpick">${list.map((e,i)=>`<option value="${i}">${e.fam} ${e.dash} ${e.thread} · ${(e.d*IN).toFixed(1)} mm</option>`).join("")}</select>`;
   document.getElementById("odhits").innerHTML=pick+cardEnd(list[0]);
 }
 function frac(n){n=Math.abs(n);const w=Math.floor(n+1e-9);let num=Math.round((n-w)*64);if(num===64)return (w+1)+"\"";if(!num)return w+"\"";let a=num,b=64;while(b){const t=a%b;a=b;b=t;}return (w?w+" ":"")+(num/a)+"/"+(64/a)+"\"";}
-function nearest(inches){let best=frac(inches),bd=Math.abs(Math.round(inches*64)/64-inches);for(const [k,v] of Object.entries(LETTERS)){const d=Math.abs(v-inches);if(d<bd){bd=d;best=k;}}for(const [k,v] of Object.entries(NUMBERS)){const d=Math.abs(v-inches);if(d<bd){bd=d;best="#"+k;}}return best;}
+function nearest(inches){return AKPlain.nearestBit(inches, LETTERS, NUMBERS);}
 function td(major,pitch,pct){return AKHoles.tapDrillDiameter(major,pitch,pct);}
 function table(){return {UNC,UNF,MET,NPT,BSPP}[family];}
 function part(kind, angle){
@@ -369,14 +465,15 @@ function part(kind, angle){
 function icon(kind, angle){ return part(kind, angle); }
 function renderDesk(){
   const d=DESK[said];
-  document.getElementById("give").textContent=lang==="fr"?`Numéro ${d.dash} · boyau ${d.tube}. ${d.note}`:`Numéro ${d.dash} · boyau ${d.tube}. ${d.note}`;
+  const asked=AKPlain.describeAsked({lang, dash:d.dash, tube:d.tube, note:lang==="en"?d.noteEn:d.note});
+  setAnswer("give", asked.bit, asked.action);
   const who=sex==="F"?"femelle":"mâle";
   document.getElementById("deskcols").innerHTML=[
     ["jic","JIC "+who,d.jic],["orfs","ORFS "+who,d.orfs],["npt",sex==="F"?"NPT ou NPSM":"NPT mâle",d.npt]
   ].map(x=>`<article>${part(x[0],"Droit")}<div class="k">${x[1]}</div><div class="v">${x[2]}</div></article>`).join("");
   document.getElementById("idgrid").innerHTML=ID.map(x=>`<button data-id="${x.id}" class="${x.id===idk?"on":""}">${icon(x.id,x.id==="npt"?"Droit":"Droit")}<b>${lang==="fr"?x.fr:x.en}</b></button>`).join("");
   const cur=ID.find(x=>x.id===idk);
-  document.getElementById("idtext").textContent=cur.txt;
+  document.getElementById("idtext").textContent=lang==="en"?cur.enTxt:cur.txt;
   const mix = document.getElementById("mix");
   if(mix) mix.innerHTML = [
     ["img/nut.jpg","Écrou : trou ouvert, le tube passe"],
@@ -420,7 +517,8 @@ function renderTap(){
   if(family==="NPT"||family==="BSPP"){inch=r[2];shop=r[1];calc=inch;}
   else {const pitch=family==="MET"?r[2]:1/r[2];calc=td(r[1],pitch,pct);inch=family==="MET"?calc/IN:calc;shop=family==="MET"?(Math.round(calc*10)/10)+" mm":nearest(inch);}
   const pipe=family==="NPT"||family==="BSPP";
-  document.getElementById("tapbig").textContent=shop+"  ·  "+(family==="MET"?calc.toFixed(2)+" mm":inch.toFixed(4)+" po");
+  const job=AKPlain.describeTap({lang, family, name:r[0], shop, inches:inch});
+  setAnswer("tapbig", job.bit, job.action);
   const intent=document.getElementById("tapintent");
   if(intent){
     intent.textContent=lang==="fr"
@@ -447,7 +545,7 @@ function renderTap(){
     }
   }
   document.getElementById("tapsub").innerHTML=part(family==="NPT"?"npt":family==="BSPP"?"bspp":family==="MET"?"metric":"unc","Droit")+(family==="MET"?inch.toFixed(4)+" po · ":(inch*IN).toFixed(2)+" mm · ")+r[0];
-  document.getElementById("taptable").innerHTML="<tr><th>Filet</th><th>Foret</th><th>mm</th></tr>"+rows.map((row,idx)=>{
+  document.getElementById("taptable").innerHTML=(lang==="en"?"<tr><th>Thread</th><th>Bit</th><th>mm</th></tr>":"<tr><th>Filet</th><th>Mèche</th><th>mm</th></tr>")+rows.map((row,idx)=>{
     let din,label;
     if(family==="NPT"||family==="BSPP"){din=row[2];label=row[1];}
     else {const p=family==="MET"?row[2]:1/row[2];const c=td(row[1],p,pct);din=family==="MET"?c/IN:c;label=family==="MET"?(Math.round(c*10)/10)+" mm":nearest(din);}
@@ -506,34 +604,21 @@ function renderClearance(){
   if(rows.some(r=>r.key===want)) sel.value=want;
   const hit=AKHoles.lookupClearance(clearFam, sel.value, clearFit);
   const note=document.getElementById("clearfitnote");
-  const fits={
-    close:lang==="fr"?"Serré (close / fine, H12) : peu de jeu. Les trous sont bien alignés, souvent percés ensemble.":"Close (fine, H12): little play. Holes line up, often drilled together.",
-    normal:lang==="fr"?"Normal (medium, H13) : le choix habituel. Deux pièces percées à part, jeu ordinaire.":"Normal (medium, H13): the usual choice. Parts drilled separately, ordinary play.",
-    loose:lang==="fr"?"Libre (loose / coarse, H14) : plus de jeu. Peinture, trous décalés, assemblage sur le tas.":"Loose (coarse, H14): more play. Paint, misaligned holes, field assembly."
-  };
-  note.textContent=fits[clearFit];
+  note.textContent=AKPlain.fitAdvice(clearFit, lang);
   document.querySelectorAll("#clearfit button").forEach(b=>b.classList.toggle("on", b.dataset.fit===clearFit));
   const src=document.getElementById("clearsource");
   const S=lang==="fr"?AKHoles.SOURCES.fr:AKHoles.SOURCES;
   src.textContent=(lang==="fr"?"Sources : ":"Sources: ")+S.metric+" "+S.inch+" "+S.fits+(lang==="fr"?" La formule de taraudage ne donne pas le trou de passage.":" The tapping formula is not used for the clearance hole.");
-  document.getElementById("clearmissing").textContent=lang==="fr"
-    ?"Pas de mèche proposée pour #12, 9/16 po, 11/16 po et 2 po : absents de ASME B18.2.8. NPT et BSP ne sont pas offerts ici."
-    :"No drill is offered for #12, 9/16 in, 11/16 in and 2 in: not in ASME B18.2.8. NPT and BSP are not offered here.";
+  document.getElementById("clearmissing").textContent=AKPlain.emptyHint(hit?"clear-aside":"clear-missing", lang);
   if(!hit){
-    document.getElementById("clearbig").textContent="—";
+    setAnswer("clearbig","—",AKPlain.emptyHint("clear-missing", lang));
     document.getElementById("clearsub").textContent="";
     document.getElementById("clearcols").innerHTML="";
     return;
   }
-  const unitLine=hit.family==="MM"
-    ?(lang==="fr"
-      ?hit.drill+"  ·  équiv. "+(hit.min/IN).toFixed(3)+" po"
-      :hit.drill+"  ·  equiv. "+(hit.min/IN).toFixed(3)+" in")
-    :(lang==="fr"
-      ?hit.drill+"  ·  "+hit.min.toFixed(3)+(hit.max?"–"+hit.max.toFixed(3):"")+" po  ·  "+(hit.min*IN).toFixed(2)+(hit.max?"–"+(hit.max*IN).toFixed(2):"")+" mm"
-      :hit.drill+"  ·  "+hit.min.toFixed(3)+(hit.max?"–"+hit.max.toFixed(3):"")+" in  ·  "+(hit.min*IN).toFixed(2)+(hit.max?"–"+(hit.max*IN).toFixed(2):"")+" mm");
-  document.getElementById("clearbig").textContent=unitLine;
-  const names={close:lang==="fr"?"serré":"close", normal:lang==="fr"?"normal":"normal", loose:lang==="fr"?"libre":"loose"};
+  const clearJob=AKPlain.describeClearance(hit, lang);
+  setAnswer("clearbig", clearJob.bit, clearJob.action);
+  const names={close:lang==="fr"?"serré":"close", normal:lang==="fr"?"normal":"normal", loose:lang==="fr"?"large":"loose"};
   document.getElementById("clearcols").innerHTML=["close","normal","loose"].map(f=>{
     const h=hit[f];
     const line=hit.family==="MM"?h.drill:h.drill+" · "+h.min.toFixed(3)+(h.max?"–"+h.max.toFixed(3):"")+(lang==="fr"?" po":" in");
@@ -551,6 +636,7 @@ function renderClearance(){
   document.getElementById("clearsub").textContent=sub;
   const toTap=document.getElementById("cleartapbtn");
   if(toTap) toTap.dataset.call=hit.tap||hit.unc||hit.unf||"";
+  paintClearCommon();
 }
 function renderOring(){
   const q=document.getElementById("oq").value.trim().replace("-","");
@@ -580,11 +666,11 @@ function renderOring(){
       }
       return Math.abs((parseInt(a[0],10)||0)-n)-Math.abs((parseInt(b[0],10)||0)-n);
     }).slice(0,8);
-    pick=`<label>aucun dash exact — choisis</label><select id="opick">${near.map(o=>`<option value="${o[0]}">-${o[0]} · ID ${o[1].toFixed(3)} · OD ${odOf(o).toFixed(3)}</option>`).join("")}</select>`;
+    pick=`<label>${AKPlain.emptyHint("oring", lang)}</label><select id="opick">${near.map(o=>`<option value="${o[0]}">-${o[0]} · ID ${o[1].toFixed(3)} po · OD ${odOf(o).toFixed(3)} po</option>`).join("")}</select>`;
     rows=near.slice(0,1);
   }
   const shown=rows.slice(0,60);
-  const more=rows.length>shown.length?`<p class="meta">${rows.length} tailles — ${shown.length} affichées. Affinez CS, ID ou dash.</p>`:"";
+  const more=rows.length>shown.length?`<p class="meta">${rows.length} ${tr("tailles —","sizes —")} ${shown.length} ${tr("affichées. Affinez l'épaisseur, le trou ou le dash.","shown. Narrow it with thickness, hole or dash.")}</p>`:"";
   document.getElementById("otable").innerHTML=pick+more+"<tr><th>dash <button class=\"help\" data-help=\"dash\">?</button></th><th>ID po <button class=\"help\" data-help=\"id\">?</button></th><th>OD po <button class=\"help\" data-help=\"odring\">?</button></th><th>CS po <button class=\"help\" data-help=\"cs\">?</button></th><th>ID mm</th></tr>"+shown.map(o=>`<tr><td>-${o[0]}</td><td>${o[1].toFixed(3)}</td><td>${odOf(o).toFixed(3)}</td><td>${o[2].toFixed(3)}</td><td>${(o[1]*IN).toFixed(2)}</td></tr>`).join("");
 }
 function kindOf(f){const s=(f.family||"").toUpperCase();if(s.includes("ORFS"))return "orfs";if(s.includes("NPT"))return "npt";if(s.includes("ORB"))return "orb";if(s.includes("JIC"))return "jic";return "jic";}
@@ -595,18 +681,19 @@ function renderFits(){
     if(fitFam&&f.family!==fitFam) return false;
     if(!tokens.length) return true;
     const hay=(f.code+" "+f.desc+" "+f.family+" "+(f.angle||"")).toLowerCase();
-    return tokens.every(t=>hay.includes(t));
+    return tokens.every(t=>AKPlain.searchWords(t).some(w=>hay.includes(w)));
   });
   let pick="";
   if(!rows.length && tokens.length){
     const near=fittings.filter(f=>!fitFam||f.family===fitFam).filter(f=>{
       const hay=(f.code+" "+f.desc+" "+f.family+" "+(f.angle||"")).toLowerCase();
-      return tokens.some(t=>hay.includes(t));
+      return tokens.some(t=>AKPlain.searchWords(t).some(w=>hay.includes(w)));
     }).slice(0,12);
     const list=near.length?near:fittings.filter(f=>!fitFam||f.family===fitFam).slice(0,12);
-    pick=`<label>aucun match ET — choisis</label><select id="fpick">${list.map(f=>`<option value="${f.code}">${f.code} · ${f.family} · ${f.angle}</option>`).join("")}</select>`;
+    pick=`<label>${AKPlain.emptyHint("fitting", lang)}</label><select id="fpick">${list.map(f=>`<option value="${f.code}">${f.code} · ${f.family} · ${f.angle}</option>`).join("")}</select>`;
   }
-  document.getElementById("fits").innerHTML=pick+(rows.length?`<p class="meta">${rows.length} séries</p>`:"")+rows.slice(0,40).map(f=>`<article><img class="part" alt="${f.desc}" src="${f.img}"><div><div class="code">${f.code}</div><div>${f.desc}</div><div class="meta">${f.family} · ${f.angle}</div></div></article>`).join("");
+  const count=rows.length?`<p class="meta">${rows.length} ${tr("séries. Le dessin dit droit, coude ou T.","series. The picture shows straight, elbow or tee.")}</p>`:"";
+  document.getElementById("fits").innerHTML=pick+count+rows.slice(0,40).map(f=>`<article><img class="part" alt="${f.desc}" src="${f.img}"><div><div class="code">${f.code}</div><div>${f.desc}</div><div class="meta">${f.family} · ${f.angle}</div></div></article>`).join("");
 }
 function showTab(tab){
   const bench=tab==="bench";
@@ -629,9 +716,56 @@ document.getElementById("feet").addEventListener("input",()=>{src="feet";renderC
 const fracs=[[0,"0"],[1/64,"1/64"],[1/32,"1/32"],[1/16,"1/16"],[1/8,"1/8"],[1/4,"1/4"],[3/8,"3/8"],[1/2,"1/2"],[3/4,"3/4"]];
 document.getElementById("fracs").innerHTML=fracs.map((f,i)=>`<button data-i="${i}">${f[1]}</button>`).join("");
 document.getElementById("fracs").onclick=e=>{const b=e.target.closest("button");if(!b)return;src="inch";const whole=Math.floor(parseFloat(document.getElementById("inch").value)||0);document.getElementById("inch").value=(whole+fracs[+b.dataset.i][0]).toFixed(4);renderConv();};
-document.getElementById("fams").innerHTML=["UNC","UNF","MET","NPT","BSPP"].map(f=>`<button data-f="${f}" class="${f==="UNC"?"on":""}">${f}</button>`).join("");
+function paintFams(){
+  document.getElementById("fams").innerHTML=AKPlain.FAMILIES.map(f=>`<button data-f="${f.id}" class="${f.id===family?"on":""}">${lang==="en"?f.en:f.fr}</button>`).join("");
+}
+function paintTapCommon(){
+  document.getElementById("tapcommon").innerHTML=AKPlain.COMMON_TAPS.map(t=>`<button type="button" data-f="${t.family}" data-name="${t.name}">${t.label}</button>`).join("");
+}
+function paintClearCommon(){
+  const cur=document.getElementById("clearsize").value;
+  document.getElementById("clearcommon").innerHTML=AKPlain.COMMON_CLEAR.map(t=>`<button type="button" data-fam="${t.family}" data-key="${t.key}" class="${t.family===clearFam&&t.key===cur?"on":""}">${lang==="en"?t.en:t.fr}</button>`).join("");
+}
+function paintQuick(){
+  document.getElementById("fitquick").innerHTML=AKPlain.FIT_SHORTCUTS.map(w=>`<button type="button" data-q="${w}">${w}</button>`).join("");
+  document.getElementById("oringcommon").innerHTML=AKPlain.ORING_SHORTCUTS.map(w=>`<button type="button" data-q="${w}">${w}</button>`).join("");
+  document.getElementById("dmm").innerHTML=["3","4","5","6","8","10","12"].map(n=>`<button type="button" data-mm="${n}">${n} mm</button>`).join("");
+}
+function paintLex(){
+  document.getElementById("lexlist").innerHTML=AKPlain.lexicon(lang).map(item=>`<dt>${item.word}</dt><dd>${item.plain}</dd>`).join("");
+}
+function paintFitFams(){
+  const all=tr("tous","all");
+  document.getElementById("fitfams").innerHTML=`<button class="${fitFam?"":"on"}" data-f="">${all}</button>`+fitFamilies.map(f=>`<button data-f="${f}" class="${f===fitFam?"on":""}">${f}</button>`).join("");
+}
+paintFams();
+paintTapCommon();
+paintQuick();
 family="UNC";
 document.getElementById("fams").onclick=e=>{const b=e.target.closest("button");if(!b)return;family=b.dataset.f;document.querySelectorAll("#fams button").forEach(x=>x.classList.toggle("on",x===b));document.getElementById("thread").innerHTML="";renderTap();};
+document.getElementById("tapcommon").onclick=e=>{
+  const b=e.target.closest("button");if(!b)return;
+  family=b.dataset.f;
+  paintFams();
+  document.getElementById("thread").innerHTML="";
+  renderTap();
+  const sel=document.getElementById("thread");
+  const idx=[...sel.options].findIndex(o=>o.textContent===b.dataset.name);
+  if(idx>=0) sel.value=String(idx);
+  renderTap();
+};
+document.getElementById("clearcommon").onclick=e=>{
+  const b=e.target.closest("button");if(!b)return;
+  clearFam=b.dataset.fam;
+  document.querySelectorAll("#clearfam button").forEach(x=>x.classList.toggle("on",x.dataset.f===clearFam));
+  document.getElementById("clearsize").innerHTML="";
+  renderClearance();
+  document.getElementById("clearsize").value=b.dataset.key;
+  renderClearance();
+};
+document.getElementById("fitquick").onclick=e=>{const b=e.target.closest("button");if(!b)return;document.getElementById("fq").value=b.dataset.q;renderFits();};
+document.getElementById("oringcommon").onclick=e=>{const b=e.target.closest("button");if(!b)return;document.getElementById("oq").value=b.dataset.q;renderOring();};
+document.getElementById("dmm").onclick=e=>{const b=e.target.closest("button");if(!b)return;dUnit="mm";document.querySelectorAll("#dunit button").forEach(x=>x.classList.toggle("on",x.dataset.u==="mm"));document.getElementById("dsize").value=b.dataset.mm;renderDrillFind();};
 document.getElementById("thread").onchange=renderTap;
 document.getElementById("pct").oninput=renderTap;
 document.getElementById("clearfam").onclick=e=>{const b=e.target.closest("button");if(!b)return;clearFam=b.dataset.f;document.querySelectorAll("#clearfam button").forEach(x=>x.classList.toggle("on",x===b));document.getElementById("clearsize").innerHTML="";renderClearance();};
@@ -672,7 +806,7 @@ document.getElementById("letters").innerHTML=Object.entries(LETTERS).map(([k,v])
 document.getElementById("numbers").innerHTML=Object.entries(NUMBERS).map(([k,v])=>`<button data-k="#${k}" data-v="${v}">#${k}<small>${v}"</small></button>`).join("");
 function parseSize(raw, unit){
   const s=String(raw||"").trim().replace(",",".").replace(/″|"/g,"");
-  if(!s) return null;
+  if(!s||AKPlain.looksLikeThread(s)) return null;
   const mixed=s.match(/^(\d+)\s*[-\s]\s*(\d+)\s*\/\s*(\d+)$/);
   if(mixed) return +mixed[1] + (+mixed[2])/(+mixed[3]);
   const frac=s.match(/^(\d+)\s*\/\s*(\d+)$/);
@@ -691,33 +825,42 @@ function closest(map, inches, prefix){
 }
 function gapWords(asked, drill){
   const dmm=(drill.v-asked)*IN;
-  if(Math.abs(dmm)<0.005) return drill.name+" fait pile "+(drill.v*IN).toFixed(2)+" mm";
-  return drill.name+" est plus "+(dmm>0?"grosse":"petite")+" que ta mesure, de "+Math.abs(dmm).toFixed(2)+" mm";
+  const unit=tr(" mm"," mm");
+  if(Math.abs(dmm)<0.005) return drill.name+" "+tr("fait pile ","is exactly ")+(drill.v*IN).toFixed(2)+unit+" · "+drill.v.toFixed(3)+tr(" po"," in");
+  const dir=dmm>0?tr("grosse","larger"):tr("petite","smaller");
+  return drill.name+" "+tr("est plus ","is ")+dir+tr(" que ta mesure, de "," than your size by ")+Math.abs(dmm).toFixed(2)+unit;
 }
 function allDrills(){
   return [...Object.entries(LETTERS).map(([k,v])=>({name:k,v})), ...Object.entries(NUMBERS).map(([k,v])=>({name:"#"+k,v}))].sort((a,b)=>a.v-b.v);
 }
 function renderDrillFind(){
-  const inches=parseSize(document.getElementById("dsize").value, dUnit);
-  if(inches==null){document.getElementById("drillbig").textContent="—";document.getElementById("drillgap").textContent="";document.getElementById("drillcols").innerHTML="";return;}
+  const raw=document.getElementById("dsize").value;
+  const inches=parseSize(raw, dUnit);
+  if(inches==null){
+    setAnswer("drillbig","—",AKPlain.emptyHint(AKPlain.looksLikeThread(raw)?"drill-thread":"drill", lang));
+    document.getElementById("drillgap").textContent="";
+    document.getElementById("drillcols").innerHTML="";
+    document.querySelectorAll(".drillgrid button").forEach(b=>b.classList.remove("on"));
+    return;
+  }
   const all=allDrills();
   const smaller=[...all].reverse().find(d=>d.v<inches-0.0002);
   const bigger=all.find(d=>d.v>inches+0.0002);
   const pile=all.find(d=>Math.abs(d.v-inches)<0.0002);
   const best=pile||(smaller&&bigger? (inches-smaller.v<=bigger.v-inches?smaller:bigger) : smaller||bigger);
-  document.getElementById("drillbig").textContent=best?best.name:"—";
-  const bits=[smaller,bigger].filter(Boolean);
-  const asked=(inches*IN).toFixed(2);
-  document.getElementById("drillgap").textContent=lang==="fr"
-    ?"Tu as demandé "+asked+" mm. Plus petite et plus grosse : mèches du tiroir autour de cette mesure. Pour percer avant de tarauder, ouvre Tarauds. Pour laisser passer un boulon, ouvre Passage. Le diamètre de la vis n'est pas la mèche."
-    :"You asked for "+asked+" mm. Smaller and larger are drawer bits around that size. To drill before tapping, open Taps. To let a bolt pass through, open Clearance. Bolt diameter is not the drill.";
+  const job=AKPlain.describeDrill({lang, name:best?best.name:"—", inches, bitInches:best?best.v:null});
+  setAnswer("drillbig", job.bit, job.action);
+  document.getElementById("drillgap").textContent=tr(
+    "Plus petite et plus grosse : mèches du tiroir autour de ta mesure. Le diamètre de la vis n'est pas la mèche.",
+    "Smaller and larger are drawer bits around your size. Bolt diameter is not the drill."
+  );
   document.getElementById("drillcols").innerHTML=`<div class="chips" id="dpick">
-    <button data-v="${smaller?smaller.v:""}">plus petite<br>${smaller?smaller.name:"—"}</button>
-    <button data-v="${bigger?bigger.v:""}">plus grosse<br>${bigger?bigger.name:"—"}</button>
+    <button data-v="${smaller?smaller.v:""}">${tr("plus petite","smaller")}<br>${smaller?smaller.name:"—"}</button>
+    <button data-v="${bigger?bigger.v:""}">${tr("plus grosse","larger")}<br>${bigger?bigger.name:"—"}</button>
   </div>`+[
-    ["Prochaine plus petite", smaller?gapWords(inches,smaller):"aucune plus petite"],
-    ["Prochaine plus grosse", bigger?gapWords(inches,bigger):"aucune plus grosse"],
-    ["En fraction", frac(inches)+" · "+inches.toFixed(4)+" po"]
+    [tr("Prochaine plus petite","Next smaller"), smaller?gapWords(inches,smaller):tr("aucune plus petite","none smaller")],
+    [tr("Prochaine plus grosse","Next larger"), bigger?gapWords(inches,bigger):tr("aucune plus grosse","none larger")],
+    [tr("En fraction","As a fraction"), frac(inches)+" · "+inches.toFixed(4)+tr(" po"," in")]
   ].map(x=>`<article><div class="k">${x[0]}</div><div class="v">${x[1]}</div></article>`).join("");
   document.querySelectorAll(".drillgrid button").forEach(b=>b.classList.toggle("on", b.dataset.k===best.name));
 }
@@ -728,34 +871,47 @@ document.getElementById("dfracs").onclick=e=>{const b=e.target.closest("button")
 document.getElementById("dsize").addEventListener("input",renderDrillFind);
 document.getElementById("dunit").onclick=e=>{const b=e.target.closest("button");if(!b)return;dUnit=b.dataset.u;document.querySelectorAll("#dunit button").forEach(x=>x.classList.toggle("on",x===b));renderDrillFind();};
 document.getElementById("letters").onclick=document.getElementById("numbers").onclick=e=>{const b=e.target.closest("button");if(!b||b.classList.contains("help"))return;dUnit="po";document.querySelectorAll("#dunit button").forEach(x=>x.classList.toggle("on",x.dataset.u==="po"));document.getElementById("dsize").value=b.dataset.v;renderDrillFind();};
-document.getElementById("cs").innerHTML=[["","tous"],["0.070","1/16"],["0.103","3/32"],["0.139","1/8"],["0.210","3/16"],["0.275","1/4"]].map((c,i)=>`<button data-cs="${c[0]}" class="${i===0?"on":""}">${c[1]}</button>`).join("");
+function paintCs(){
+  const cur=document.querySelector("#cs button.on")?.dataset.cs||"";
+  const rows=[["",tr("tous","all")],["0.070","1/16"],["0.103","3/32"],["0.139","1/8"],["0.210","3/16"],["0.275","1/4"]];
+  document.getElementById("cs").innerHTML=rows.map(c=>`<button data-cs="${c[0]}" class="${c[0]===cur?"on":""}">${c[1]}</button>`).join("");
+}
+paintCs();
 document.getElementById("cs").onclick=e=>{const b=e.target.closest("button");if(!b)return;document.querySelectorAll("#cs button").forEach(x=>x.classList.toggle("on",x===b));renderOring();};
 document.getElementById("oq").oninput=renderOring;
 document.getElementById("oid").oninput=renderOring;
 document.getElementById("ood").oninput=renderOring;
 document.getElementById("fq").oninput=renderFits;
-document.getElementById("lang").onclick=()=>{lang=lang==="fr"?"en":"fr";localStorage.setItem("ak-lang",lang);document.getElementById("lang").textContent=lang==="fr"?"EN":"FR";document.querySelectorAll("[data-fr]").forEach(el=>{el.textContent=lang==="fr"?el.dataset.fr:el.dataset.en;});renderDesk();renderOd();renderTap();renderDrillFind();renderClearance();renderOring();renderFits();};
+function applyLang(){
+  document.getElementById("lang").textContent=lang==="fr"?"EN":"FR";
+  document.querySelectorAll("[data-fr]").forEach(el=>{if(el.dataset.fr)el.textContent=lang==="fr"?el.dataset.fr:el.dataset.en;});
+  paintFams();paintTapCommon();paintQuick();paintCs();paintLex();paintFitFams();
+}
+document.getElementById("lang").onclick=()=>{lang=lang==="fr"?"en":"fr";localStorage.setItem("ak-lang",lang);applyLang();renderDesk();renderOd();renderTap();renderDrillFind();renderClearance();renderOring();renderFits();};
+document.getElementById("guidedismiss").onclick=()=>{document.getElementById("guide").hidden=true;localStorage.setItem("ak-guide","off");};
+document.getElementById("guidebtn").onclick=()=>{const g=document.getElementById("guide");g.hidden=false;localStorage.removeItem("ak-guide");g.scrollIntoView({behavior:"smooth",block:"start"});};
+if(localStorage.getItem("ak-guide")==="off") document.getElementById("guide").hidden=true;
 const HELP={
- od:{t:"Mesurer",b:"Mâle : placez le vernier à l'extérieur, sur les premiers filets. Femelle : placez-le à l'intérieur de l'ouverture. Ne mesurez pas dans le creux du filet."},
- sex:{t:"Mâle ou femelle",b:"Mâle : le filet est à l'extérieur. Femelle : le filet est à l'intérieur, écrou ou port. Un boyau a souvent une femelle droite NPSM, pas une femelle NPT."},
- tpi:{t:"Filets",b:"Comptez les filets sur un pouce. 18 ou 20. Ce n'est pas la grosseur. Si vous ne le savez pas, laissez le champ vide."},
- said:{t:"Taille demandée",b:"Un 1/2 po peut désigner le boyau ou le filet. Ce n'est pas le même raccord. Vérifiez le bout, puis choisissez."},
- end:{t:"Le bout",b:"Pointu : JIC. Plat avec un o-ring : ORFS. En cône qui serre fort : NPT. Droit avec l'o-ring à la base : ORB."},
- convert:{t:"mm, pouces, pieds",b:"25,4 mm valent un pouce. 12 pouces valent un pied. Entrez mm, pouces ou pieds : les autres suivent."},
- clear:{t:"Trou de passage",b:"Le boulon traverse sans filet. Le diamètre écrit sur la vis (1/4, M10) n'est pas la mèche. Serré : peu de jeu. Normal : le choix habituel. Libre : plus de jeu. UNC et UNF du même diamètre ont le même trou. NPT et BSP ne sont pas ici."},
- tap:{t:"Avant taraud",b:"Le taraud coupe le filet dans un trou plus petit que la vis. Le pas change la mèche : 1/4-20 prend #7, 1/4-28 prend #3. Le trou de passage est le même pour les deux : 9/32 en ajustement normal."},
- threadname:{t:"1/4-20",b:"1/4 est le diamètre nominal de la vis. 20 est le nombre de filets sur un pouce. Ce n'est pas le nom de la mèche, ni le trou de passage."},
- pct:{t:"75 %",b:"Ne percez pas aussi gros que la vis. 75 % est le trou habituel avant de tarauder. Plus gros, le filet est faible. Plus petit, l'outil casse. Ce calcul ne donne pas le trou de passage."},
- fams:{t:"Les familles",b:"Gros : UNC. Fin : UNF. Métrique : M6, M8. Tuyau NPT et gaz BSP : filets de tuyau, pour tarauder seulement. Pas un trou de passage de boulon."},
- drill:{t:"Les mèches",b:"Une mèche peut s'appeler par une lettre, un numéro ou une fraction, comme 5/32. Plus petite et plus grosse sont les mèches du tiroir autour de la mesure. Pour un filet intérieur, ouvre Tarauds. Pour un boulon qui passe, ouvre Passage."},
- letter:{t:"Lettres",b:"De A à Z. A est plus petite que Z."},
- number:{t:"Numéros",b:"De 1 à 80. Plus le numéro est grand, plus la mèche est petite. #7 est la mèche avant de tarauder un 1/4-20. #3 est celle d'un 1/4-28. Ni l'une ni l'autre n'est le trou de passage."},
- oring:{t:"O-ring",b:"Mesurez d'abord l'épaisseur (CS), puis le trou (ID). L'OD = ID + 2×CS. Le dash n'est pas la grosseur du boyau."},
- fit:{t:"Numéro",b:"2404 est le numéro du raccord. Plusieurs mots : JIC et 90 doivent tous matcher (ET). Le dessin dit droit, coude ou T."},
- dash:{t:"dash",b:"C'est le numéro de l'o-ring, comme -214. Ce n'est pas la grosseur du tuyau."},
- id:{t:"ID",b:"ID, c'est le trou au milieu de l'o-ring. En pouces, puis en millimètres."},
- cs:{t:"CS",b:"CS, c'est l'épaisseur du rond. 0,070 po, c'est un o-ring mince. 0,139 po, c'est plus gros."},
- odring:{t:"OD",b:"OD, c'est le dehors de l'o-ring. OD = ID + 2×CS. Utile pour vérifier une mesure au vernier."}
+ od:{fr:{t:"Mesurer",b:"Mâle : place le vernier à l'extérieur, sur les premiers filets. Femelle : place-le à l'intérieur de l'ouverture. Ne mesure pas dans le creux du filet. Exemple : 0.562 po."},en:{t:"Measuring",b:"Male: put the caliper outside, on the first threads. Female: put it inside the opening. Do not measure in the thread groove. Example: 0.562 in."}},
+ sex:{fr:{t:"Mâle ou femelle",b:"Mâle : le filet est à l'extérieur. Femelle : le filet est à l'intérieur, écrou ou port. Un boyau a souvent une femelle droite NPSM, pas une femelle NPT."},en:{t:"Male or female",b:"Male: the thread is outside. Female: the thread is inside, a nut or a port. A hose often has a straight NPSM female, not an NPT female."}},
+ tpi:{fr:{t:"Filets",b:"Compte les filets sur un pouce. 18 ou 20. Ce n'est pas la grosseur. Si tu ne le sais pas, laisse le champ vide."},en:{t:"Threads",b:"Count the threads in one inch. 18 or 20. That is not the size. If you don't know, leave the field empty."}},
+ said:{fr:{t:"Taille demandée",b:"Un 1/2 po peut désigner le boyau ou le filet. Ce n'est pas le même raccord. Vérifie le bout, puis choisis."},en:{t:"Size given",b:"1/2 in can mean the hose or the thread. It is not the same fitting. Check the nose, then choose."}},
+ end:{fr:{t:"Le bout",b:"Pointu : JIC. Plat avec un o-ring : ORFS. En cône qui serre fort : NPT. Droit avec l'o-ring à la base : ORB."},en:{t:"The nose",b:"Pointed: JIC. Flat with an O-ring: ORFS. Tapered and sealing harder as you tighten: NPT. Straight with the O-ring at the base: ORB."}},
+ convert:{fr:{t:"mm, pouces, pieds",b:"25,4 mm valent un pouce. 12 pouces valent un pied. Entre mm, pouces ou pieds : les autres suivent."},en:{t:"mm, inches, feet",b:"25.4 mm is one inch. 12 inches is one foot. Enter mm, inches or feet: the others follow."}},
+ clear:{fr:{t:"Trou de passage",b:"Le boulon traverse sans filet. Le diamètre écrit sur la vis (1/4, M10) n'est pas la mèche. Serré : peu de jeu. Normal : le choix habituel. Large : plus de jeu. UNC et UNF du même diamètre ont le même trou. NPT et BSP ne sont pas ici."},en:{t:"Clearance hole",b:"The bolt passes through with no thread. The diameter written on the bolt (1/4, M10) is not the drill. Close: little play. Normal: the usual choice. Loose: more play. UNC and UNF of the same diameter share the hole. NPT and BSP are not here."}},
+ tap:{fr:{t:"Avant taraud",b:"Le taraud coupe le filet dans un trou plus petit que la vis. Le pas change la mèche : 1/4-20 prend #7, 1/4-28 prend #3. Le trou de passage est le même pour les deux : 9/32 en ajustement normal."},en:{t:"Before the tap",b:"The tap cuts the thread in a hole smaller than the bolt. Pitch changes the bit: 1/4-20 takes #7, 1/4-28 takes #3. The clearance hole is the same for both: 9/32 at a normal fit."}},
+ threadname:{fr:{t:"1/4-20",b:"1/4 est le diamètre nominal de la vis. 20 est le nombre de filets sur un pouce. Ce n'est pas le nom de la mèche, ni le trou de passage."},en:{t:"1/4-20",b:"1/4 is the nominal bolt diameter. 20 is the number of threads per inch. It is not the drill name, and not the clearance hole."}},
+ pct:{fr:{t:"75 %",b:"Ne perce pas aussi gros que la vis. 75 % est le trou habituel avant de tarauder. Plus gros, le filet est faible. Plus petit, l'outil casse. Ce calcul ne donne pas le trou de passage."},en:{t:"75%",b:"Do not drill as large as the bolt. 75% is the usual hole before tapping. Larger, the thread is weak. Smaller, the tap breaks. This calculation is not the clearance hole."}},
+ fams:{fr:{t:"Les familles",b:"Gros : UNC. Fin : UNF. Métrique : M6, M8, M10x1.5. Tuyau NPT et gaz BSP : filets de tuyau, pour tarauder seulement. Pas un trou de passage de boulon."},en:{t:"Families",b:"Coarse: UNC. Fine: UNF. Metric: M6, M8, M10x1.5. NPT pipe and BSP gas: pipe threads, for tapping only. Not a bolt clearance hole."}},
+ drill:{fr:{t:"Les mèches",b:"Une mèche peut s'appeler par une lettre, un numéro ou une fraction, comme 5/32 ou 0.250 po. Plus petite et plus grosse sont les mèches du tiroir autour de la mesure. Pour un filet, ouvre Tarauds. Pour un boulon qui passe, ouvre Passage."},en:{t:"Drills",b:"A bit can be a letter, a number or a fraction, such as 5/32 or 0.250 in. Smaller and larger are the drawer bits around the size. For a thread, open Taps. To let a bolt through, open Clearance."}},
+ letter:{fr:{t:"Lettres",b:"De A à Z. A est plus petite que Z."},en:{t:"Letters",b:"From A to Z. A is smaller than Z."}},
+ number:{fr:{t:"Numéros",b:"De 1 à 80. Plus le numéro est grand, plus la mèche est petite. #7 est la mèche avant de tarauder un 1/4-20. #3 est celle d'un 1/4-28. Ni l'une ni l'autre n'est le trou de passage."},en:{t:"Numbers",b:"From 1 to 80. The higher the number, the smaller the bit. #7 is the drill before tapping 1/4-20. #3 is the one for 1/4-28. Neither is the clearance hole."}},
+ oring:{fr:{t:"O-ring",b:"Mesure d'abord l'épaisseur (section, CS), puis le trou (ID). L'OD = ID + 2×CS. Le dash n'est pas la grosseur du boyau. 214 est un exemple courant."},en:{t:"O-ring",b:"Measure the thickness first (cross-section, CS), then the hole (ID). OD = ID + 2×CS. The dash is not the hose size. 214 is a common example."}},
+ fit:{fr:{t:"Numéro",b:"2404 est le numéro du raccord. Plusieurs mots : JIC et 90 doivent tous matcher. Bouchon trouve aussi plug. Le dessin dit droit, coude ou T."},en:{t:"Number",b:"2404 is the fitting number. Several words: JIC and 90 must all match. The picture shows straight, elbow or tee."}},
+ dash:{fr:{t:"dash",b:"C'est le numéro de l'o-ring, comme 214. Ce n'est pas la grosseur du tuyau."},en:{t:"dash",b:"It is the O-ring number, such as 214. It is not the hose size."}},
+ id:{fr:{t:"ID",b:"ID, c'est le trou au milieu de l'o-ring. Exemple : 0.984 po."},en:{t:"ID",b:"ID is the hole in the middle of the O-ring. Example: 0.984 in."}},
+ cs:{fr:{t:"Section",b:"CS, c'est l'épaisseur du rond. 0.070 po, c'est un o-ring mince. 0.139 po (1/8), c'est courant sur les boyaux."},en:{t:"Section",b:"CS is the thickness of the ring. 0.070 in is a thin O-ring. 0.139 in (1/8) is common on hoses."}},
+ odring:{fr:{t:"OD",b:"OD, c'est le dehors de l'o-ring. OD = ID + 2×CS. Exemple : 1.262 po. Utile pour vérifier une mesure au vernier."},en:{t:"OD",b:"OD is the outside of the O-ring. OD = ID + 2×CS. Example: 1.262 in. Useful to check a caliper reading."}}
 };
 document.body.addEventListener("click",e=>{
   const b=e.target.closest(".help");
@@ -764,15 +920,16 @@ document.body.addEventListener("click",e=>{
   e.stopPropagation();
   const h=HELP[b.dataset.help];
   if(!h) return;
-  document.getElementById("poptitle").textContent=h.t;
-  document.getElementById("popbody").textContent=h.b;
+  const pack=h.fr?(lang==="en"?h.en:h.fr):h;
+  document.getElementById("poptitle").textContent=pack.t;
+  document.getElementById("popbody").textContent=pack.b;
   document.getElementById("pop").showModal();
 });
 document.getElementById("popclose").onclick=()=>document.getElementById("pop").close();
 fetch("fittings.json").then(r=>r.json()).then(data=>{
   fittings=data;
-  const fams=[...new Set(data.map(f=>f.family))];
-  document.getElementById("fitfams").innerHTML=`<button class="on" data-f="">tous</button>`+fams.map(f=>`<button data-f="${f}">${f}</button>`).join("");
+  fitFamilies=[...new Set(data.map(f=>f.family))];
+  paintFitFams();
   document.getElementById("fitfams").onclick=e=>{const b=e.target.closest("button");if(!b)return;fitFam=b.dataset.f;document.querySelectorAll("#fitfams button").forEach(x=>x.classList.toggle("on",x===b));renderFits();};
   renderFits();
 });
@@ -866,7 +1023,7 @@ renderClearance=paid(_clear);
 renderTap=paid(_tap);
 renderDesk=paid(_desk);
 renderFits=paid(_fits);
-showTab("bench");renderDesk();renderConv();renderTap();const t14=[...document.getElementById("thread").options].findIndex(o=>o.textContent.startsWith("1/4-20"));if(t14>=0)document.getElementById("thread").value=t14;renderTap();renderOring();renderOd();renderDrillFind();renderClearance();trialNote();
+showTab("bench");renderDesk();renderConv();renderTap();const t14=[...document.getElementById("thread").options].findIndex(o=>o.textContent.startsWith("1/4-20"));if(t14>=0)document.getElementById("thread").value=t14;renderTap();renderOring();renderOd();renderDrillFind();renderClearance();paintLex();applyLang();trialNote();
 </script>
 </body>
 </html>

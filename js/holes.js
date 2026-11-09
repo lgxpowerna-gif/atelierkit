@@ -155,7 +155,7 @@
   function fitName(fit) {
     var f = String(fit || "normal").toLowerCase();
     if (f === "close" || f === "fine" || f === "serre" || f === "serré") return "close";
-    if (f === "loose" || f === "coarse" || f === "libre") return "loose";
+    if (f === "loose" || f === "coarse" || f === "libre" || f === "large") return "loose";
     return "normal";
   }
   function stripTpi(token) {
