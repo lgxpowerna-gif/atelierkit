@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>AtelierKit — connexions hydrauliques</title>
 <link rel="canonical" href="https://atelierkit.faitle.net/" />
-<meta name="description" content="Au comptoir : quelle mèche prendre, quelle pièce sortir. Essai de 30 jours." />
+<meta name="description" content="Au shop : quelle mèche prendre, quel fitting sortir. Essai de 30 jours." />
 <link rel="manifest" href="/manifest.webmanifest" />
 <meta name="theme-color" content="#1c1915" />
 <link rel="icon" href="/icons/icon-192.png" />
@@ -105,9 +105,14 @@ body.bench-mode .bench-label{display:block}
 #otable a,#fits .locked-note a,#taptable a{color:var(--accent);font-weight:600}
 #pay a.btn{display:inline-block;margin-top:4px;background:#e2a322;color:#1c1406;text-decoration:none;border-radius:8px;padding:10px 14px;font-weight:600}
 #fits .locked-note{margin:0 0 10px}
+.backhome{display:inline-flex;align-items:center;min-height:44px;margin:0 0 12px;padding:8px 14px;border-radius:12px;border:1px solid var(--line);background:#fff;font-weight:600;font-size:16px;cursor:pointer}
+.morelinks{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.morelinks button{background:transparent;border:0;color:var(--accent);font-weight:600;font-size:16px;padding:8px 4px;cursor:pointer;min-height:44px}
+h2.task{font-size:26px;line-height:1.2;margin:0 0 8px}
 @media(max-width:720px){
+  nav button:not([data-tab="start"]){display:none}
   .triple,.pair,.readout,.cols{grid-template-columns:1fr}
-  nav button,#lang,#guidebtn,.chips button,#tapclearbtn,#cleartapbtn,#guidedismiss,dialog button{min-height:44px;padding:10px 12px}
+  nav button,#lang,#guidebtn,.chips button,#tapclearbtn,#cleartapbtn,#guidedismiss,.backhome,dialog button{min-height:44px;padding:10px 12px}
   #guidedismiss{width:100%}
   .guide-top{flex-wrap:wrap}
   .help{width:36px;height:36px;font-size:16px}
@@ -124,14 +129,13 @@ body.bench-mode .bench-label{display:block}
   <div class="brand"><span>AK</span> AtelierKit</div>
   <nav>
     <button class="on" data-tab="start" data-fr="Accueil" data-en="Home">Accueil</button>
-    <button data-tab="desk" data-fr="Raccord" data-en="Fitting">Raccord</button>
-    <button data-tab="convert" data-fr="Convertir" data-en="Convert">Convertir</button>
+    <button data-tab="desk" data-fr="Fitting" data-en="Fitting">Fitting</button>
+    <button data-tab="oring" data-fr="O-ring" data-en="O-ring">O-ring</button>
+    <button data-tab="tap" data-fr="Taraud" data-en="Tap">Taraud</button>
     <button data-tab="clear" data-fr="Passage" data-en="Clearance">Passage</button>
-    <button data-tab="tap" data-fr="Filet" data-en="Thread">Filet</button>
+    <button data-tab="convert" data-fr="po / mm" data-en="in / mm">po / mm</button>
+    <button data-tab="fit" data-fr="Numéro" data-en="Number">Numéro</button>
     <button data-tab="drill" data-fr="Mèche" data-en="Drill">Mèche</button>
-    <button data-tab="oring" data-fr="Joint" data-en="O-ring">Joint</button>
-    <button data-tab="fit" data-fr="Dessins" data-en="Pictures">Dessins</button>
-    <button data-tab="bench" data-fr="Tout" data-en="All">Tout</button>
   </nav>
   <div class="headtools">
     <button type="button" id="guidebtn" data-fr="Aide" data-en="Help">Aide</button>
@@ -141,32 +145,26 @@ body.bench-mode .bench-label{display:block}
 <main>
   <section class="panel" id="start">
     <div class="card ask">
-      <h1 data-fr="Qu'est-ce que tu cherches ?" data-en="What are you looking for?">Qu'est-ce que tu cherches ?</h1>
-      <p class="lead" data-fr="Choisis une ligne. La bande noire dit quelle mèche prendre, ou quelle pièce sortir." data-en="Pick one line. The black bar says which bit to take, or which part to pull.">Choisis une ligne. La bande noire dit quelle mèche prendre, ou quelle pièce sortir.</p>
+      <h1 data-fr="T'as quoi en main?" data-en="What have you got?">T'as quoi en main?</h1>
+      <p class="lead" data-fr="Pogne une job. La bande noire te dit quoi prendre." data-en="Pick a job. The black bar tells you what to grab.">Pogne une job. La bande noire te dit quoi prendre.</p>
       <div class="routes" id="routes">
-        <button type="button" data-go="bolt"><span data-fr="J'ai un boulon / une vis" data-en="I have a bolt / a screw">J'ai un boulon / une vis</span><small data-fr="Le boulon traverse, ou je fais le filet dans le trou." data-en="The bolt passes through, or I cut the thread in the hole.">Le boulon traverse, ou je fais le filet dans le trou.</small></button>
-        <button type="button" data-go="drill"><span data-fr="Je dois percer un trou" data-en="I need to drill a hole">Je dois percer un trou</span><small data-fr="Je connais la grosseur. Je veux le nom de la mèche." data-en="I know the size. I want the drill name.">Je connais la grosseur. Je veux le nom de la mèche.</small></button>
-        <button type="button" data-go="fit"><span data-fr="Je cherche un raccord" data-en="I'm looking for a fitting">Je cherche un raccord</span><small data-fr="J'ai la pièce en main, ou un numéro." data-en="I have the part in hand, or a number.">J'ai la pièce en main, ou un numéro.</small></button>
-        <button type="button" data-go="oring"><span data-fr="Je cherche un o-ring" data-en="I'm looking for an O-ring">Je cherche un o-ring</span><small data-fr="Le numéro du joint, à partir de l'épaisseur." data-en="The ring number, from the thickness.">Le numéro du joint, à partir de l'épaisseur.</small></button>
-        <button type="button" data-go="convert"><span data-fr="Convertir" data-en="Convert">Convertir</span><small data-fr="Des mm aux pouces, ou l'inverse." data-en="Millimetres to inches, or the other way.">Des mm aux pouces, ou l'inverse.</small></button>
+        <button type="button" data-go="desk"><span data-fr="J'ai un raccord, c'est quoi?" data-en="I've got a fitting. What is it?">J'ai un raccord, c'est quoi?</span><small data-fr="Fitting en main. Tu mesures le filet. Exemple : 0.562 po." data-en="Fitting in hand. You measure the thread. Example: 0.562 in.">Fitting en main. Tu mesures le filet. Exemple : 0.562 po.</small></button>
+        <button type="button" data-go="oring"><span data-fr="Quel O-ring il me faut?" data-en="Which O-ring do I need?">Quel O-ring il me faut?</span><small data-fr="Joint torique (O-ring). Exemple : dash 214." data-en="O-ring. Example: dash 214.">Joint torique (O-ring). Exemple : dash 214.</small></button>
+        <button type="button" data-go="tap"><span data-fr="Quelle mèche pour ce taraud?" data-en="Which drill for this tap?">Quelle mèche pour ce taraud?</span><small data-fr="Foret / mèche (drill) avant le taraud (tap). Exemple : 1/4-20." data-en="Drill before the tap. Example: 1/4-20.">Foret / mèche (drill) avant le taraud (tap). Exemple : 1/4-20.</small></button>
+        <button type="button" data-go="clear"><span data-fr="Quel trou de passage pour ma vis?" data-en="What clearance hole for my bolt?">Quel trou de passage pour ma vis?</span><small data-fr="La vis passe, tu taraude pas. Exemple : 1/4 po." data-en="The bolt passes through. You don't tap. Example: 1/4 in.">La vis passe, tu taraude pas. Exemple : 1/4 po.</small></button>
       </div>
-      <div class="routes" id="boltq" hidden>
-        <button type="button" class="back" data-go="back"><span data-fr="Retour" data-en="Back">Retour</span></button>
-        <button type="button" data-go="clear"><span data-fr="Le boulon traverse la pièce" data-en="The bolt passes through the part">Le boulon traverse la pièce</span><small data-fr="Pas de filet dans ce trou. Exemple : boulon 1/4 po." data-en="No thread in this hole. Example: 1/4 in bolt.">Pas de filet dans ce trou. Exemple : boulon 1/4 po.</small></button>
-        <button type="button" data-go="tap"><span data-fr="Je fais le filet dans le trou" data-en="I cut the thread in the hole">Je fais le filet dans le trou</span><small data-fr="Je perce d'abord, puis je taraude. Exemple : 1/4-20." data-en="I drill first, then I tap. Example: 1/4-20.">Je perce d'abord, puis je taraude. Exemple : 1/4-20.</small></button>
-      </div>
-      <div class="routes" id="fitq" hidden>
-        <button type="button" class="back" data-go="back"><span data-fr="Retour" data-en="Back">Retour</span></button>
-        <button type="button" data-go="desk"><span data-fr="J'ai la pièce en main" data-en="I have the part in hand">J'ai la pièce en main</span><small data-fr="Je mesure le filet. Exemple : 0.562 po." data-en="I measure the thread. Example: 0.562 in.">Je mesure le filet. Exemple : 0.562 po.</small></button>
-        <button type="button" data-go="catalog"><span data-fr="J'ai un numéro ou un nom" data-en="I have a number or a name">J'ai un numéro ou un nom</span><small data-fr="Exemple : 2404, ou JIC 90." data-en="Example: 2404, or JIC 90.">Exemple : 2404, ou JIC 90.</small></button>
+      <div class="morelinks">
+        <button type="button" data-go="convert" data-fr="Pouces ou mm?" data-en="Inches or mm?">Pouces ou mm?</button>
+        <button type="button" data-go="fit" data-fr="J'ai le numéro du fitting" data-en="I have the fitting number">J'ai le numéro du fitting</button>
+        <button type="button" data-go="drill" data-fr="Juste le nom d'une mèche" data-en="Just the drill name">Juste le nom d'une mèche</button>
       </div>
     </div>
     <details class="card guide" id="guide">
       <summary data-fr="Comment ça marche" data-en="How it works">Comment ça marche</summary>
       <ol>
-        <li data-fr="Choisis ce que tu cherches. Un seul écran s'ouvre." data-en="Pick what you are looking for. One screen opens.">Choisis ce que tu cherches. Un seul écran s'ouvre.</li>
-        <li data-fr="Regarde l'exemple déjà rempli, puis mets ta taille : 1/4-20, M10x1.5, 3/8 NPT ou 0.250 po." data-en="Look at the filled-in example, then type your size: 1/4-20, M10x1.5, 3/8 NPT or 0.250 in.">Regarde l'exemple déjà rempli, puis mets ta taille : 1/4-20, M10x1.5, 3/8 NPT ou 0.250 po.</li>
-        <li data-fr="Lis la bande noire. Elle dit quelle mèche prendre, ou quelle pièce sortir. Le reste est un détail." data-en="Read the black bar. It says which bit to take, or which part to pull. The rest is detail.">Lis la bande noire. Elle dit quelle mèche prendre, ou quelle pièce sortir. Le reste est un détail.</li>
+        <li data-fr="Pogne la job. Un seul écran s'ouvre." data-en="Pick the job. One screen opens.">Pogne la job. Un seul écran s'ouvre.</li>
+        <li data-fr="L'exemple est déjà fait. Change pour ta taille : 1/4-20, M10x1.5, 3/8 NPT ou 0.250 po." data-en="The example is already done. Change it to your size: 1/4-20, M10x1.5, 3/8 NPT or 0.250 in.">L'exemple est déjà fait. Change pour ta taille : 1/4-20, M10x1.5, 3/8 NPT ou 0.250 po.</li>
+        <li data-fr="Lis la bande noire. C'est ça que tu prends. Le reste, c'est du détail." data-en="Read the black bar. That's what you grab. The rest is detail.">Lis la bande noire. C'est ça que tu prends. Le reste, c'est du détail.</li>
       </ol>
       <p class="ex"><a href="#lexicon" data-fr="Mots du comptoir" data-en="Shop words">Mots du comptoir</a></p>
       <button type="button" id="guidedismiss" data-fr="J'ai compris" data-en="Got it">J'ai compris</button>
@@ -174,59 +172,68 @@ body.bench-mode .bench-label{display:block}
   </section>
   <section class="panel" id="desk">
     <div class="card">
-      <div class="bench-label" data-fr="Hydraulique — mesure et taille" data-en="Hydraulic — measure and size">Hydraulique — mesure et taille</div>
-      <p class="why" data-fr="À quoi ça sert : nommer le raccord quand tu n'as pas le numéro de pièce." data-en="What it's for: name the fitting when you don't have the part number.">À quoi ça sert : nommer le raccord quand tu n'as pas le numéro de pièce.</p>
-      <p class="lead"><span data-fr="Étape 1. Mâle : le filet est dehors. Femelle : le filet est dedans. Mesure sur les filets, pas dans le creux." data-en="Step 1. Male: the thread is outside. Female: the thread is inside. Measure on the threads, not in the groove.">Étape 1. Mâle : le filet est dehors. Femelle : le filet est dedans. Mesure sur les filets, pas dans le creux.</span> <button class="help" data-help="sex">?</button></p>
+      <button type="button" class="backhome" data-fr="← Accueil" data-en="← Home">← Accueil</button>
+      <div class="bench-label" data-fr="Fitting en main" data-en="Fitting in hand">Fitting en main</div>
+      <h2 class="task" data-fr="J'ai un raccord, c'est quoi?" data-en="I've got a fitting. What is it?">J'ai un raccord, c'est quoi?</h2>
+      <p class="why" data-fr="À quoi ça sert : trouver le fitting quand t'as pas le numéro." data-en="What it's for: name the fitting when you don't have the number.">À quoi ça sert : trouver le fitting quand t'as pas le numéro.</p>
+      <div class="give"><span data-fr="Quelle pièce je sors" data-en="Which part I pull">Quelle pièce je sors</span><b id="odgive">—</b></div>
+      <p class="lead"><span data-fr="Mâle : le filet est dehors. Femelle : le filet est dedans. Mesure sur le filet, pas dans le fond." data-en="Male: thread is outside. Female: thread is inside. Measure on the thread, not in the bottom.">Mâle : le filet est dehors. Femelle : le filet est dedans. Mesure sur le filet, pas dans le fond.</span> <button class="help" data-help="sex">?</button></p>
       <div class="chips" id="sex">
         <button class="on" data-s="M" data-fr="mâle" data-en="male">mâle</button>
         <button data-s="F" data-fr="femelle" data-en="female">femelle</button>
       </div>
       <div class="pair">
-        <div><label id="odlabel"><span id="odlabtext" data-fr="Dehors, sur le filet" data-en="Outside, on the thread">Dehors, sur le filet</span> <button class="help" data-help="od">?</button></label><input id="od" inputmode="decimal" value="0.562" placeholder="0.562 po" /><p class="ex" data-fr="Exemple déjà rempli : 0.562 po. Efface et mets ta mesure." data-en="Example already filled in: 0.562 in. Clear it and type your measurement.">Exemple déjà rempli : 0.562 po. Efface et mets ta mesure.</p></div>
-        <div><label><span data-fr="Filets sur 1 po (ex. 18). Vide si tu ne sais pas." data-en="Threads per inch (ex. 18). Leave empty if you don't know.">Filets sur 1 po (ex. 18). Vide si tu ne sais pas.</span> <button class="help" data-help="tpi">?</button></label><input id="tpi" inputmode="decimal" placeholder="18" /></div>
+        <div><label id="odlabel"><span id="odlabtext" data-fr="Mesure dehors, sur le filet" data-en="Measure outside, on the thread">Mesure dehors, sur le filet</span> <button class="help" data-help="od">?</button></label><input id="od" inputmode="decimal" value="0.562" placeholder="0.562 po" /><p class="ex" data-fr="Exemple déjà là : 0.562 po. Efface, mets ta mesure." data-en="Example already in: 0.562 in. Clear it and type yours.">Exemple déjà là : 0.562 po. Efface, mets ta mesure.</p></div>
+        <div><label><span data-fr="Filets sur 1 po (ex. 18). Laisse vide si tu sais pas." data-en="Threads per inch (ex. 18). Leave empty if you don't know.">Filets sur 1 po (ex. 18). Laisse vide si tu sais pas.</span> <button class="help" data-help="tpi">?</button></label><input id="tpi" inputmode="decimal" placeholder="18" /></div>
       </div>
       <div class="chips" id="odunit">
         <button class="on" data-u="po">po</button>
         <button data-u="mm">mm</button>
       </div>
-      <div class="give"><span data-fr="Quelle pièce je sors" data-en="Which part I pull">Quelle pièce je sors</span><b id="odgive">—</b></div>
       <div id="odhits"></div>
     </div>
-    <div class="card" style="margin-top:12px">
-      <p class="lead"><span data-fr="Étape 2. La taille dite (ex. 1/2 po) peut être le boyau ou le filet. Regarde le bout avant de sortir le raccord." data-en="Step 2. The size you were told (ex. 1/2 in) may be the hose or the thread. Look at the nose before you pull the fitting.">Étape 2. La taille dite (ex. 1/2 po) peut être le boyau ou le filet. Regarde le bout avant de sortir le raccord.</span> <button class="help" data-help="said">?</button></p>
+    <details class="card advanced" style="margin-top:12px">
+      <summary data-fr="On t'a dit une grosseur, pas le fitting" data-en="They told you a size, not the fitting">On t'a dit une grosseur, pas le fitting</summary>
+      <p class="lead"><span data-fr="Un 1/2 po, ça peut être le boyau ou le filet. Regarde le bout avant de sortir la pièce." data-en="1/2 in can be the hose or the thread. Look at the nose before you pull the part.">Un 1/2 po, ça peut être le boyau ou le filet. Regarde le bout avant de sortir la pièce.</span> <button class="help" data-help="said">?</button></p>
       <label data-fr="taille demandée" data-en="size given">taille demandée</label>
       <div class="chips" id="said"></div>
       <div class="give"><span data-fr="Quelle pièce je sors" data-en="Which part I pull">Quelle pièce je sors</span><b id="give">—</b></div>
       <div class="cols" id="deskcols"></div>
-      <h3><span data-fr="C'est quoi le bout" data-en="What is the nose">C'est quoi le bout</span> <button class="help" data-help="end">?</button></h3>
+      <h3><span data-fr="C'est quoi le bout?" data-en="What's the nose?">C'est quoi le bout?</span> <button class="help" data-help="end">?</button></h3>
       <div class="idgrid" id="idgrid"></div>
       <p id="idtext" class="lead"></p>
-    </div>
+    </details>
   </section>
 
   <section class="panel" id="convert">
     <div class="card">
-      <div class="bench-label" data-fr="Convertir — mm, pouces, pieds" data-en="Convert — mm, inches, feet">Convertir — mm, pouces, pieds</div>
-      <p class="why" data-fr="À quoi ça sert : passer des mm aux pouces, ou l'inverse, sans calculatrice." data-en="What it's for: turn mm into inches, or the other way, without a calculator.">À quoi ça sert : passer des mm aux pouces, ou l'inverse, sans calculatrice.</p>
-      <p class="lead"><span data-fr="Entre la mesure en mm, pouces ou pieds. Les autres unités suivent. Le point et la virgule marchent." data-en="Enter the measurement in mm, inches or feet. The other units follow. Dot and comma both work.">Entre la mesure en mm, pouces ou pieds. Les autres unités suivent. Le point et la virgule marchent.</span> <button class="help" data-help="convert">?</button></p>
+      <button type="button" class="backhome" data-fr="← Accueil" data-en="← Home">← Accueil</button>
+      <div class="bench-label" data-fr="po / mm" data-en="in / mm">po / mm</div>
+      <h2 class="task" data-fr="Pouces ou millimètres?" data-en="Inches or millimetres?">Pouces ou millimètres?</h2>
+      <p class="why" data-fr="À quoi ça sert : passer de po à mm, sans calculatrice." data-en="What it's for: turn inches into mm, no calculator.">À quoi ça sert : passer de po à mm, sans calculatrice.</p>
+      <div class="readout">
+        <div><div class="big" id="bigmm">25.400 mm</div><div class="subn" id="bigin">1.0000 po</div></div>
+        <div><div class="big" id="bigfrac">1"</div><div class="subn" id="bigft">0 pi 1 po</div></div>
+      </div>
+      <p class="lead"><span data-fr="Exemple déjà là : 1-1/2 po. Écris en mm, en pouces ou en pieds. Le point ou la virgule, les deux marchent." data-en="Example already in: 1-1/2 in. Type mm, inches or feet. Dot or comma, both work.">Exemple déjà là : 1-1/2 po. Écris en mm, en pouces ou en pieds. Le point ou la virgule, les deux marchent.</span> <button class="help" data-help="convert">?</button></p>
       <div class="triple">
         <div><label data-fr="pieds" data-en="feet">pieds</label><input id="feet" inputmode="decimal" value="0" placeholder="2" /></div>
         <div><label data-fr="pouces" data-en="inches">pouces</label><input id="inch" value="1-1/2" placeholder="1-1/2" /></div>
         <div><label>mm</label><input id="mm" inputmode="decimal" value="25.4" placeholder="25.4" /></div>
       </div>
       <div class="chips" id="fracs"></div>
-      <div class="readout">
-        <div><div class="big" id="bigmm">25.400 mm</div><div class="subn" id="bigin">1.0000 po</div></div>
-        <div><div class="big" id="bigfrac">1"</div><div class="subn" id="bigft">0 pi 1 po</div></div>
-      </div>
     </div>
   </section>
 
   <section class="panel" id="clear">
     <div class="card">
-      <div class="bench-label" data-fr="Passage — le boulon traverse, sans filet" data-en="Clearance — the bolt passes through, no thread">Passage — le boulon traverse, sans filet</div>
-      <p class="why" data-fr="À quoi ça sert : choisir la mèche d'un trou où le boulon passe, sans le tarauder." data-en="What it's for: pick the drill for a hole the bolt passes through, with no thread.">À quoi ça sert : choisir la mèche d'un trou où le boulon passe, sans le tarauder.</p>
-      <p class="lead"><span data-fr="Trou de passage : la vis traverse la pièce. On ne taraude pas ce trou. Le diamètre nominal (1/4, M10) n'est pas la mèche. En cas de doute, laisse Normal. NPT et BSP ne sont pas des boulons." data-en="Clearance hole: the bolt passes through the part. This hole is not tapped. Nominal diameter (1/4, M10) is not the drill. If unsure, leave Normal. NPT and BSP are not bolts.">Trou de passage : la vis traverse la pièce. On ne taraude pas ce trou. Le diamètre nominal (1/4, M10) n'est pas la mèche. En cas de doute, laisse Normal. NPT et BSP ne sont pas des boulons.</span> <button class="help" data-help="clear">?</button></p>
+      <button type="button" class="backhome" data-fr="← Accueil" data-en="← Home">← Accueil</button>
+      <div class="bench-label" data-fr="Trou de passage (clearance)" data-en="Clearance hole">Trou de passage (clearance)</div>
+      <h2 class="task" data-fr="Quel trou de passage pour ta vis?" data-en="What clearance hole for your bolt?">Quel trou de passage pour ta vis?</h2>
+      <p class="why" data-fr="À quoi ça sert : la mèche (drill) pour que la vis passe. Tu taraude pas." data-en="What it's for: the drill so the bolt passes through. You don't tap.">À quoi ça sert : la mèche (drill) pour que la vis passe. Tu taraude pas.</p>
+      <p class="ex" data-fr="Exemple déjà là : vis 1/4 po, jeu normal. Change la grosseur en bas." data-en="Example already in: 1/4 in bolt, normal fit. Change the size below.">Exemple déjà là : vis 1/4 po, jeu normal. Change la grosseur en bas.</p>
+      <div class="give"><span data-fr="Quelle mèche je prends" data-en="Which bit I take">Quelle mèche je prends</span><b id="clearbig">—</b></div>
+      <p class="subn" id="clearfitnote"></p>
       <p class="meta" data-fr="Tailles courantes" data-en="Common sizes">Tailles courantes</p>
       <div class="chips" id="clearcommon"></div>
       <div class="chips" id="clearfam">
@@ -234,9 +241,9 @@ body.bench-mode .bench-label{display:block}
         <button data-f="MM" data-fr="Métrique" data-en="Metric">Métrique</button>
       </div>
       <div class="pair">
-        <div><label data-fr="diamètre du boulon (ex. 1/4 ou M10)" data-en="bolt diameter (ex. 1/4 or M10)">diamètre du boulon (ex. 1/4 ou M10)</label><select id="clearsize"></select></div>
+        <div><label data-fr="Grosseur de la vis (ex. 1/4 ou M10)" data-en="Bolt size (ex. 1/4 or M10)">Grosseur de la vis (ex. 1/4 ou M10)</label><select id="clearsize"></select></div>
         <div>
-          <label data-fr="Jeu du trou. En cas de doute : normal." data-en="Hole fit. If unsure: normal.">Jeu du trou. En cas de doute : normal.</label>
+          <label data-fr="Jeu du trou. Si on t'a rien dit : normal." data-en="Hole fit. If nobody said: normal.">Jeu du trou. Si on t'a rien dit : normal.</label>
           <div class="chips" id="clearfit">
             <button data-fit="close" data-fr="serré" data-en="close">serré</button>
             <button class="on" data-fit="normal" data-fr="normal" data-en="normal">normal</button>
@@ -244,9 +251,6 @@ body.bench-mode .bench-label{display:block}
           </div>
         </div>
       </div>
-      <p class="ex" data-fr="Exemple déjà choisi : boulon 1/4 po, jeu normal. Change la taille pour la tienne." data-en="Example already chosen: 1/4 in bolt, normal fit. Change the size to yours.">Exemple déjà choisi : boulon 1/4 po, jeu normal. Change la taille pour la tienne.</p>
-      <p class="subn" id="clearfitnote"></p>
-      <div class="give"><span data-fr="Quelle mèche je prends" data-en="Which bit I take">Quelle mèche je prends</span><b id="clearbig">—</b></div>
       <details class="advanced">
         <summary data-fr="Plus de détails" data-en="More detail">Plus de détails</summary>
         <p class="subn" id="clearsub"></p>
@@ -258,33 +262,34 @@ body.bench-mode .bench-label{display:block}
         <summary data-fr="D'où viennent les chiffres" data-en="Where the numbers come from">D'où viennent les chiffres</summary>
         <p class="meta" id="clearsource"></p>
       </details>
-      <p><button type="button" id="cleartapbtn" data-goto="tap" data-fr="Voir la mèche avant taraud" data-en="See the drill before tapping">Voir la mèche avant taraud</button></p>
+      <p><button type="button" id="cleartapbtn" data-goto="tap" data-fr="Mèche pour tarauder (tap) cette vis" data-en="Drill to tap this bolt">Mèche pour tarauder (tap) cette vis</button></p>
     </div>
   </section>
 
   <section class="panel" id="tap">
     <div class="card">
-      <div class="bench-label" data-fr="Taraudage — trou plus petit, filet dedans" data-en="Tapping — smaller hole, thread cut inside">Taraudage — trou plus petit, filet dedans</div>
-      <p class="why" data-fr="À quoi ça sert : savoir quelle mèche percer avant de passer le taraud." data-en="What it's for: which bit to drill before you run the tap.">À quoi ça sert : savoir quelle mèche percer avant de passer le taraud.</p>
-      <p class="lead"><span data-fr="Avant de tarauder : perce un trou plus petit que la vis. Le taraud coupe le filet dans ce trou. Ce n'est pas un trou de passage." data-en="Before tapping: drill a hole smaller than the bolt. The tap cuts the thread in that hole. This is not a clearance hole.">Avant de tarauder : perce un trou plus petit que la vis. Le taraud coupe le filet dans ce trou. Ce n'est pas un trou de passage.</span> <button class="help" data-help="tap">?</button></p>
+      <button type="button" class="backhome" data-fr="← Accueil" data-en="← Home">← Accueil</button>
+      <div class="bench-label" data-fr="Mèche avant le taraud (tap)" data-en="Drill before the tap">Mèche avant le taraud (tap)</div>
+      <h2 class="task" data-fr="Quelle mèche pour ce taraud?" data-en="Which drill for this tap?">Quelle mèche pour ce taraud?</h2>
+      <p class="why" data-fr="À quoi ça sert : le foret / la mèche (drill) avant de passer le taraud (tap). C'est pas le trou de passage." data-en="What it's for: the drill before you run the tap. Not the clearance hole.">À quoi ça sert : le foret / la mèche (drill) avant de passer le taraud (tap). C'est pas le trou de passage.</p>
+      <p class="ex" data-fr="Exemple déjà là : 1/4-20. Change le taraud en bas." data-en="Example already in: 1/4-20. Change the tap below.">Exemple déjà là : 1/4-20. Change le taraud en bas.</p>
+      <div class="give"><span data-fr="Quelle mèche je prends" data-en="Which bit I take">Quelle mèche je prends</span><b id="tapbig">—</b></div>
+      <p class="subn" id="tapintent"></p>
       <p class="meta" data-fr="Tailles courantes" data-en="Common sizes">Tailles courantes</p>
       <div class="chips" id="tapcommon"></div>
       <div class="chips" id="fams"></div>
-      <p class="meta"><span data-fr="Gros = vis ordinaire. Fin = filet plus serré. Le pas change la mèche." data-en="Coarse = ordinary bolt. Fine = tighter thread. Pitch changes the bit.">Gros = vis ordinaire. Fin = filet plus serré. Le pas change la mèche.</span> <button class="help" data-help="fams">?</button></p>
+      <p class="meta"><span data-fr="Gros = bolt ordinaire (UNC). Fin = filet fin (UNF). Le pas change la mèche." data-en="Coarse = ordinary bolt (UNC). Fine = fine thread (UNF). Pitch changes the drill.">Gros = bolt ordinaire (UNC). Fin = filet fin (UNF). Le pas change la mèche.</span> <button class="help" data-help="fams">?</button></p>
       <div class="pair">
-        <div><label><span data-fr="Taraud demandé (ex. 1/4-20)" data-en="Tap called for (ex. 1/4-20)">Taraud demandé (ex. 1/4-20)</span> <button class="help" data-help="threadname">?</button></label><select id="thread"></select></div>
+        <div><label><span data-fr="Taraud (tap), ex. 1/4-20" data-en="Tap, ex. 1/4-20">Taraud (tap), ex. 1/4-20</span> <button class="help" data-help="threadname">?</button></label><select id="thread"></select></div>
         <div>
           <details class="advanced">
             <summary data-fr="% de filet — laisse 75" data-en="Thread percent — leave 75">% de filet — laisse 75</summary>
-            <label><span data-fr="Laisse 75, c'est le trou habituel." data-en="Leave 75, that is the usual hole.">Laisse 75, c'est le trou habituel.</span> <button class="help" data-help="pct">?</button></label>
+            <label><span data-fr="Laisse 75. C'est le trou qu'on perce d'habitude." data-en="Leave 75. That's the usual hole.">Laisse 75. C'est le trou qu'on perce d'habitude.</span> <button class="help" data-help="pct">?</button></label>
             <input id="pct" type="number" min="50" max="100" value="75" placeholder="75" />
           </details>
         </div>
       </div>
-      <p class="ex" data-fr="Exemple déjà choisi : vis 1/4-20. La bande noire dit la mèche, puis le taraud." data-en="Example already chosen: 1/4-20 screw. The black bar names the bit, then the tap.">Exemple déjà choisi : vis 1/4-20. La bande noire dit la mèche, puis le taraud.</p>
-      <div class="give"><span data-fr="Quelle mèche je prends" data-en="Which bit I take">Quelle mèche je prends</span><b id="tapbig">—</b></div>
-      <p class="subn" id="tapintent"></p>
-      <p><button type="button" id="tapclearbtn" data-fr="Voir le trou où ce boulon traverse" data-en="See the hole this bolt passes through">Voir le trou où ce boulon traverse</button></p>
+      <p><button type="button" id="tapclearbtn" data-fr="Trou de passage pour cette vis" data-en="Clearance hole for this bolt">Trou de passage pour cette vis</button></p>
       <details class="advanced">
         <summary data-fr="Plus de détails" data-en="More detail">Plus de détails</summary>
         <p class="subn" id="tapsub"></p>
@@ -296,11 +301,13 @@ body.bench-mode .bench-label{display:block}
 
   <section class="panel" id="drill">
     <div class="card">
-      <p class="why" data-fr="À quoi ça sert : trouver la lettre ou le numéro de mèche le plus proche d'une mesure." data-en="What it's for: find the letter or number drill closest to a measurement.">À quoi ça sert : trouver la lettre ou le numéro de mèche le plus proche d'une mesure.</p>
-      <p class="lead"><span data-fr="Entre la grosseur de la mèche. L'outil montre la mèche du tiroir juste plus petite et juste plus grosse. Ce n'est ni le trou avant taraud, ni le trou de passage du boulon." data-en="Enter the drill size. The tool shows the next smaller and next larger bit in the drawer. This is neither the tap drill nor the bolt clearance hole.">Entre la grosseur de la mèche. L'outil montre la mèche du tiroir juste plus petite et juste plus grosse. Ce n'est ni le trou avant taraud, ni le trou de passage du boulon.</span> <button class="help" data-help="drill">?</button></p>
+      <button type="button" class="backhome" data-fr="← Accueil" data-en="← Home">← Accueil</button>
+      <h2 class="task" data-fr="C'est quelle mèche (drill)?" data-en="Which drill is that?">C'est quelle mèche (drill)?</h2>
+      <p class="why" data-fr="À quoi ça sert : le nom de la mèche (lettre ou numéro) le plus proche de ta mesure." data-en="What it's for: the letter or number drill closest to your size.">À quoi ça sert : le nom de la mèche (lettre ou numéro) le plus proche de ta mesure.</p>
+      <div class="give"><span data-fr="Quelle mèche je prends" data-en="Which bit I take">Quelle mèche je prends</span><b id="drillbig">—</b></div>
+      <p class="lead"><span data-fr="C'est pas la mèche de taraud, pis c'est pas le trou de passage. Exemple déjà là : 5/32. Tu peux écrire 0.250 po ou 6.5 mm." data-en="Not the tap drill, and not the clearance hole. Example already in: 5/32. You can type 0.250 in or 6.5 mm.">C'est pas la mèche de taraud, pis c'est pas le trou de passage. Exemple déjà là : 5/32. Tu peux écrire 0.250 po ou 6.5 mm.</span> <button class="help" data-help="drill">?</button></p>
       <label data-fr="Grosseur (ex. 5/32, 0.250 po ou 6.5 mm)" data-en="Size (ex. 5/32, 0.250 in or 6.5 mm)">Grosseur (ex. 5/32, 0.250 po ou 6.5 mm)</label>
       <input id="dsize" value="5/32" placeholder="0.250 po" />
-      <p class="ex" data-fr="Exemple déjà rempli : 5/32. Tu peux taper 0.250 po ou 6.5 mm." data-en="Example already filled in: 5/32. You can type 0.250 in or 6.5 mm.">Exemple déjà rempli : 5/32. Tu peux taper 0.250 po ou 6.5 mm.</p>
       <div class="chips" id="dunit">
         <button class="on" data-u="po">po</button>
         <button data-u="mm">mm</button>
@@ -308,7 +315,6 @@ body.bench-mode .bench-label{display:block}
       <p class="meta" data-fr="Tailles courantes" data-en="Common sizes">Tailles courantes</p>
       <div class="chips" id="dfracs"></div>
       <div class="chips" id="dmm"></div>
-      <div class="give"><span data-fr="Quelle mèche je prends" data-en="Which bit I take">Quelle mèche je prends</span><b id="drillbig">—</b></div>
       <p class="subn" id="drillgap"></p>
       <div class="cols" id="drillcols"></div>
       <details class="advanced">
@@ -323,22 +329,25 @@ body.bench-mode .bench-label{display:block}
 
   <section class="panel" id="oring">
     <div class="card">
-      <div class="bench-label" data-fr="O-rings — CS d'abord, puis ID / OD" data-en="O-rings — CS first, then ID / OD">O-rings — CS d'abord, puis ID / OD</div>
-      <p class="why" data-fr="À quoi ça sert : trouver le numéro (dash) du joint à partir de l'épaisseur CS et du trou." data-en="What it's for: find the O-ring dash from the cross-section and the hole.">À quoi ça sert : trouver le numéro (dash) du joint à partir de l'épaisseur CS et du trou.</p>
-      <p class="lead"><span data-fr="Mesure d'abord l'épaisseur du rond (section, CS), puis le trou (ID). L'OD = ID + 2×CS. Le dash n'est pas la grosseur du boyau. Sur un boyau, commence par 1/8 po." data-en="Measure the ring thickness first (cross-section, CS), then the hole (ID). OD = ID + 2×CS. The dash is not the hose size. On a hose, start with 1/8 in.">Mesure d'abord l'épaisseur du rond (section, CS), puis le trou (ID). L'OD = ID + 2×CS. Le dash n'est pas la grosseur du boyau. Sur un boyau, commence par 1/8 po.</span> <button class="help" data-help="oring">?</button></p>
+      <button type="button" class="backhome" data-fr="← Accueil" data-en="← Home">← Accueil</button>
+      <div class="bench-label" data-fr="O-ring (joint torique)" data-en="O-ring">O-ring (joint torique)</div>
+      <h2 class="task" data-fr="Quel O-ring il te faut?" data-en="Which O-ring do you need?">Quel O-ring il te faut?</h2>
+      <p class="why" data-fr="À quoi ça sert : le numéro de dash, à partir de l'épaisseur CS du rond." data-en="What it's for: the dash number, from the ring thickness (CS).">À quoi ça sert : le numéro de dash, à partir de l'épaisseur CS du rond.</p>
+      <p class="ex" data-fr="Exemple déjà là : dash 214, épaisseur 1/8 po. Sur un boyau, commence par 1/8 po." data-en="Example already in: dash 214, 1/8 in thick. On a hose, start with 1/8 in.">Exemple déjà là : dash 214, épaisseur 1/8 po. Sur un boyau, commence par 1/8 po.</p>
+      <div class="give"><span data-fr="Quelle pièce je sors" data-en="Which part I pull">Quelle pièce je sors</span><b id="oringbig">—</b></div>
+      <p class="lead"><span data-fr="Mesure l'épaisseur du rond en premier. Le dash, c'est pas la grosseur du boyau." data-en="Measure the ring thickness first. The dash is not the hose size.">Mesure l'épaisseur du rond en premier. Le dash, c'est pas la grosseur du boyau.</span> <button class="help" data-help="oring">?</button></p>
       <label data-fr="Épaisseur du rond — épaisseur CS (ex. 1/8 po)" data-en="Ring thickness — cross-section CS (ex. 1/8 in)">Épaisseur du rond — épaisseur CS (ex. 1/8 po)</label>
       <div class="chips" id="cs"></div>
-      <div class="pair">
-        <div><label data-fr="Trou du rond, ID (po) ex. 0.984" data-en="Ring hole, ID (in) ex. 0.984">Trou du rond, ID (po) ex. 0.984</label><input id="oid" inputmode="decimal" placeholder="0.984 po" /></div>
-        <div><label data-fr="Dehors du rond, OD (po) ex. 1.262" data-en="Outside of the ring, OD (in) ex. 1.262">Dehors du rond, OD (po) ex. 1.262</label><input id="ood" inputmode="decimal" placeholder="1.262 po" /></div>
-      </div>
-      <label data-fr="Numéro dash (ex. 214)" data-en="Dash number (ex. 214)">Numéro dash (ex. 214)</label>
+      <label data-fr="Numéro de dash (ex. 214)" data-en="Dash number (ex. 214)">Numéro de dash (ex. 214)</label>
       <input id="oq" class="search" value="214" placeholder="214" />
-      <p class="ex" data-fr="Exemple déjà rempli : dash 214, épaisseur 1/8 po. Efface pour le tien." data-en="Example already filled in: dash 214, 1/8 in thick. Clear it for yours.">Exemple déjà rempli : dash 214, épaisseur 1/8 po. Efface pour le tien.</p>
       <div class="chips" id="oringcommon"></div>
-      <div class="give"><span data-fr="Quelle pièce je sors" data-en="Which part I pull">Quelle pièce je sors</span><b id="oringbig">—</b></div>
-      <details class="advanced" open>
-        <summary data-fr="Les autres dash proches" data-en="Other nearby dashes">Les autres dash proches</summary>
+      <details class="advanced">
+        <summary data-fr="J'ai mesuré le O-ring" data-en="I measured the O-ring">J'ai mesuré le O-ring</summary>
+        <div class="pair">
+          <div><label data-fr="Trou du rond, ID (po) ex. 0.984" data-en="Ring hole, ID (in) ex. 0.984">Trou du rond, ID (po) ex. 0.984</label><input id="oid" inputmode="decimal" placeholder="0.984 po" /></div>
+          <div><label data-fr="Dehors du rond, OD (po) ex. 1.262" data-en="Outside of the ring, OD (in) ex. 1.262">Dehors du rond, OD (po) ex. 1.262</label><input id="ood" inputmode="decimal" placeholder="1.262 po" /></div>
+        </div>
+        <p class="meta" data-fr="Les autres dash proches" data-en="Other nearby dashes">Les autres dash proches</p>
         <table id="otable"></table>
       </details>
     </div>
@@ -346,12 +355,14 @@ body.bench-mode .bench-label{display:block}
 
   <section class="panel" id="fit">
     <div class="card">
-      <div class="bench-label" data-fr="Raccords — recherche ET (tous les mots)" data-en="Fittings — AND search (all words)">Raccords — recherche ET (tous les mots)</div>
-      <p class="why" data-fr="À quoi ça sert : voir le dessin du raccord à partir du numéro ou de mots comme JIC 90." data-en="What it's for: see the fitting picture from the number or from words like JIC 90.">À quoi ça sert : voir le dessin du raccord à partir du numéro ou de mots comme JIC 90.</p>
-      <p class="lead"><span data-fr="Entre le numéro ou plusieurs mots (ex. JIC 90). Tous les mots doivent être sur la fiche. Bouchon cherche aussi plug. Le dessin indique droit, coude ou T." data-en="Enter the number or several words (ex. JIC 90). Every word has to be on the card. Plug also finds caps. The picture shows straight, elbow or tee.">Entre le numéro ou plusieurs mots (ex. JIC 90). Tous les mots doivent être sur la fiche. Bouchon cherche aussi plug. Le dessin indique droit, coude ou T.</span> <button class="help" data-help="fit">?</button></p>
-      <label data-fr="code ou nom" data-en="code or name">code ou nom</label>
+      <button type="button" class="backhome" data-fr="← Accueil" data-en="← Home">← Accueil</button>
+      <div class="bench-label" data-fr="Numéro de fitting" data-en="Fitting number">Numéro de fitting</div>
+      <h2 class="task" data-fr="J'ai le numéro du fitting" data-en="I have the fitting number">J'ai le numéro du fitting</h2>
+      <p class="why" data-fr="À quoi ça sert : voir le dessin à partir du numéro, ou de mots comme JIC 90." data-en="What it's for: see the picture from the number, or from words like JIC 90.">À quoi ça sert : voir le dessin à partir du numéro, ou de mots comme JIC 90.</p>
+      <p class="lead"><span data-fr="Écris le numéro ou des mots (ex. JIC 90). Tous les mots doivent être sur la fiche. Bouchon trouve aussi plug." data-en="Type the number or words (ex. JIC 90). Every word has to be on the card. Bouchon also finds plug.">Écris le numéro ou des mots (ex. JIC 90). Tous les mots doivent être sur la fiche. Bouchon trouve aussi plug.</span> <button class="help" data-help="fit">?</button></p>
+      <label data-fr="Numéro ou nom" data-en="Number or name">Numéro ou nom</label>
       <input id="fq" class="search" placeholder="2404" />
-      <p class="ex" data-fr="Exemple : tape 2404, ou JIC 90. Vide, aucun dessin. Choisis une famille pour les voir." data-en="Example: type 2404, or JIC 90. Empty, no pictures. Pick a family to see them.">Exemple : tape 2404, ou JIC 90. Vide, aucun dessin. Choisis une famille pour les voir.</p>
+      <p class="ex" data-fr="Exemple : 2404, ou JIC 90. Vide, y'a pas de dessin. Pogne une famille pour les voir." data-en="Example: 2404, or JIC 90. Empty, no picture. Pick a family to see them.">Exemple : 2404, ou JIC 90. Vide, y'a pas de dessin. Pogne une famille pour les voir.</p>
       <div class="chips" id="fitquick"></div>
       <div class="chips" id="fitfams"></div>
       <div class="fits" id="fits"></div>
@@ -370,12 +381,12 @@ body.bench-mode .bench-label{display:block}
 </dialog>
 <p id="trialnote" class="lead" style="text-align:center"></p>
 <div id="pay" class="card" style="display:none;margin:16px">
-  <b data-fr="L'essai gratuit de 30 jours est fini." data-en="The free 30-day trial is over.">L'essai gratuit de 30 jours est fini.</b>
-  <p class="lead" data-fr="Le raccord, la mèche et le numéro d'o-ring sont réservés aux abonnés, à 9 $ par mois. Les dessins et la conversion restent gratuits." data-en="The fitting, the drill and the O-ring number are for subscribers, at $9 a month. Drawings and conversion stay free.">Le raccord, la mèche et le numéro d'o-ring sont réservés aux abonnés, à 9 $ par mois. Les dessins et la conversion restent gratuits.</p>
+  <b data-fr="L'essai de 30 jours est fini." data-en="The 30-day trial is over.">L'essai de 30 jours est fini.</b>
+  <p class="lead" data-fr="Le fitting, la mèche et le numéro d'O-ring, c'est pour les abonnés, 9 $ par mois. Les dessins et le po/mm restent gratuits." data-en="The fitting, the drill and the O-ring number are for subscribers, $9 a month. Pictures and in/mm stay free.">Le fitting, la mèche et le numéro d'O-ring, c'est pour les abonnés, 9 $ par mois. Les dessins et le po/mm restent gratuits.</p>
   <p><a class="btn" href="/tarifs" data-fr="Voir les abonnements" data-en="See the plans">Voir les abonnements</a></p>
 </div>
-<p id="offlinenote" class="lead" hidden style="text-align:center" data-fr="Sans réseau, seul un abonnement ouvre les réponses. L'essai de 30 jours compte seulement en ligne." data-en="With no network, only a subscription opens the answers. The 30-day trial counts only while online.">Sans réseau, seul un abonnement ouvre les réponses. L'essai de 30 jours compte seulement en ligne.</p>
-<p id="offlinepro" class="ex" hidden style="text-align:center" data-fr="Mode hors ligne (installable) : cet appareil peut garder l'outil sans réseau." data-en="Offline mode (installable): this device can keep the tool with no network.">Mode hors ligne (installable) : cet appareil peut garder l'outil sans réseau.</p>
+<p id="offlinenote" class="lead" hidden style="text-align:center" data-fr="Pas de réseau. Sans abonnement, les réponses restent fermées. L'essai de 30 jours, c'est juste en ligne." data-en="No network. Without a subscription, the answers stay locked. The 30-day trial only counts online.">Pas de réseau. Sans abonnement, les réponses restent fermées. L'essai de 30 jours, c'est juste en ligne.</p>
+<p id="offlinepro" class="ex" hidden style="text-align:center" data-fr="Mode hors ligne (installable) : tu peux garder l'outil sur cet appareil, sans réseau." data-en="Offline mode (installable): you can keep the tool on this device, with no network.">Mode hors ligne (installable) : tu peux garder l'outil sur cet appareil, sans réseau.</p>
 <script src="js/holes.js"></script>
 <script src="js/plain.js"></script>
 <script src="js/offline.js"></script>
@@ -475,11 +486,11 @@ function renderOd(){
   const lab=document.getElementById("odlabtext");
   if(lab){
     lab.textContent=sex==="F"
-      ?tr("Dedans, dans le filet","Inside, in the thread")
-      :tr("Dehors, sur le filet","Outside, on the thread");
-    lab.dataset.fr="Dedans, dans le filet";
-    lab.dataset.en="Inside, in the thread";
-    if(sex!=="F"){lab.dataset.fr="Dehors, sur le filet";lab.dataset.en="Outside, on the thread";}
+      ?tr("Mesure dedans, dans le filet","Measure inside, in the thread")
+      :tr("Mesure dehors, sur le filet","Measure outside, on the thread");
+    lab.dataset.fr="Mesure dedans, dans le filet";
+    lab.dataset.en="Measure inside, in the thread";
+    if(sex!=="F"){lab.dataset.fr="Mesure dehors, sur le filet";lab.dataset.en="Measure outside, on the thread";}
   }
   if(inches==null){
     setAnswer("odgive","—",AKPlain.emptyHint("bad-measure", lang));
@@ -495,7 +506,7 @@ function renderOd(){
   if(!top){setAnswer("odgive","—",AKPlain.emptyHint("bad-measure", lang));document.getElementById("odhits").innerHTML="";return;}
   const job=AKPlain.describeFitting({lang, sex:top.sex, fam:top.fam, dash:top.dash, thread:top.thread, close:hits.length>0, many:hits.length>1, distanceMm:(top.d*IN).toFixed(1)});
   setAnswer("odgive", job.bit, job.action);
-  const pickLabel=hits.length>1?tr("Plusieurs proches. Choisis après le bout.","Several are close. Pick after you check the nose."):hits.length?tr("Dans la tolérance.","Within tolerance."):tr("Rien dans 1,5 mm. Vérifie po ou mm.","Nothing within 1.5 mm. Check in or mm.");
+  const pickLabel=hits.length>1?tr("Y'en a plusieurs. Regarde le bout avant.","Several match. Check the nose first."):hits.length?tr("Ça fit.","It fits."):tr("Rien dans 1,5 mm. Vérifie po ou mm.","Nothing within 1.5 mm. Check in or mm.");
   const pick=`<label>${pickLabel}</label><select id="odpick">${list.map((e,i)=>`<option value="${i}">${e.fam} ${e.dash} ${e.thread} · ${(e.d*IN).toFixed(1)} mm</option>`).join("")}</select>`;
   document.getElementById("odhits").innerHTML=pick+cardEnd(list[0]);
 }
@@ -581,8 +592,8 @@ function renderTap(){
   if(intent){
     intent.textContent=lang==="fr"
       ?(pipe
-        ?"Filet de tuyau (NPT ou BSP). Cette mèche sert à tarauder le tuyau. Ce n'est pas un trou de passage de boulon."
-        :"Trou plus petit que la vis, percé avant de couper le filet intérieur. Le diamètre nominal n'est pas cette mèche, et ce n'est pas le trou de passage du boulon.")
+        ?"Pipe (NPT ou BSP). Cette mèche, c'est pour tarauder le pipe. C'est pas un trou de passage."
+        :"Trou plus petit que la vis, avant de passer le taraud (tap). C'est pas le trou de passage.")
       :(pipe
         ?"Pipe thread (NPT or BSP). This drill is for tapping the pipe. It is not a bolt clearance hole."
         :"Hole smaller than the bolt, drilled before the internal thread is cut. Nominal diameter is not this drill, and it is not the hole the bolt passes through.");
@@ -613,7 +624,7 @@ function renderTap(){
 let clearFam="IN";
 let clearFit="normal";
 function clearThreads(row){
-  if(row.family==="MM") return lang==="fr"?"gros ou fin : même trou de passage":"coarse or fine: same clearance hole";
+  if(row.family==="MM") return lang==="fr"?"gros ou fin : même trou de passage (clearance)":"coarse or fine: same clearance hole";
   const names=[row.unc,row.unf].filter(Boolean);
   if(names.length>1) return names.join(" et ")+(lang==="fr"?" : même trou de passage":": same clearance hole");
   return (names[0]||row.key)+(lang==="fr"?" : trou de passage de ce diamètre":": clearance hole for this diameter");
@@ -687,7 +698,7 @@ function renderClearance(){
     :"Nominal diameter "+hit.key+" = "+(hit.family==="MM"?hit.nominal+" mm":hit.nominal.toFixed(3)+" in")+". That is not the clearance drill. "+clearThreads(hit)+".";
   if(hit.family==="MM"){
     sub+=lang==="fr"
-      ?" Sors la mèche de passage en millimètres. Ne la remplace pas par une lettre ou une fraction."
+      ?" Prends la mèche de passage en millimètres. Remplace pas ça par une lettre ou une fraction."
       :" Pull the clearance drill in millimetres. Do not substitute a letter or a fraction bit.";
   }
   sub+=pitchNote(hit);
@@ -733,7 +744,7 @@ function renderOring(){
   const top=shown[0];
   if(!top){setAnswer("oringbig","—",AKPlain.emptyHint("oring", lang));return;}
   setAnswer("oringbig","dash "+top[0], tr(
-    "Sors le joint dash "+top[0]+" (trou "+top[1].toFixed(3)+" po · "+(top[1]*IN).toFixed(2)+" mm, épaisseur "+top[2].toFixed(3)+" po).",
+    "Sors l'O-ring dash "+top[0]+" (trou "+top[1].toFixed(3)+" po · "+(top[1]*IN).toFixed(2)+" mm, épaisseur "+top[2].toFixed(3)+" po).",
     "Pull O-ring dash "+top[0]+" (hole "+top[1].toFixed(3)+" in · "+(top[1]*IN).toFixed(2)+" mm, thickness "+top[2].toFixed(3)+" in)."
   ));
 }
@@ -743,7 +754,7 @@ function renderFits(){
   const q=document.getElementById("fq").value.trim().toLowerCase();
   const tokens=q.split(/[\s,;+/]+/).map(t=>t.trim()).filter(Boolean);
   if(!tokens.length && !fitFam && !browseAll){
-    document.getElementById("fits").innerHTML=`<p class="lead">${tr("Exemple : tape 2404, ou appuie sur JIC.","Example: type 2404, or press JIC.")}</p>`;
+    document.getElementById("fits").innerHTML=`<p class="lead">${tr("Exemple : écris 2404, ou pèse sur JIC.","Example: type 2404, or press JIC.")}</p>`;
     return;
   }
   const rows=fittings.filter(f=>{
@@ -772,7 +783,7 @@ function showTab(tab){
     if(routes) routes.hidden=false;
     if(boltq) boltq.hidden=true;
     if(fitq) fitq.hidden=true;
-    askTitle("Qu'est-ce que tu cherches ?","What are you looking for?");
+    askTitle("T'as quoi en main?","What have you got?");
   }
   const bench=tab==="bench";
   const show=bench?new Set(["desk","convert","clear","tap","oring","fit"]):new Set([tab]);
@@ -792,13 +803,12 @@ function askTitle(fr,en){
   h.dataset.fr=fr; h.dataset.en=en; h.textContent=tr(fr,en);
 }
 function openRoute(go){
-  if(go==="back"){showTab("start");return;}
-  if(go==="bolt"){document.getElementById("routes").hidden=true;document.getElementById("boltq").hidden=false;document.getElementById("fitq").hidden=true;askTitle("Le boulon doit faire quoi ?","What should the bolt do?");return;}
-  if(go==="fit"){document.getElementById("routes").hidden=true;document.getElementById("fitq").hidden=false;document.getElementById("boltq").hidden=true;askTitle("Tu as le raccord comment ?","How do you have the fitting?");return;}
-  showTab(go==="catalog"?"fit":go);
+  if(go==="back"||go==="start"){showTab("start");window.scrollTo(0,0);return;}
+  showTab(go);
   window.scrollTo(0,0);
 }
-document.getElementById("routes").onclick=document.getElementById("boltq").onclick=document.getElementById("fitq").onclick=e=>{const b=e.target.closest("button");if(!b)return;openRoute(b.dataset.go);};
+document.getElementById("start").addEventListener("click",e=>{const b=e.target.closest("[data-go]");if(!b)return;openRoute(b.dataset.go);});
+document.body.addEventListener("click",e=>{const b=e.target.closest(".backhome");if(!b)return;showTab("start");window.scrollTo(0,0);});
 document.getElementById("said").innerHTML=DESK.map((d,i)=>`<button data-i="${i}" class="${i===said?"on":""}">${d.say}</button>`).join("");
 document.getElementById("said").onclick=e=>{const b=e.target.closest("button");if(!b)return;said=+b.dataset.i;document.querySelectorAll("#said button").forEach(x=>x.classList.toggle("on",x===b));renderDesk();};
 document.getElementById("idgrid").onclick=e=>{const b=e.target.closest("button");if(!b)return;idk=b.dataset.id;renderDesk();};
@@ -943,7 +953,7 @@ function renderDrillFind(){
   const job=AKPlain.describeDrill({lang, name:best?best.name:"—", inches, bitInches:best?best.v:null});
   setAnswer("drillbig", job.bit, job.action);
   document.getElementById("drillgap").textContent=tr(
-    "Plus petite et plus grosse : mèches du tiroir autour de ta mesure. Le diamètre de la vis n'est pas la mèche.",
+    "Plus petite et plus grosse : les mèches du tiroir autour de ta mesure. La grosseur de la vis, c'est pas la mèche.",
     "Smaller and larger are drawer bits around your size. Bolt diameter is not the drill."
   );
   document.getElementById("drillcols").innerHTML=`<div class="chips" id="dpick">
@@ -985,26 +995,26 @@ document.getElementById("guidedismiss").onclick=()=>{document.getElementById("gu
 document.getElementById("guidebtn").onclick=()=>{showTab("start");const g=document.getElementById("guide");g.hidden=false;if("open" in g) g.open=true;localStorage.removeItem("ak-guide");g.scrollIntoView({behavior:"smooth",block:"start"});};
 if(localStorage.getItem("ak-guide")==="off") document.getElementById("guide").hidden=true;
 const HELP={
- od:{fr:{t:"Mesurer",b:"Mâle : place le vernier à l'extérieur, sur les premiers filets. Femelle : place-le à l'intérieur de l'ouverture. Ne mesure pas dans le creux du filet. Exemple : 0.562 po."},en:{t:"Measuring",b:"Male: put the caliper outside, on the first threads. Female: put it inside the opening. Do not measure in the thread groove. Example: 0.562 in."}},
- sex:{fr:{t:"Mâle ou femelle",b:"Mâle : le filet est à l'extérieur. Femelle : le filet est à l'intérieur, écrou ou port. Un boyau a souvent une femelle droite NPSM, pas une femelle NPT."},en:{t:"Male or female",b:"Male: the thread is outside. Female: the thread is inside, a nut or a port. A hose often has a straight NPSM female, not an NPT female."}},
- tpi:{fr:{t:"Filets",b:"Compte les filets sur un pouce. 18 ou 20. Ce n'est pas la grosseur. Si tu ne le sais pas, laisse le champ vide."},en:{t:"Threads",b:"Count the threads in one inch. 18 or 20. That is not the size. If you don't know, leave the field empty."}},
- said:{fr:{t:"Taille demandée",b:"Un 1/2 po peut désigner le boyau ou le filet. Ce n'est pas le même raccord. Vérifie le bout, puis choisis."},en:{t:"Size given",b:"1/2 in can mean the hose or the thread. It is not the same fitting. Check the nose, then choose."}},
- end:{fr:{t:"Le bout",b:"Pointu : JIC. Plat avec un o-ring : ORFS. En cône qui serre fort : NPT. Droit avec l'o-ring à la base : ORB."},en:{t:"The nose",b:"Pointed: JIC. Flat with an O-ring: ORFS. Tapered and sealing harder as you tighten: NPT. Straight with the O-ring at the base: ORB."}},
- convert:{fr:{t:"mm, pouces, pieds",b:"25,4 mm valent un pouce. 12 pouces valent un pied. Entre mm, pouces ou pieds : les autres suivent."},en:{t:"mm, inches, feet",b:"25.4 mm is one inch. 12 inches is one foot. Enter mm, inches or feet: the others follow."}},
- clear:{fr:{t:"Trou de passage",b:"Le boulon traverse sans filet. Le diamètre écrit sur la vis (1/4, M10) n'est pas la mèche. Serré : peu de jeu. Normal : le choix habituel. Large : plus de jeu. UNC et UNF du même diamètre ont le même trou. NPT et BSP ne sont pas ici."},en:{t:"Clearance hole",b:"The bolt passes through with no thread. The diameter written on the bolt (1/4, M10) is not the drill. Close: little play. Normal: the usual choice. Loose: more play. UNC and UNF of the same diameter share the hole. NPT and BSP are not here."}},
- tap:{fr:{t:"Avant taraud",b:"Le taraud coupe le filet dans un trou plus petit que la vis. Le pas change la mèche : 1/4-20 prend #7, 1/4-28 prend #3. Le trou de passage est le même pour les deux : 9/32 en ajustement normal."},en:{t:"Before the tap",b:"The tap cuts the thread in a hole smaller than the bolt. Pitch changes the bit: 1/4-20 takes #7, 1/4-28 takes #3. The clearance hole is the same for both: 9/32 at a normal fit."}},
- threadname:{fr:{t:"1/4-20",b:"1/4 est le diamètre nominal de la vis. 20 est le nombre de filets sur un pouce. Ce n'est pas le nom de la mèche, ni le trou de passage."},en:{t:"1/4-20",b:"1/4 is the nominal bolt diameter. 20 is the number of threads per inch. It is not the drill name, and not the clearance hole."}},
- pct:{fr:{t:"75 %",b:"Ne perce pas aussi gros que la vis. 75 % est le trou habituel avant de tarauder. Plus gros, le filet est faible. Plus petit, l'outil casse. Ce calcul ne donne pas le trou de passage."},en:{t:"75%",b:"Do not drill as large as the bolt. 75% is the usual hole before tapping. Larger, the thread is weak. Smaller, the tap breaks. This calculation is not the clearance hole."}},
- fams:{fr:{t:"Les familles",b:"Gros : UNC. Fin : UNF. Métrique : M6, M8, M10x1.5. Tuyau NPT et gaz BSP : filets de tuyau, pour tarauder seulement. Pas un trou de passage de boulon."},en:{t:"Families",b:"Coarse: UNC. Fine: UNF. Metric: M6, M8, M10x1.5. NPT pipe and BSP gas: pipe threads, for tapping only. Not a bolt clearance hole."}},
- drill:{fr:{t:"Les mèches",b:"Une mèche peut s'appeler par une lettre, un numéro ou une fraction, comme 5/32 ou 0.250 po. Plus petite et plus grosse sont les mèches du tiroir autour de la mesure. Pour un filet, ouvre Tarauds. Pour un boulon qui passe, ouvre Passage."},en:{t:"Drills",b:"A bit can be a letter, a number or a fraction, such as 5/32 or 0.250 in. Smaller and larger are the drawer bits around the size. For a thread, open Taps. To let a bolt through, open Clearance."}},
+ od:{fr:{t:"Mesurer",b:"Mâle : le vernier dehors, sur les premiers filets. Femelle : dedans, dans l'ouverture. Mesure pas dans le fond du filet. Exemple : 0.562 po."},en:{t:"Measuring",b:"Male: caliper outside, on the first threads. Female: inside the opening. Don't measure in the thread groove. Example: 0.562 in."}},
+ sex:{fr:{t:"Mâle ou femelle",b:"Mâle : le filet est dehors. Femelle : le filet est dedans, écrou ou port. Un boyau a souvent une femelle droite NPSM, pas une femelle NPT."},en:{t:"Male or female",b:"Male: the thread is outside. Female: the thread is inside, a nut or a port. A hose often has a straight NPSM female, not an NPT female."}},
+ tpi:{fr:{t:"Filets",b:"Compte les filets sur un pouce. 18 ou 20. C'est pas la grosseur. Si tu sais pas, laisse vide."},en:{t:"Threads",b:"Count the threads in one inch. 18 or 20. That's not the size. If you don't know, leave it empty."}},
+ said:{fr:{t:"Taille demandée",b:"Un 1/2 po, ça peut être le boyau ou le filet. C'est pas le même fitting. Regarde le bout, pis choisis."},en:{t:"Size given",b:"1/2 in can be the hose or the thread. Not the same fitting. Check the nose, then pick."}},
+ end:{fr:{t:"Le bout",b:"Pointu : JIC. Plat avec un O-ring : ORFS. En cône qui serre en vissant : NPT. Droit, O-ring à la base : ORB."},en:{t:"The nose",b:"Pointed: JIC. Flat with an O-ring: ORFS. Taper that tightens as you screw: NPT. Straight, O-ring at the base: ORB."}},
+ convert:{fr:{t:"po, mm, pieds",b:"25,4 mm = 1 pouce. 12 pouces = 1 pied. Écris mm, pouces ou pieds : le reste suit."},en:{t:"in, mm, feet",b:"25.4 mm = 1 inch. 12 inches = 1 foot. Type mm, inches or feet: the rest follows."}},
+ clear:{fr:{t:"Trou de passage",b:"La vis passe, sans filet. Le chiffre sur la vis (1/4, M10) c'est pas la mèche. Serré : peu de jeu. Normal : le choix habituel. Large : plus de jeu. UNC et UNF de la même grosseur, même trou. NPT et BSP, c'est pas ici."},en:{t:"Clearance hole",b:"The bolt passes through, no thread. The number on the bolt (1/4, M10) is not the drill. Close: little play. Normal: the usual choice. Loose: more play. UNC and UNF of the same size share the hole. NPT and BSP are not here."}},
+ tap:{fr:{t:"Avant le taraud",b:"Le taraud (tap) coupe le filet dans un trou plus petit que la vis. Le pas change la mèche : 1/4-20 prend #7, 1/4-28 prend #3. Le trou de passage est le même pour les deux : 9/32, jeu normal."},en:{t:"Before the tap",b:"The tap cuts the thread in a hole smaller than the bolt. Pitch changes the bit: 1/4-20 takes #7, 1/4-28 takes #3. The clearance hole is the same for both: 9/32 at a normal fit."}},
+ threadname:{fr:{t:"1/4-20",b:"1/4, c'est la grosseur de la vis. 20, c'est les filets sur un pouce. C'est pas le nom de la mèche, pis c'est pas le trou de passage."},en:{t:"1/4-20",b:"1/4 is the bolt size. 20 is threads per inch. Not the drill name, and not the clearance hole."}},
+ pct:{fr:{t:"75 %",b:"Perce pas aussi gros que la vis. 75 %, c'est le trou d'habitude avant le taraud. Plus gros, le filet est faible. Plus petit, le taraud casse. Ça donne pas le trou de passage."},en:{t:"75%",b:"Don't drill as big as the bolt. 75% is the usual hole before the tap. Bigger, the thread is weak. Smaller, the tap breaks. This is not the clearance hole."}},
+ fams:{fr:{t:"Les familles",b:"Gros : UNC. Fin : UNF. Métrique : M6, M8, M10x1.5. Pipe NPT et BSP : juste pour tarauder. Pas un trou de passage."},en:{t:"Families",b:"Coarse: UNC. Fine: UNF. Metric: M6, M8, M10x1.5. NPT and BSP pipe: for tapping only. Not a clearance hole."}},
+ drill:{fr:{t:"Les mèches",b:"Une mèche (drill) peut être une lettre, un numéro ou une fraction, comme 5/32 ou 0.250 po. Pour un taraud, ouvre Tarauds. Pour une vis qui passe, ouvre Passage."},en:{t:"Drills",b:"A drill can be a letter, a number or a fraction, like 5/32 or 0.250 in. For a tap, open Taps. For a bolt that passes through, open Clearance."}},
  letter:{fr:{t:"Lettres",b:"De A à Z. A est plus petite que Z."},en:{t:"Letters",b:"From A to Z. A is smaller than Z."}},
- number:{fr:{t:"Numéros",b:"De 1 à 80. Plus le numéro est grand, plus la mèche est petite. #7 est la mèche avant de tarauder un 1/4-20. #3 est celle d'un 1/4-28. Ni l'une ni l'autre n'est le trou de passage."},en:{t:"Numbers",b:"From 1 to 80. The higher the number, the smaller the bit. #7 is the drill before tapping 1/4-20. #3 is the one for 1/4-28. Neither is the clearance hole."}},
- oring:{fr:{t:"O-ring",b:"Mesure d'abord l'épaisseur (section, CS), puis le trou (ID). L'OD = ID + 2×CS. Le dash n'est pas la grosseur du boyau. 214 est un exemple courant."},en:{t:"O-ring",b:"Measure the thickness first (cross-section, CS), then the hole (ID). OD = ID + 2×CS. The dash is not the hose size. 214 is a common example."}},
- fit:{fr:{t:"Numéro",b:"2404 est le numéro du raccord. Plusieurs mots : JIC et 90 doivent tous matcher. Bouchon trouve aussi plug. Le dessin dit droit, coude ou T."},en:{t:"Number",b:"2404 is the fitting number. Several words: JIC and 90 must all match. The picture shows straight, elbow or tee."}},
- dash:{fr:{t:"dash",b:"C'est le numéro de l'o-ring, comme 214. Ce n'est pas la grosseur du tuyau."},en:{t:"dash",b:"It is the O-ring number, such as 214. It is not the hose size."}},
- id:{fr:{t:"ID",b:"ID, c'est le trou au milieu de l'o-ring. Exemple : 0.984 po."},en:{t:"ID",b:"ID is the hole in the middle of the O-ring. Example: 0.984 in."}},
- cs:{fr:{t:"Section",b:"CS, c'est l'épaisseur du rond. 0.070 po, c'est un o-ring mince. 0.139 po (1/8), c'est courant sur les boyaux."},en:{t:"Section",b:"CS is the thickness of the ring. 0.070 in is a thin O-ring. 0.139 in (1/8) is common on hoses."}},
- odring:{fr:{t:"OD",b:"OD, c'est le dehors de l'o-ring. OD = ID + 2×CS. Exemple : 1.262 po. Utile pour vérifier une mesure au vernier."},en:{t:"OD",b:"OD is the outside of the O-ring. OD = ID + 2×CS. Example: 1.262 in. Useful to check a caliper reading."}}
+ number:{fr:{t:"Numéros",b:"De 1 à 80. Plus le numéro est gros, plus la mèche est petite. #7, c'est avant de tarauder un 1/4-20. #3, c'est pour un 1/4-28. Ni un ni l'autre, c'est le trou de passage."},en:{t:"Numbers",b:"From 1 to 80. Bigger number, smaller drill. #7 is before tapping 1/4-20. #3 is for 1/4-28. Neither is the clearance hole."}},
+ oring:{fr:{t:"O-ring",b:"Mesure l'épaisseur (section, CS) en premier, pis le trou (ID). OD = ID + 2×CS. Le dash, c'est pas la grosseur du boyau. 214, c'est un exemple courant."},en:{t:"O-ring",b:"Measure the thickness (CS) first, then the hole (ID). OD = ID + 2×CS. The dash is not the hose size. 214 is a common example."}},
+ fit:{fr:{t:"Numéro",b:"2404, c'est le numéro du fitting. Plusieurs mots : JIC et 90 doivent être les deux sur la fiche. Bouchon trouve aussi plug. Le dessin dit droit, coude ou T."},en:{t:"Number",b:"2404 is the fitting number. Several words: JIC and 90 both have to be on the card. Bouchon also finds plug. The picture shows straight, elbow or tee."}},
+ dash:{fr:{t:"dash",b:"C'est le numéro du O-ring, comme 214. C'est pas la grosseur du boyau."},en:{t:"dash",b:"The O-ring number, like 214. Not the hose size."}},
+ id:{fr:{t:"ID",b:"ID, c'est le trou au milieu du O-ring. Exemple : 0.984 po."},en:{t:"ID",b:"ID is the hole in the middle of the O-ring. Example: 0.984 in."}},
+ cs:{fr:{t:"Section",b:"CS, c'est l'épaisseur du rond. 0.070 po, c'est mince. 0.139 po (1/8), c'est courant sur les boyaux."},en:{t:"Section",b:"CS is the ring thickness. 0.070 in is thin. 0.139 in (1/8) is common on hoses."}},
+ odring:{fr:{t:"OD",b:"OD, c'est le dehors du O-ring. OD = ID + 2×CS. Exemple : 1.262 po. Pratique pour checker au vernier."},en:{t:"OD",b:"OD is the outside of the O-ring. OD = ID + 2×CS. Example: 1.262 in. Handy to check with a caliper."}}
 };
 document.body.addEventListener("click",e=>{
   const b=e.target.closest(".help");
@@ -1063,20 +1073,20 @@ function trialNote(){
   const off=document.getElementById("offlinenote");
   const proNote=document.getElementById("offlinepro");
   if(AKOffline.access(localStorage.getItem("ak-pro"), navigator.onLine)==="offline-locked"){
-    n.textContent=fr?"Hors ligne. Le mode hors ligne est réservé aux abonnés.":"Offline. Offline mode is for subscribers.";
+    n.textContent=fr?"Pas de réseau. Le mode hors ligne, c'est pour les abonnés.":"No network. Offline mode is for subscribers.";
     if(off) off.hidden=false;
     if(proNote) proNote.hidden=true;
     return;
   }
   if(off) off.hidden=true;
   if(proNote) proNote.hidden=state!=="pro";
-  if(state==="pro"){n.textContent=fr?"Abonnement ouvert. Mode hors ligne inclus.":"Subscription is open. Offline mode is included.";return;}
-  if(state==="empty"){n.textContent=fr?"Essai de 30 jours, à partir de la première recherche.":"30-day trial, from the first search.";return;}
+  if(state==="pro"){n.textContent=fr?"T'es abonné. Le mode hors ligne est inclus.":"You're subscribed. Offline mode is included.";return;}
+  if(state==="empty"){n.textContent=fr?"Essai de 30 jours. Ça part à ta première recherche.":"30-day trial. It starts at your first search.";return;}
   if(state==="expired"){n.textContent="";return;}
   const start=Number(localStorage.getItem("ak-trial")||0);
   const left=Math.max(0, Math.ceil((AKHoles.TRIAL_MS-(Date.now()-start))/86400000));
   n.textContent=fr
-    ?`Essai : ${left} jour${left>1?"s":""} restant${left>1?"s":""}. La réponse reste ouverte.`
+    ?`Essai de 30 jours : ${left} jour${left>1?"s":""} de reste. La réponse reste ouverte.`
     :`Trial: ${left} day${left>1?"s":""} left. Answers stay open.`;
 }
 function lockIfNeeded(){
