@@ -13,6 +13,7 @@
   if (root) root.AKHoles = api;
 })(typeof globalThis !== "undefined" ? globalThis : this, function () {
   var TAP_CONSTANT = 1.299038105676658;
+  var TRIAL_MS = 30 * 86400000;
   var PIPE_FAMILIES = ["NPT", "NPS", "NPSM", "BSP", "BSPP", "BSPT", "G"];
   /* Designations already used as pipe taps in this app. Not clearance cases. */
   var PIPE_KEYS = {
@@ -207,9 +208,23 @@
     };
   }
 
-  /* Existing shop formula for the hole drilled BEFORE tapping. Not for clearance. */
+  /* 75% tap-drill formula already used by the shop chart.
+     diameter = major - 1.299038105676658 * pitch * (percent/100).
+     The stock name is the nearest drawer bit to that diameter.
+     Published 75% charts name a different bit when the pitch changes:
+     1/4-20 → #7 (0.201 in), 1/4-28 → #3 (0.213 in);
+     M10×1.5 → 8.5 mm, M10×1.25 → 8.8 mm; M8×1.25 → 6.8 mm, M8×1 → 7.0 mm.
+     Clearance is not this function. Coarse and fine share a clearance
+     hole only because the nominal diameter is the same. */
   function tapDrillDiameter(major, pitch, pct) {
     return major - TAP_CONSTANT * pitch * ((+pct || 75) / 100);
+  }
+  function entitlement(pro, trialStart, now) {
+    if (pro === "oui") return "pro";
+    var start = Number(trialStart || 0);
+    if (!start) return "empty";
+    if ((+now) - start < TRIAL_MS) return "active";
+    return "expired";
   }
 
   return {
@@ -221,6 +236,8 @@
     SOURCES: SOURCES,
     lookupClearance: lookupClearance,
     tapDrillDiameter: tapDrillDiameter,
+    entitlement: entitlement,
+    TRIAL_MS: TRIAL_MS,
     isPipeFamily: isPipeFamily,
     isPipeKey: isPipeKey
   };

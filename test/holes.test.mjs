@@ -56,9 +56,42 @@ test("inch clearance is the ASME drill, shared by UNC and UNF", () => {
   assert.equal(H.lookupClearance("IN", "#10-32", "close").drill, "#5");
   assert.equal(H.lookupClearance("IN", "#10", "loose").drill, "B");
   const tap = H.tapDrillDiameter(0.25, 1 / 20, 75);
-  assert.ok(Math.abs(tap - 0.201286) < 1e-4);
+  assert.ok(Math.abs(tap - 0.201286071) < 1e-6);
   assert.ok(tap < 0.21);
   assert.ok(quarter.min > tap + 0.05);
+});
+
+test("coarse and fine tap drills differ; clearance does not", () => {
+  const unc = H.tapDrillDiameter(0.25, 1 / 20, 75);
+  const unf = H.tapDrillDiameter(0.25, 1 / 28, 75);
+  assert.ok(Math.abs(unc - 0.201286071) < 1e-6);
+  assert.ok(Math.abs(unf - 0.215204336) < 1e-6);
+  assert.ok(unf - unc > 0.01);
+  assert.equal(H.lookupClearance("UNC", "1/4-20", "normal").drill, H.lookupClearance("UNF", "1/4-28", "normal").drill);
+  const m10c = H.tapDrillDiameter(10, 1.5, 75);
+  const m10f = H.tapDrillDiameter(10, 1.25, 75);
+  const m8c = H.tapDrillDiameter(8, 1.25, 75);
+  const m8f = H.tapDrillDiameter(8, 1, 75);
+  assert.equal(Math.round(m10c * 10) / 10, 8.5);
+  assert.equal(Math.round(m10f * 10) / 10, 8.8);
+  assert.equal(Math.round(m8c * 10) / 10, 6.8);
+  assert.equal(Math.round(m8f * 10) / 10, 7);
+  assert.notEqual(Math.round(m10c * 10) / 10, Math.round(m10f * 10) / 10);
+  assert.notEqual(Math.round(m8c * 10) / 10, Math.round(m8f * 10) / 10);
+  assert.equal(H.lookupClearance("MM", "M10×1.5", "normal").min, 11);
+  assert.equal(H.lookupClearance("MM", "M10×1.25", "normal").min, 11);
+  assert.equal(H.lookupClearance("MM", "M8×1.25", "normal").min, H.lookupClearance("MM", "M8×1", "normal").min);
+});
+
+test("entitlement states stay on the 30-day rule", () => {
+  const now = 1_700_000_000_000;
+  assert.equal(H.TRIAL_MS, 30 * 86400000);
+  assert.equal(H.entitlement("", 0, now), "empty");
+  assert.equal(H.entitlement(null, now - 2 * 86400000, now), "active");
+  assert.equal(H.entitlement(null, now - 29 * 86400000, now), "active");
+  assert.equal(H.entitlement(null, now - 30 * 86400000, now), "expired");
+  assert.equal(H.entitlement(null, now - 40 * 86400000, now), "expired");
+  assert.equal(H.entitlement("oui", now - 40 * 86400000, now), "pro");
 });
 
 test("pipe threads and unpublished sizes are not clearance cases", () => {
@@ -105,7 +138,11 @@ test("page separates the two jobs and keeps the paywall", () => {
   assert.match(html, /id="clear"/);
   assert.match(html, /\["desk","convert","clear","tap","oring","fit"\]/);
   assert.match(html, /clearbig/);
-  assert.match(html, /30\*86400000/);
+  assert.match(html, /tapbig/);
+  assert.match(html, /AKHoles\.TRIAL_MS/);
+  assert.match(html, /AKHoles\.entitlement/);
+  assert.match(html, /change avec le pas/);
+  assert.match(html, /1\/4-20 prend #7, 1\/4-28 prend #3/);
   assert.match(html, /ak-pro/);
   assert.match(html, /mois fini/);
   assert.match(html, /taille demandée/);
