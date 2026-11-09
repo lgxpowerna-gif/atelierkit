@@ -5,7 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>AtelierKit — connexions hydrauliques</title>
 <link rel="canonical" href="https://atelierkit.faitle.net/" />
-<meta name="description" content="Au comptoir, sans numéro Parker : mesurez le filet, trouvez le raccord, la mèche et l'o-ring." />
+<meta name="description" content="Au comptoir : quelle mèche prendre, quelle pièce sortir. Essai de 30 jours." />
+<link rel="manifest" href="/manifest.webmanifest" />
+<meta name="theme-color" content="#1c1915" />
+<link rel="icon" href="/icons/icon-192.png" />
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet" />
 <style>
 :root{--bg:#efeae2;--ink:#1c1915;--muted:#6d655c;--line:#d9d0c4;--card:#fffdf9;--accent:#9a4f12;--hi:#fff4df}
@@ -31,8 +34,17 @@ nav button.on{background:#e2a322;color:#1c1406}
 .lexicon{margin-top:12px}
 .lexicon dt{font-weight:600;margin-top:10px}
 .lexicon dd{margin:2px 0 0;color:var(--ink);line-height:1.4}
-.give b .bit{display:block;font-size:26px;line-height:1.15}
-.give b .do{display:block;font-size:16px;font-weight:500;line-height:1.35;margin-top:6px}
+.give > span{font-size:13px;opacity:.85}
+.give b .bit{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.give b .do{display:block;font-size:26px;font-weight:600;line-height:1.3;margin-top:2px}
+.ask h1{font-size:32px;line-height:1.15;margin:0 0 8px}
+.routes{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+.routes[hidden]{display:none !important}
+body.home nav{display:none}
+.routes button{min-height:64px;font-size:18px;text-align:left;padding:12px 16px;border-radius:14px;border:1px solid var(--line);background:#fff;cursor:pointer;font-weight:600}
+.routes button small{display:block;font-weight:400;color:var(--muted);font-size:14px;margin-top:4px}
+.routes button.back{min-height:44px;background:transparent}
+.example{margin-top:8px}
 nav button{min-height:36px}
 main{max-width:1080px;margin:0 auto;padding:16px 16px 48px}
 .panel{display:none}.panel.on{display:block}
@@ -101,7 +113,9 @@ body.bench-mode .bench-label{display:block}
   .help{width:36px;height:36px;font-size:16px}
   input,select{min-height:48px}
   .drillgrid button{min-height:44px;font-size:16px}
-  .give b .bit{font-size:24px}
+  .give b .do{font-size:22px}
+  .ask h1{font-size:26px}
+  .routes button{min-height:72px}
 }
 </style>
 </head>
@@ -109,14 +123,15 @@ body.bench-mode .bench-label{display:block}
 <header>
   <div class="brand"><span>AK</span> AtelierKit</div>
   <nav>
-    <button class="on" data-tab="bench" data-fr="Comptoir" data-en="Bench">Comptoir</button>
-    <button data-tab="desk" data-fr="Hydraulique" data-en="Hydraulic">Hydraulique</button>
+    <button class="on" data-tab="start" data-fr="Accueil" data-en="Home">Accueil</button>
+    <button data-tab="desk" data-fr="Raccord" data-en="Fitting">Raccord</button>
     <button data-tab="convert" data-fr="Convertir" data-en="Convert">Convertir</button>
     <button data-tab="clear" data-fr="Passage" data-en="Clearance">Passage</button>
-    <button data-tab="tap" data-fr="Tarauds" data-en="Taps">Tarauds</button>
-    <button data-tab="drill" data-fr="Mèches" data-en="Drills">Mèches</button>
-    <button data-tab="oring" data-fr="O-rings" data-en="O-rings">O-rings</button>
-    <button data-tab="fit" data-fr="Raccords" data-en="Fittings">Raccords</button>
+    <button data-tab="tap" data-fr="Filet" data-en="Thread">Filet</button>
+    <button data-tab="drill" data-fr="Mèche" data-en="Drill">Mèche</button>
+    <button data-tab="oring" data-fr="Joint" data-en="O-ring">Joint</button>
+    <button data-tab="fit" data-fr="Dessins" data-en="Pictures">Dessins</button>
+    <button data-tab="bench" data-fr="Tout" data-en="All">Tout</button>
   </nav>
   <div class="headtools">
     <button type="button" id="guidebtn" data-fr="Aide" data-en="Help">Aide</button>
@@ -124,17 +139,38 @@ body.bench-mode .bench-label{display:block}
   </div>
 </header>
 <main>
-  <section class="card guide" id="guide">
-    <div class="guide-top">
-      <b data-fr="Comment ça marche" data-en="How it works">Comment ça marche</b>
-      <button type="button" id="guidedismiss" data-fr="J'ai compris" data-en="Got it">J'ai compris</button>
+  <section class="panel" id="start">
+    <div class="card ask">
+      <h1 data-fr="Qu'est-ce que tu cherches ?" data-en="What are you looking for?">Qu'est-ce que tu cherches ?</h1>
+      <p class="lead" data-fr="Choisis une ligne. La bande noire dit quelle mèche prendre, ou quelle pièce sortir." data-en="Pick one line. The black bar says which bit to take, or which part to pull.">Choisis une ligne. La bande noire dit quelle mèche prendre, ou quelle pièce sortir.</p>
+      <div class="routes" id="routes">
+        <button type="button" data-go="bolt"><span data-fr="J'ai un boulon / une vis" data-en="I have a bolt / a screw">J'ai un boulon / une vis</span><small data-fr="Le boulon traverse, ou je fais le filet dans le trou." data-en="The bolt passes through, or I cut the thread in the hole.">Le boulon traverse, ou je fais le filet dans le trou.</small></button>
+        <button type="button" data-go="drill"><span data-fr="Je dois percer un trou" data-en="I need to drill a hole">Je dois percer un trou</span><small data-fr="Je connais la grosseur. Je veux le nom de la mèche." data-en="I know the size. I want the drill name.">Je connais la grosseur. Je veux le nom de la mèche.</small></button>
+        <button type="button" data-go="fit"><span data-fr="Je cherche un raccord" data-en="I'm looking for a fitting">Je cherche un raccord</span><small data-fr="J'ai la pièce en main, ou un numéro." data-en="I have the part in hand, or a number.">J'ai la pièce en main, ou un numéro.</small></button>
+        <button type="button" data-go="oring"><span data-fr="Je cherche un o-ring" data-en="I'm looking for an O-ring">Je cherche un o-ring</span><small data-fr="Le numéro du joint, à partir de l'épaisseur." data-en="The ring number, from the thickness.">Le numéro du joint, à partir de l'épaisseur.</small></button>
+        <button type="button" data-go="convert"><span data-fr="Convertir" data-en="Convert">Convertir</span><small data-fr="Des mm aux pouces, ou l'inverse." data-en="Millimetres to inches, or the other way.">Des mm aux pouces, ou l'inverse.</small></button>
+      </div>
+      <div class="routes" id="boltq" hidden>
+        <button type="button" class="back" data-go="back"><span data-fr="Retour" data-en="Back">Retour</span></button>
+        <button type="button" data-go="clear"><span data-fr="Le boulon traverse la pièce" data-en="The bolt passes through the part">Le boulon traverse la pièce</span><small data-fr="Pas de filet dans ce trou. Exemple : boulon 1/4 po." data-en="No thread in this hole. Example: 1/4 in bolt.">Pas de filet dans ce trou. Exemple : boulon 1/4 po.</small></button>
+        <button type="button" data-go="tap"><span data-fr="Je fais le filet dans le trou" data-en="I cut the thread in the hole">Je fais le filet dans le trou</span><small data-fr="Je perce d'abord, puis je taraude. Exemple : 1/4-20." data-en="I drill first, then I tap. Example: 1/4-20.">Je perce d'abord, puis je taraude. Exemple : 1/4-20.</small></button>
+      </div>
+      <div class="routes" id="fitq" hidden>
+        <button type="button" class="back" data-go="back"><span data-fr="Retour" data-en="Back">Retour</span></button>
+        <button type="button" data-go="desk"><span data-fr="J'ai la pièce en main" data-en="I have the part in hand">J'ai la pièce en main</span><small data-fr="Je mesure le filet. Exemple : 0.562 po." data-en="I measure the thread. Example: 0.562 in.">Je mesure le filet. Exemple : 0.562 po.</small></button>
+        <button type="button" data-go="catalog"><span data-fr="J'ai un numéro ou un nom" data-en="I have a number or a name">J'ai un numéro ou un nom</span><small data-fr="Exemple : 2404, ou JIC 90." data-en="Example: 2404, or JIC 90.">Exemple : 2404, ou JIC 90.</small></button>
+      </div>
     </div>
-    <ol>
-      <li data-fr="Choisis l'outil : Hydraulique, Passage, Taraud, Mèche, O-ring ou Raccord." data-en="Pick the tool: Hydraulic, Clearance, Tap, Drill, O-ring or Fitting.">Choisis l'outil : Hydraulique, Passage, Taraud, Mèche, O-ring ou Raccord.</li>
-      <li data-fr="Entre la taille comme sur le bon : 1/4-20, M10x1.5, 3/8 NPT ou 0.250 po." data-en="Type the size as written on the order: 1/4-20, M10x1.5, 3/8 NPT or 0.250 in.">Entre la taille comme sur le bon : 1/4-20, M10x1.5, 3/8 NPT ou 0.250 po.</li>
-      <li data-fr="Lis la bande noire. Elle dit quelle mèche sortir, et quoi faire ensuite." data-en="Read the black bar. It says which bit to pull, and what to do next.">Lis la bande noire. Elle dit quelle mèche sortir, et quoi faire ensuite.</li>
-    </ol>
-    <p class="ex"><span data-fr="Un mot bloque ?" data-en="Stuck on a word?">Un mot bloque ?</span> <a href="#lexicon" data-fr="Mots du comptoir" data-en="Shop words">Mots du comptoir</a>. <span data-fr="Les habitués peuvent fermer ce guide." data-en="Regulars can close this guide.">Les habitués peuvent fermer ce guide.</span></p>
+    <details class="card guide" id="guide">
+      <summary data-fr="Comment ça marche" data-en="How it works">Comment ça marche</summary>
+      <ol>
+        <li data-fr="Choisis ce que tu cherches. Un seul écran s'ouvre." data-en="Pick what you are looking for. One screen opens.">Choisis ce que tu cherches. Un seul écran s'ouvre.</li>
+        <li data-fr="Regarde l'exemple déjà rempli, puis mets ta taille : 1/4-20, M10x1.5, 3/8 NPT ou 0.250 po." data-en="Look at the filled-in example, then type your size: 1/4-20, M10x1.5, 3/8 NPT or 0.250 in.">Regarde l'exemple déjà rempli, puis mets ta taille : 1/4-20, M10x1.5, 3/8 NPT ou 0.250 po.</li>
+        <li data-fr="Lis la bande noire. Elle dit quelle mèche prendre, ou quelle pièce sortir. Le reste est un détail." data-en="Read the black bar. It says which bit to take, or which part to pull. The rest is detail.">Lis la bande noire. Elle dit quelle mèche prendre, ou quelle pièce sortir. Le reste est un détail.</li>
+      </ol>
+      <p class="ex"><a href="#lexicon" data-fr="Mots du comptoir" data-en="Shop words">Mots du comptoir</a></p>
+      <button type="button" id="guidedismiss" data-fr="J'ai compris" data-en="Got it">J'ai compris</button>
+    </details>
   </section>
   <section class="panel" id="desk">
     <div class="card">
@@ -153,14 +189,14 @@ body.bench-mode .bench-label{display:block}
         <button class="on" data-u="po">po</button>
         <button data-u="mm">mm</button>
       </div>
-      <div class="give"><span data-fr="Raccord le plus proche" data-en="Closest fitting">Raccord le plus proche</span><b id="odgive">—</b></div>
+      <div class="give"><span data-fr="Quelle pièce je sors" data-en="Which part I pull">Quelle pièce je sors</span><b id="odgive">—</b></div>
       <div id="odhits"></div>
     </div>
     <div class="card" style="margin-top:12px">
       <p class="lead"><span data-fr="Étape 2. La taille dite (ex. 1/2 po) peut être le boyau ou le filet. Regarde le bout avant de sortir le raccord." data-en="Step 2. The size you were told (ex. 1/2 in) may be the hose or the thread. Look at the nose before you pull the fitting.">Étape 2. La taille dite (ex. 1/2 po) peut être le boyau ou le filet. Regarde le bout avant de sortir le raccord.</span> <button class="help" data-help="said">?</button></p>
       <label data-fr="taille demandée" data-en="size given">taille demandée</label>
       <div class="chips" id="said"></div>
-      <div class="give"><span data-fr="À vérifier avant de choisir" data-en="Check before choosing">À vérifier avant de choisir</span><b id="give">—</b></div>
+      <div class="give"><span data-fr="Quelle pièce je sors" data-en="Which part I pull">Quelle pièce je sors</span><b id="give">—</b></div>
       <div class="cols" id="deskcols"></div>
       <h3><span data-fr="C'est quoi le bout" data-en="What is the nose">C'est quoi le bout</span> <button class="help" data-help="end">?</button></h3>
       <div class="idgrid" id="idgrid"></div>
@@ -208,11 +244,16 @@ body.bench-mode .bench-label{display:block}
           </div>
         </div>
       </div>
+      <p class="ex" data-fr="Exemple déjà choisi : boulon 1/4 po, jeu normal. Change la taille pour la tienne." data-en="Example already chosen: 1/4 in bolt, normal fit. Change the size to yours.">Exemple déjà choisi : boulon 1/4 po, jeu normal. Change la taille pour la tienne.</p>
       <p class="subn" id="clearfitnote"></p>
-      <div class="give"><span data-fr="Mèche de passage" data-en="Clearance drill">Mèche de passage</span><b id="clearbig">—</b></div>
-      <p class="subn" id="clearsub"></p>
-      <div class="cols" id="clearcols"></div>
-      <p class="meta" id="clearmissing"></p>
+      <div class="give"><span data-fr="Quelle mèche je prends" data-en="Which bit I take">Quelle mèche je prends</span><b id="clearbig">—</b></div>
+      <details class="advanced">
+        <summary data-fr="Plus de détails" data-en="More detail">Plus de détails</summary>
+        <p class="subn" id="clearsub"></p>
+        <div class="cols" id="clearcols"></div>
+        <p class="meta" id="clearmissing"></p>
+      </details>
+      <p class="meta" hidden>Mèche de passage</p>
       <details class="advanced">
         <summary data-fr="D'où viennent les chiffres" data-en="Where the numbers come from">D'où viennent les chiffres</summary>
         <p class="meta" id="clearsource"></p>
@@ -240,11 +281,16 @@ body.bench-mode .bench-label{display:block}
           </details>
         </div>
       </div>
-      <div class="give"><span data-fr="Mèche avant taraud" data-en="Tap drill">Mèche avant taraud</span><b id="tapbig">—</b></div>
+      <p class="ex" data-fr="Exemple déjà choisi : vis 1/4-20. La bande noire dit la mèche, puis le taraud." data-en="Example already chosen: 1/4-20 screw. The black bar names the bit, then the tap.">Exemple déjà choisi : vis 1/4-20. La bande noire dit la mèche, puis le taraud.</p>
+      <div class="give"><span data-fr="Quelle mèche je prends" data-en="Which bit I take">Quelle mèche je prends</span><b id="tapbig">—</b></div>
       <p class="subn" id="tapintent"></p>
-      <p class="subn" id="tapsub"></p>
-      <p><button type="button" id="tapclearbtn" data-fr="Voir le trou de passage de ce diamètre" data-en="See the clearance hole for this diameter">Voir le trou de passage de ce diamètre</button></p>
-      <div style="overflow:auto;margin-top:8px"><table id="taptable"></table></div>
+      <p><button type="button" id="tapclearbtn" data-fr="Voir le trou où ce boulon traverse" data-en="See the hole this bolt passes through">Voir le trou où ce boulon traverse</button></p>
+      <details class="advanced">
+        <summary data-fr="Plus de détails" data-en="More detail">Plus de détails</summary>
+        <p class="subn" id="tapsub"></p>
+        <p class="meta">Mèche avant taraud</p>
+        <div style="overflow:auto;margin-top:8px"><table id="taptable"></table></div>
+      </details>
     </div>
   </section>
 
@@ -262,13 +308,16 @@ body.bench-mode .bench-label{display:block}
       <p class="meta" data-fr="Tailles courantes" data-en="Common sizes">Tailles courantes</p>
       <div class="chips" id="dfracs"></div>
       <div class="chips" id="dmm"></div>
-      <div class="give"><span data-fr="La mèche" data-en="The drill">La mèche</span><b id="drillbig">—</b></div>
+      <div class="give"><span data-fr="Quelle mèche je prends" data-en="Which bit I take">Quelle mèche je prends</span><b id="drillbig">—</b></div>
       <p class="subn" id="drillgap"></p>
       <div class="cols" id="drillcols"></div>
-      <h3><span data-fr="Lettres" data-en="Letters">Lettres</span> <button class="help" data-help="letter">?</button></h3>
-      <div class="drillgrid" id="letters"></div>
-      <h3><span data-fr="Numéros" data-en="Numbers">Numéros</span> <button class="help" data-help="number">?</button></h3>
-      <div class="drillgrid" id="numbers"></div>
+      <details class="advanced">
+        <summary data-fr="Toutes les lettres et tous les numéros" data-en="Every letter and number">Toutes les lettres et tous les numéros</summary>
+        <h3><span data-fr="Lettres" data-en="Letters">Lettres</span> <button class="help" data-help="letter">?</button></h3>
+        <div class="drillgrid" id="letters"></div>
+        <h3><span data-fr="Numéros" data-en="Numbers">Numéros</span> <button class="help" data-help="number">?</button></h3>
+        <div class="drillgrid" id="numbers"></div>
+      </details>
     </div>
   </section>
 
@@ -284,9 +333,14 @@ body.bench-mode .bench-label{display:block}
         <div><label data-fr="Dehors du rond, OD (po) ex. 1.262" data-en="Outside of the ring, OD (in) ex. 1.262">Dehors du rond, OD (po) ex. 1.262</label><input id="ood" inputmode="decimal" placeholder="1.262 po" /></div>
       </div>
       <label data-fr="Numéro dash (ex. 214)" data-en="Dash number (ex. 214)">Numéro dash (ex. 214)</label>
-      <input id="oq" class="search" placeholder="214" />
+      <input id="oq" class="search" value="214" placeholder="214" />
+      <p class="ex" data-fr="Exemple déjà rempli : dash 214, épaisseur 1/8 po. Efface pour le tien." data-en="Example already filled in: dash 214, 1/8 in thick. Clear it for yours.">Exemple déjà rempli : dash 214, épaisseur 1/8 po. Efface pour le tien.</p>
       <div class="chips" id="oringcommon"></div>
-      <table id="otable"></table>
+      <div class="give"><span data-fr="Quelle pièce je sors" data-en="Which part I pull">Quelle pièce je sors</span><b id="oringbig">—</b></div>
+      <details class="advanced" open>
+        <summary data-fr="Les autres dash proches" data-en="Other nearby dashes">Les autres dash proches</summary>
+        <table id="otable"></table>
+      </details>
     </div>
   </section>
 
@@ -296,7 +350,8 @@ body.bench-mode .bench-label{display:block}
       <p class="why" data-fr="À quoi ça sert : voir le dessin du raccord à partir du numéro ou de mots comme JIC 90." data-en="What it's for: see the fitting picture from the number or from words like JIC 90.">À quoi ça sert : voir le dessin du raccord à partir du numéro ou de mots comme JIC 90.</p>
       <p class="lead"><span data-fr="Entre le numéro ou plusieurs mots (ex. JIC 90). Tous les mots doivent être sur la fiche. Bouchon cherche aussi plug. Le dessin indique droit, coude ou T." data-en="Enter the number or several words (ex. JIC 90). Every word has to be on the card. Plug also finds caps. The picture shows straight, elbow or tee.">Entre le numéro ou plusieurs mots (ex. JIC 90). Tous les mots doivent être sur la fiche. Bouchon cherche aussi plug. Le dessin indique droit, coude ou T.</span> <button class="help" data-help="fit">?</button></p>
       <label data-fr="code ou nom" data-en="code or name">code ou nom</label>
-      <input id="fq" class="search" placeholder="JIC 90, 2404, 3/8 NPT" />
+      <input id="fq" class="search" placeholder="2404" />
+      <p class="ex" data-fr="Exemple : tape 2404, ou JIC 90. Vide, aucun dessin. Choisis une famille pour les voir." data-en="Example: type 2404, or JIC 90. Empty, no pictures. Pick a family to see them.">Exemple : tape 2404, ou JIC 90. Vide, aucun dessin. Choisis une famille pour les voir.</p>
       <div class="chips" id="fitquick"></div>
       <div class="chips" id="fitfams"></div>
       <div class="fits" id="fits"></div>
@@ -307,7 +362,7 @@ body.bench-mode .bench-label{display:block}
     <dl id="lexlist"></dl>
   </details>
 </main>
-<footer>AtelierKit · <a href="#lexicon" data-fr="Mots du comptoir" data-en="Shop words">Mots du comptoir</a> · <a href="/tarifs">1 mois, puis 9 $/mois</a> · <a href="https://facturepro.faitle.net">FacturePro</a> · <a href="https://tradequote.faitle.net">TradeQuote</a></footer>
+<footer>AtelierKit · <a href="#lexicon" data-fr="Mots du comptoir" data-en="Shop words">Mots du comptoir</a> · <a href="/tarifs" data-fr="Essai de 30 jours, puis 9 $/mois" data-en="30-day trial, then $9/month">Essai de 30 jours, puis 9 $/mois</a> · <a href="https://facturepro.faitle.net">FacturePro</a> · <a href="https://tradequote.faitle.net">TradeQuote</a></footer>
 <dialog id="pop">
   <header id="poptitle">Aide</header>
   <p id="popbody"></p>
@@ -319,8 +374,11 @@ body.bench-mode .bench-label{display:block}
   <p class="lead" data-fr="Le raccord, la mèche et le numéro d'o-ring sont réservés aux abonnés, à 9 $ par mois. Les dessins et la conversion restent gratuits." data-en="The fitting, the drill and the O-ring number are for subscribers, at $9 a month. Drawings and conversion stay free.">Le raccord, la mèche et le numéro d'o-ring sont réservés aux abonnés, à 9 $ par mois. Les dessins et la conversion restent gratuits.</p>
   <p><a class="btn" href="/tarifs" data-fr="Voir les abonnements" data-en="See the plans">Voir les abonnements</a></p>
 </div>
+<p id="offlinenote" class="lead" hidden style="text-align:center" data-fr="Sans réseau, seul un abonnement ouvre les réponses. L'essai de 30 jours compte seulement en ligne." data-en="With no network, only a subscription opens the answers. The 30-day trial counts only while online.">Sans réseau, seul un abonnement ouvre les réponses. L'essai de 30 jours compte seulement en ligne.</p>
+<p id="offlinepro" class="ex" hidden style="text-align:center" data-fr="Mode hors ligne (installable) : cet appareil peut garder l'outil sans réseau." data-en="Offline mode (installable): this device can keep the tool with no network.">Mode hors ligne (installable) : cet appareil peut garder l'outil sans réseau.</p>
 <script src="js/holes.js"></script>
 <script src="js/plain.js"></script>
+<script src="js/offline.js"></script>
 <script>
 const IN=25.4;
 const LETTERS={"A":0.234,"B":0.238,"C":0.242,"D":0.246,"E":0.250,"F":0.257,"G":0.261,"H":0.266,"I":0.272,"J":0.277,"K":0.281,"L":0.290,"M":0.295,"N":0.302,"O":0.316,"P":0.323,"Q":0.332,"R":0.339,"S":0.348,"T":0.358,"U":0.368,"V":0.377,"W":0.386,"X":0.397,"Y":0.404,"Z":0.413};
@@ -672,11 +730,22 @@ function renderOring(){
   const shown=rows.slice(0,60);
   const more=rows.length>shown.length?`<p class="meta">${rows.length} ${tr("tailles —","sizes —")} ${shown.length} ${tr("affichées. Affinez l'épaisseur, le trou ou le dash.","shown. Narrow it with thickness, hole or dash.")}</p>`:"";
   document.getElementById("otable").innerHTML=pick+more+"<tr><th>dash <button class=\"help\" data-help=\"dash\">?</button></th><th>ID po <button class=\"help\" data-help=\"id\">?</button></th><th>OD po <button class=\"help\" data-help=\"odring\">?</button></th><th>CS po <button class=\"help\" data-help=\"cs\">?</button></th><th>ID mm</th></tr>"+shown.map(o=>`<tr><td>-${o[0]}</td><td>${o[1].toFixed(3)}</td><td>${odOf(o).toFixed(3)}</td><td>${o[2].toFixed(3)}</td><td>${(o[1]*IN).toFixed(2)}</td></tr>`).join("");
+  const top=shown[0];
+  if(!top){setAnswer("oringbig","—",AKPlain.emptyHint("oring", lang));return;}
+  setAnswer("oringbig","dash "+top[0], tr(
+    "Sors le joint dash "+top[0]+" (trou "+top[1].toFixed(3)+" po · "+(top[1]*IN).toFixed(2)+" mm, épaisseur "+top[2].toFixed(3)+" po).",
+    "Pull O-ring dash "+top[0]+" (hole "+top[1].toFixed(3)+" in · "+(top[1]*IN).toFixed(2)+" mm, thickness "+top[2].toFixed(3)+" in)."
+  ));
 }
 function kindOf(f){const s=(f.family||"").toUpperCase();if(s.includes("ORFS"))return "orfs";if(s.includes("NPT"))return "npt";if(s.includes("ORB"))return "orb";if(s.includes("JIC"))return "jic";return "jic";}
+let browseAll=false;
 function renderFits(){
   const q=document.getElementById("fq").value.trim().toLowerCase();
   const tokens=q.split(/[\s,;+/]+/).map(t=>t.trim()).filter(Boolean);
+  if(!tokens.length && !fitFam && !browseAll){
+    document.getElementById("fits").innerHTML=`<p class="lead">${tr("Exemple : tape 2404, ou appuie sur JIC.","Example: type 2404, or press JIC.")}</p>`;
+    return;
+  }
   const rows=fittings.filter(f=>{
     if(fitFam&&f.family!==fitFam) return false;
     if(!tokens.length) return true;
@@ -696,9 +765,19 @@ function renderFits(){
   document.getElementById("fits").innerHTML=pick+count+rows.slice(0,40).map(f=>`<article><img class="part" alt="${f.desc}" src="${f.img}"><div><div class="code">${f.code}</div><div>${f.desc}</div><div class="meta">${f.family} · ${f.angle}</div></div></article>`).join("");
 }
 function showTab(tab){
+  if(tab==="start"){
+    const routes=document.getElementById("routes");
+    const boltq=document.getElementById("boltq");
+    const fitq=document.getElementById("fitq");
+    if(routes) routes.hidden=false;
+    if(boltq) boltq.hidden=true;
+    if(fitq) fitq.hidden=true;
+    askTitle("Qu'est-ce que tu cherches ?","What are you looking for?");
+  }
   const bench=tab==="bench";
   const show=bench?new Set(["desk","convert","clear","tap","oring","fit"]):new Set([tab]);
   document.body.classList.toggle("bench-mode",bench);
+  document.body.classList.toggle("home",tab==="start");
   document.querySelectorAll(".panel").forEach(p=>{
     const on=show.has(p.id);
     p.classList.toggle("on",on);
@@ -706,7 +785,20 @@ function showTab(tab){
   });
   document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.tab===tab));
 }
-document.querySelector("nav").onclick=e=>{const t=e.target.closest("button");if(!t)return;showTab(t.dataset.tab);};
+document.querySelector("nav").onclick=e=>{const t=e.target.closest("button");if(!t)return;showTab(t.dataset.tab);window.scrollTo(0,0);};
+function askTitle(fr,en){
+  const h=document.querySelector("#start h1");
+  if(!h) return;
+  h.dataset.fr=fr; h.dataset.en=en; h.textContent=tr(fr,en);
+}
+function openRoute(go){
+  if(go==="back"){showTab("start");return;}
+  if(go==="bolt"){document.getElementById("routes").hidden=true;document.getElementById("boltq").hidden=false;document.getElementById("fitq").hidden=true;askTitle("Le boulon doit faire quoi ?","What should the bolt do?");return;}
+  if(go==="fit"){document.getElementById("routes").hidden=true;document.getElementById("fitq").hidden=false;document.getElementById("boltq").hidden=true;askTitle("Tu as le raccord comment ?","How do you have the fitting?");return;}
+  showTab(go==="catalog"?"fit":go);
+  window.scrollTo(0,0);
+}
+document.getElementById("routes").onclick=document.getElementById("boltq").onclick=document.getElementById("fitq").onclick=e=>{const b=e.target.closest("button");if(!b)return;openRoute(b.dataset.go);};
 document.getElementById("said").innerHTML=DESK.map((d,i)=>`<button data-i="${i}" class="${i===said?"on":""}">${d.say}</button>`).join("");
 document.getElementById("said").onclick=e=>{const b=e.target.closest("button");if(!b)return;said=+b.dataset.i;document.querySelectorAll("#said button").forEach(x=>x.classList.toggle("on",x===b));renderDesk();};
 document.getElementById("idgrid").onclick=e=>{const b=e.target.closest("button");if(!b)return;idk=b.dataset.id;renderDesk();};
@@ -872,7 +964,8 @@ document.getElementById("dsize").addEventListener("input",renderDrillFind);
 document.getElementById("dunit").onclick=e=>{const b=e.target.closest("button");if(!b)return;dUnit=b.dataset.u;document.querySelectorAll("#dunit button").forEach(x=>x.classList.toggle("on",x===b));renderDrillFind();};
 document.getElementById("letters").onclick=document.getElementById("numbers").onclick=e=>{const b=e.target.closest("button");if(!b||b.classList.contains("help"))return;dUnit="po";document.querySelectorAll("#dunit button").forEach(x=>x.classList.toggle("on",x.dataset.u==="po"));document.getElementById("dsize").value=b.dataset.v;renderDrillFind();};
 function paintCs(){
-  const cur=document.querySelector("#cs button.on")?.dataset.cs||"";
+  const picked=document.querySelector("#cs button.on");
+  const cur=picked?picked.dataset.cs:"0.139";
   const rows=[["",tr("tous","all")],["0.070","1/16"],["0.103","3/32"],["0.139","1/8"],["0.210","3/16"],["0.275","1/4"]];
   document.getElementById("cs").innerHTML=rows.map(c=>`<button data-cs="${c[0]}" class="${c[0]===cur?"on":""}">${c[1]}</button>`).join("");
 }
@@ -889,7 +982,7 @@ function applyLang(){
 }
 document.getElementById("lang").onclick=()=>{lang=lang==="fr"?"en":"fr";localStorage.setItem("ak-lang",lang);applyLang();renderDesk();renderOd();renderTap();renderDrillFind();renderClearance();renderOring();renderFits();};
 document.getElementById("guidedismiss").onclick=()=>{document.getElementById("guide").hidden=true;localStorage.setItem("ak-guide","off");};
-document.getElementById("guidebtn").onclick=()=>{const g=document.getElementById("guide");g.hidden=false;localStorage.removeItem("ak-guide");g.scrollIntoView({behavior:"smooth",block:"start"});};
+document.getElementById("guidebtn").onclick=()=>{showTab("start");const g=document.getElementById("guide");g.hidden=false;if("open" in g) g.open=true;localStorage.removeItem("ak-guide");g.scrollIntoView({behavior:"smooth",block:"start"});};
 if(localStorage.getItem("ak-guide")==="off") document.getElementById("guide").hidden=true;
 const HELP={
  od:{fr:{t:"Mesurer",b:"Mâle : place le vernier à l'extérieur, sur les premiers filets. Femelle : place-le à l'intérieur de l'ouverture. Ne mesure pas dans le creux du filet. Exemple : 0.562 po."},en:{t:"Measuring",b:"Male: put the caliper outside, on the first threads. Female: put it inside the opening. Do not measure in the thread groove. Example: 0.562 in."}},
@@ -930,7 +1023,7 @@ fetch("fittings.json").then(r=>r.json()).then(data=>{
   fittings=data;
   fitFamilies=[...new Set(data.map(f=>f.family))];
   paintFitFams();
-  document.getElementById("fitfams").onclick=e=>{const b=e.target.closest("button");if(!b)return;fitFam=b.dataset.f;document.querySelectorAll("#fitfams button").forEach(x=>x.classList.toggle("on",x===b));renderFits();};
+  document.getElementById("fitfams").onclick=e=>{const b=e.target.closest("button");if(!b)return;fitFam=b.dataset.f;browseAll=b.dataset.f==="";document.querySelectorAll("#fitfams button").forEach(x=>x.classList.toggle("on",x===b));renderFits();};
   renderFits();
 });
 document.getElementById("od").addEventListener("input",renderOd);
@@ -945,6 +1038,7 @@ function startTrial(){
   if(!localStorage.getItem("ak-trial")) localStorage.setItem("ak-trial", String(Date.now()));
 }
 function trialOk(){
+  if(AKOffline.access(localStorage.getItem("ak-pro"), navigator.onLine)==="offline-locked") return false;
   return AKHoles.entitlement(localStorage.getItem("ak-pro"), localStorage.getItem("ak-trial"), Date.now())!=="expired";
 }
 function lockedHtml(){
@@ -966,8 +1060,18 @@ function trialNote(){
   if(!n) return;
   const fr=lang!=="en";
   const state=AKHoles.entitlement(localStorage.getItem("ak-pro"), localStorage.getItem("ak-trial"), Date.now());
-  if(state==="pro"){n.textContent=fr?"Comptoir ouvert.":"Bench is open.";return;}
-  if(state==="empty"){n.textContent=fr?"1 mois gratuit, à partir de la première recherche.":"1 free month, from the first search.";return;}
+  const off=document.getElementById("offlinenote");
+  const proNote=document.getElementById("offlinepro");
+  if(AKOffline.access(localStorage.getItem("ak-pro"), navigator.onLine)==="offline-locked"){
+    n.textContent=fr?"Hors ligne. Le mode hors ligne est réservé aux abonnés.":"Offline. Offline mode is for subscribers.";
+    if(off) off.hidden=false;
+    if(proNote) proNote.hidden=true;
+    return;
+  }
+  if(off) off.hidden=true;
+  if(proNote) proNote.hidden=state!=="pro";
+  if(state==="pro"){n.textContent=fr?"Abonnement ouvert. Mode hors ligne inclus.":"Subscription is open. Offline mode is included.";return;}
+  if(state==="empty"){n.textContent=fr?"Essai de 30 jours, à partir de la première recherche.":"30-day trial, from the first search.";return;}
   if(state==="expired"){n.textContent="";return;}
   const start=Number(localStorage.getItem("ak-trial")||0);
   const left=Math.max(0, Math.ceil((AKHoles.TRIAL_MS-(Date.now()-start))/86400000));
@@ -984,7 +1088,7 @@ function lockIfNeeded(){
     return;
   }
   if(pay) pay.style.display="block";
-  ["odgive","drillbig","give","clearbig","tapbig"].forEach(setLocked);
+  ["odgive","drillbig","give","clearbig","tapbig","oringbig"].forEach(setLocked);
   ["clearsub","clearcols","drillgap","drillcols"].forEach(id=>{const n=document.getElementById(id);if(n) n.textContent="";});
   document.querySelectorAll(".drillgrid button.on").forEach(b=>b.classList.remove("on"));
   const tapsub=document.getElementById("tapsub");
@@ -1023,7 +1127,11 @@ renderClearance=paid(_clear);
 renderTap=paid(_tap);
 renderDesk=paid(_desk);
 renderFits=paid(_fits);
-showTab("bench");renderDesk();renderConv();renderTap();const t14=[...document.getElementById("thread").options].findIndex(o=>o.textContent.startsWith("1/4-20"));if(t14>=0)document.getElementById("thread").value=t14;renderTap();renderOring();renderOd();renderDrillFind();renderClearance();paintLex();applyLang();trialNote();
+showTab("start");renderDesk();renderConv();renderTap();const t14=[...document.getElementById("thread").options].findIndex(o=>o.textContent.startsWith("1/4-20"));if(t14>=0)document.getElementById("thread").value=t14;renderTap();renderOring();renderOd();renderDrillFind();renderClearance();paintLex();applyLang();trialNote();
+function syncNet(){AKOffline.sync(localStorage.getItem("ak-pro"), navigator.onLine);}
+window.addEventListener("online", function(){renderDesk();renderTap();renderClearance();renderDrillFind();renderOring();renderOd();renderFits();syncNet();});
+window.addEventListener("offline", function(){lockIfNeeded();});
+syncNet();
 </script>
 </body>
 </html>
