@@ -1,6 +1,10 @@
 {
-  "cleanUrls": true,
+  "cleanUrls": false,
   "trailingSlash": false,
+  "rewrites": [
+    { "source": "/tarifs", "destination": "/tarifs.html" },
+    { "source": "/merci", "destination": "/merci.html" }
+  ],
   "headers": [
     {
       "source": "/(.*)",
