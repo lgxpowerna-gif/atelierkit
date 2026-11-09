@@ -65,13 +65,20 @@ dialog p{margin:0;padding:16px;line-height:1.45}
 dialog button{margin:0 16px 16px;border:0;background:#e2a322;border-radius:8px;padding:8px 12px;font-weight:600;cursor:pointer}
 .search{font-size:16px}
 @media(max-width:800px){.pair,.readout,.cols,.idgrid{grid-template-columns:1fr 1fr}.big{font-size:30px}}
+.triple{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+body.bench-mode .panel.bench-stack{display:block;margin-bottom:12px}
+body.bench-mode .panel.bench-stack > .card{margin-top:0}
+.bench-label{display:none;font-size:13px;font-weight:600;color:var(--accent);margin:0 0 8px;text-transform:uppercase;letter-spacing:.04em}
+body.bench-mode .bench-label{display:block}
+@media(max-width:720px){.triple{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <header>
   <div class="brand"><span>AK</span> AtelierKit</div>
   <nav>
-    <button class="on" data-tab="desk" data-fr="Hydraulique" data-en="Hydraulic">Hydraulique</button>
+    <button class="on" data-tab="bench" data-fr="Comptoir" data-en="Bench">Comptoir</button>
+    <button data-tab="desk" data-fr="Hydraulique" data-en="Hydraulic">Hydraulique</button>
     <button data-tab="convert" data-fr="Convertir" data-en="Convert">Convertir</button>
     <button data-tab="tap" data-fr="Tarauds" data-en="Taps">Tarauds</button>
     <button data-tab="drill" data-fr="Forets" data-en="Drills">Forets</button>
@@ -81,8 +88,9 @@ dialog button{margin:0 16px 16px;border:0;background:#e2a322;border-radius:8px;p
   <button id="lang">EN</button>
 </header>
 <main>
-  <section class="panel on" id="desk">
+  <section class="panel" id="desk">
     <div class="card">
+      <div class="bench-label" data-fr="Hydraulique — mesure et taille" data-en="Hydraulic — measure and size">Hydraulique — mesure et taille</div>
       <p class="lead">Pas de numéro de pièce. Mesurez. Étape 1. Choisissez mâle ou femelle. Mâle : à l'extérieur du filet. Femelle : à l'intérieur. <button class="help" data-help="sex">?</button></p>
       <div class="chips" id="sex">
         <button class="on" data-s="M">mâle</button>
@@ -113,10 +121,12 @@ dialog button{margin:0 16px 16px;border:0;background:#e2a322;border-radius:8px;p
 
   <section class="panel" id="convert">
     <div class="card">
-      <p class="lead">Entrez la mesure. Le résultat s'affiche en millimètres et en pouces. <button class="help" data-help="convert">?</button></p>
-      <div class="pair">
+      <div class="bench-label" data-fr="Convertir — mm, pouces, pieds" data-en="Convert — mm, inches, feet">Convertir — mm, pouces, pieds</div>
+      <p class="lead">Entrez la mesure en mm, pouces ou pieds. Les autres unités suivent. <button class="help" data-help="convert">?</button></p>
+      <div class="triple">
+        <div><label data-fr="pieds" data-en="feet">pieds</label><input id="feet" inputmode="decimal" value="0" /></div>
+        <div><label data-fr="pouces" data-en="inches">pouces</label><input id="inch" value="1-1/2" placeholder="1-1/2" /></div>
         <div><label>mm</label><input id="mm" inputmode="decimal" value="25.4" /></div>
-        <div><label data-fr="pouces" data-en="inches">pouces</label><input id="inch" value="1-1/2"" placeholder="1-1/2"" /></div>
       </div>
       <div class="chips" id="fracs"></div>
       <div class="readout">
@@ -163,8 +173,14 @@ dialog button{margin:0 16px 16px;border:0;background:#e2a322;border-radius:8px;p
 
   <section class="panel" id="oring">
     <div class="card">
-      <p class="lead">Entrez le numéro de l'o-ring. Ce numéro n'est pas la grosseur du boyau. <button class="help" data-help="oring">?</button></p>
+      <div class="bench-label" data-fr="O-rings — CS d'abord, puis ID / OD" data-en="O-rings — CS first, then ID / OD">O-rings — CS d'abord, puis ID / OD</div>
+      <p class="lead">Mesurez d'abord l'épaisseur (CS), puis le trou (ID). L'OD = ID + 2×CS. Le dash n'est pas la grosseur du boyau. <button class="help" data-help="oring">?</button></p>
+      <label data-fr="épaisseur CS" data-en="cross-section CS">épaisseur CS</label>
       <div class="chips" id="cs"></div>
+      <div class="pair">
+        <div><label data-fr="ID mesuré (po)" data-en="measured ID (in)">ID mesuré (po)</label><input id="oid" inputmode="decimal" placeholder="0.984" /></div>
+        <div><label data-fr="OD mesuré (po)" data-en="measured OD (in)">OD mesuré (po)</label><input id="ood" inputmode="decimal" placeholder="1.262" /></div>
+      </div>
       <label>dash</label>
       <input id="oq" class="search" placeholder="214" />
       <table id="otable"></table>
@@ -173,9 +189,10 @@ dialog button{margin:0 16px 16px;border:0;background:#e2a322;border-radius:8px;p
 
   <section class="panel" id="fit">
     <div class="card">
-      <p class="lead">Entrez le numéro du raccord, par exemple 2404. Le dessin indique droit, coude ou T. <button class="help" data-help="fit">?</button></p>
+      <div class="bench-label" data-fr="Raccords — recherche ET (tous les mots)" data-en="Fittings — AND search (all words)">Raccords — recherche ET (tous les mots)</div>
+      <p class="lead">Entrez le numéro ou plusieurs mots (ex. JIC 90). Tous les mots doivent matcher. Le dessin indique droit, coude ou T. <button class="help" data-help="fit">?</button></p>
       <label data-fr="code ou nom" data-en="code or name">code ou nom</label>
-      <input id="fq" class="search" placeholder="2404, JIC, ORFS, 90, bride" />
+      <input id="fq" class="search" placeholder="JIC 90, 2404 ORFS, bride" />
       <div class="chips" id="fitfams"></div>
       <div class="fits" id="fits"></div>
     </div>
@@ -196,7 +213,7 @@ const UNF=[["#0-80",0.060,80],["#1-72",0.073,72],["#2-64",0.086,64],["#3-56",0.0
 const MET=[["M3×0.5",3,0.5],["M4×0.7",4,0.7],["M5×0.8",5,0.8],["M6×1",6,1],["M8×1.25",8,1.25],["M8×1",8,1],["M10×1.5",10,1.5],["M10×1.25",10,1.25],["M12×1.75",12,1.75],["M12×1.25",12,1.25],["M14×2",14,2],["M16×2",16,2],["M20×2.5",20,2.5],["M24×3",24,3]];
 const NPT=[["1/16-27","C",0.242],["1/8-27","Q",0.332],["1/4-18","7/16",0.4375],["3/8-18","9/16",0.5625],["1/2-14","45/64",0.703],["3/4-14","29/32",0.906],["1-11.5","1-9/64",1.1406],["1-1/4-11.5","1-31/64",1.484],["1-1/2-11.5","1-23/32",1.719],["2-11.5","2-3/16",2.1875]];
 const BSPP=[["G1/8-28","11/32",0.344],["G1/4-19","29/64",0.453],["G3/8-19","19/32",0.594],["G1/2-14","47/64",0.734],["G3/4-14","31/32",0.969],["G1-11","1-13/64",1.203]];
-const ORINGS=[["006",0.114,0.070],["010",0.239,0.070],["011",0.301,0.070],["012",0.364,0.070],["014",0.489,0.070],["110",0.362,0.103],["112",0.487,0.103],["114",0.612,0.103],["210",0.734,0.139],["212",0.859,0.139],["214",0.984,0.139],["216",1.109,0.139],["222",1.484,0.139],["325",1.475,0.210],["328",1.850,0.210]];
+const ORINGS=[["001",0.029,0.04],["002",0.042,0.05],["003",0.056,0.06],["004",0.07,0.07],["005",0.101,0.07],["006",0.114,0.07],["007",0.145,0.07],["008",0.176,0.07],["009",0.208,0.07],["010",0.239,0.07],["011",0.301,0.07],["012",0.364,0.07],["013",0.426,0.07],["014",0.489,0.07],["015",0.551,0.07],["016",0.614,0.07],["017",0.676,0.07],["018",0.739,0.07],["019",0.801,0.07],["020",0.864,0.07],["021",0.926,0.07],["022",0.989,0.07],["023",1.051,0.07],["024",1.114,0.07],["025",1.176,0.07],["026",1.239,0.07],["027",1.301,0.07],["028",1.364,0.07],["029",1.489,0.07],["030",1.614,0.07],["031",1.739,0.07],["032",1.864,0.07],["033",1.989,0.07],["034",2.114,0.07],["035",2.239,0.07],["036",2.364,0.07],["037",2.489,0.07],["038",2.614,0.07],["039",2.739,0.07],["040",2.864,0.07],["041",2.989,0.07],["042",3.239,0.07],["043",3.489,0.07],["044",3.739,0.07],["045",3.989,0.07],["046",4.239,0.07],["047",4.489,0.07],["048",4.739,0.07],["049",4.989,0.07],["050",5.239,0.07],["102",0.049,0.103],["103",0.081,0.103],["104",0.112,0.103],["105",0.143,0.103],["106",0.174,0.103],["107",0.206,0.103],["108",0.237,0.103],["109",0.299,0.103],["110",0.362,0.103],["111",0.424,0.103],["112",0.487,0.103],["113",0.549,0.103],["114",0.612,0.103],["115",0.674,0.103],["116",0.737,0.103],["117",0.799,0.103],["118",0.862,0.103],["119",0.924,0.103],["120",0.987,0.103],["121",1.049,0.103],["122",1.112,0.103],["123",1.174,0.103],["124",1.237,0.103],["125",1.299,0.103],["126",1.362,0.103],["127",1.424,0.103],["128",1.487,0.103],["129",1.549,0.103],["130",1.612,0.103],["131",1.674,0.103],["132",1.737,0.103],["133",1.799,0.103],["134",1.862,0.103],["135",1.925,0.103],["136",1.987,0.103],["137",2.05,0.103],["138",2.112,0.103],["139",2.175,0.103],["140",2.237,0.103],["141",2.3,0.103],["142",2.362,0.103],["143",2.425,0.103],["144",2.487,0.103],["145",2.55,0.103],["146",2.612,0.103],["147",2.675,0.103],["148",2.737,0.103],["149",2.8,0.103],["150",2.862,0.103],["151",2.987,0.103],["152",3.237,0.103],["153",3.487,0.103],["154",3.737,0.103],["155",3.987,0.103],["156",4.237,0.103],["157",4.487,0.103],["158",4.737,0.103],["159",4.987,0.103],["160",5.237,0.103],["161",5.487,0.103],["162",5.737,0.103],["163",5.987,0.103],["164",6.237,0.103],["165",6.487,0.103],["166",6.737,0.103],["167",6.987,0.103],["168",7.237,0.103],["169",7.487,0.103],["170",7.737,0.103],["171",7.987,0.103],["172",8.237,0.103],["173",8.487,0.103],["174",8.737,0.103],["175",8.987,0.103],["176",9.237,0.103],["177",9.487,0.103],["178",9.737,0.103],["201",0.171,0.139],["202",0.234,0.139],["203",0.296,0.139],["204",0.359,0.139],["205",0.421,0.139],["206",0.484,0.139],["207",0.546,0.139],["208",0.609,0.139],["209",0.671,0.139],["210",0.734,0.139],["211",0.796,0.139],["212",0.859,0.139],["213",0.921,0.139],["214",0.984,0.139],["215",1.046,0.139],["216",1.109,0.139],["217",1.171,0.139],["218",1.234,0.139],["219",1.296,0.139],["220",1.359,0.139],["221",1.421,0.139],["222",1.484,0.139],["223",1.609,0.139],["224",1.734,0.139],["225",1.859,0.139],["226",1.984,0.139],["227",2.109,0.139],["228",2.234,0.139],["229",2.359,0.139],["230",2.484,0.139],["231",2.609,0.139],["232",2.734,0.139],["233",2.859,0.139],["234",2.984,0.139],["235",3.109,0.139],["236",3.234,0.139],["237",3.359,0.139],["238",3.484,0.139],["239",3.609,0.139],["240",3.734,0.139],["241",3.859,0.139],["242",3.984,0.139],["243",4.109,0.139],["244",4.234,0.139],["245",4.359,0.139],["246",4.484,0.139],["247",4.609,0.139],["248",4.734,0.139],["249",4.859,0.139],["250",4.984,0.139],["251",5.109,0.139],["252",5.234,0.139],["253",5.359,0.139],["254",5.484,0.139],["255",5.609,0.139],["256",5.734,0.139],["257",5.859,0.139],["258",5.984,0.139],["259",6.234,0.139],["260",6.484,0.139],["261",6.734,0.139],["262",6.984,0.139],["263",7.234,0.139],["264",7.484,0.139],["265",7.734,0.139],["266",7.984,0.139],["267",8.234,0.139],["268",8.484,0.139],["269",8.734,0.139],["270",8.984,0.139],["271",9.234,0.139],["272",9.484,0.139],["273",9.734,0.139],["274",9.984,0.139],["275",10.484,0.139],["276",10.984,0.139],["277",11.484,0.139],["278",11.984,0.139],["279",12.984,0.139],["280",13.984,0.139],["281",14.984,0.139],["282",15.955,0.139],["283",16.955,0.139],["284",17.955,0.139],["309",0.412,0.21],["310",0.475,0.21],["311",0.537,0.21],["312",0.6,0.21],["313",0.662,0.21],["314",0.725,0.21],["315",0.787,0.21],["316",0.85,0.21],["317",0.912,0.21],["318",0.975,0.21],["319",1.037,0.21],["320",1.1,0.21],["321",1.162,0.21],["322",1.225,0.21],["323",1.287,0.21],["324",1.35,0.21],["325",1.475,0.21],["326",1.6,0.21],["327",1.725,0.21],["328",1.85,0.21],["329",1.975,0.21],["330",2.1,0.21],["331",2.225,0.21],["332",2.35,0.21],["333",2.475,0.21],["334",2.6,0.21],["335",2.725,0.21],["336",2.85,0.21],["337",2.975,0.21],["338",3.1,0.21],["339",3.225,0.21],["340",3.35,0.21],["341",3.475,0.21],["342",3.6,0.21],["343",3.725,0.21],["344",3.85,0.21],["345",3.975,0.21],["346",4.1,0.21],["347",4.225,0.21],["348",4.35,0.21],["349",4.475,0.21],["350",4.6,0.21],["351",4.725,0.21],["352",4.85,0.21],["353",4.975,0.21],["354",5.1,0.21],["355",5.225,0.21],["356",5.35,0.21],["357",5.475,0.21],["358",5.6,0.21],["359",5.725,0.21],["360",5.85,0.21],["361",5.975,0.21],["362",6.225,0.21],["363",6.475,0.21],["364",6.725,0.21],["365",6.975,0.21],["366",7.225,0.21],["367",7.475,0.21],["368",7.725,0.21],["369",7.975,0.21],["370",8.225,0.21],["371",8.475,0.21],["372",8.725,0.21],["373",8.975,0.21],["374",9.225,0.21],["375",9.475,0.21],["376",9.725,0.21],["377",9.975,0.21],["378",10.475,0.21],["379",10.975,0.21],["380",11.475,0.21],["381",11.975,0.21],["382",12.975,0.21],["383",13.975,0.21],["384",14.975,0.21],["385",15.955,0.21],["386",16.955,0.21],["387",17.955,0.21],["388",18.955,0.21],["389",19.955,0.21],["390",20.955,0.21],["391",21.955,0.21],["392",22.94,0.21],["393",23.94,0.21],["394",24.94,0.21],["395",25.94,0.21],["425",4.475,0.275],["426",4.6,0.275],["427",4.725,0.275],["428",4.85,0.275],["429",4.975,0.275],["430",5.1,0.275],["431",5.225,0.275],["432",5.35,0.275],["433",5.475,0.275],["434",5.6,0.275],["435",5.725,0.275],["436",5.85,0.275],["437",5.975,0.275],["438",6.225,0.275],["439",6.475,0.275],["440",6.725,0.275],["441",6.975,0.275],["442",7.225,0.275],["443",7.475,0.275],["444",7.725,0.275],["445",7.975,0.275],["446",8.475,0.275],["447",8.975,0.275],["448",9.475,0.275],["449",9.975,0.275],["450",10.475,0.275],["451",10.975,0.275],["452",11.475,0.275],["453",11.975,0.275],["454",12.475,0.275],["455",12.975,0.275],["456",13.475,0.275],["457",13.975,0.275],["458",14.475,0.275],["459",14.975,0.275],["460",15.475,0.275],["461",15.955,0.275],["462",16.455,0.275],["463",16.955,0.275],["464",17.455,0.275],["465",17.955,0.275],["466",18.455,0.275],["467",18.955,0.275],["468",19.455,0.275],["469",19.955,0.275],["470",20.955,0.275],["471",21.955,0.275],["472",22.94,0.275],["473",23.94,0.275],["474",24.94,0.275],["475",25.94,0.275]];
 const DESK=[
  {say:"1/4",dash:"-4",tube:"1/4 po",jic:"7/16-20",orfs:"9/16-18",npt:"1/8 NPT, OD ~0.41 po",note:"Tube 1/4 ≠ NPT 1/4"},
  {say:"5/16",dash:"-5",tube:"5/16 po",jic:"1/2-20",orfs:"—",npt:"souvent confondu avec 1/4",note:"Dash -5 existe en JIC, rare en ORFS"},
@@ -322,9 +339,27 @@ function renderDesk(){
 }
 function renderConv(){
   let mm,inch;
-  if(src==="mm"){mm=parseFloat(String(document.getElementById("mm").value).replace(",","."))||0;inch=mm/IN;document.getElementById("inch").value=inch.toFixed(4);}
-  else {inch=parseSize(document.getElementById("inch").value,"po"); if(inch==null) return; mm=inch*IN; document.getElementById("mm").value=mm.toFixed(3);}
-  const feet=Math.floor(inch/12), rem=inch-feet*12;
+  if(src==="mm"){
+    mm=parseFloat(String(document.getElementById("mm").value).replace(",","."))||0;
+    inch=mm/IN;
+    document.getElementById("inch").value=inch.toFixed(4);
+  }else if(src==="feet"){
+    const ft=parseFloat(String(document.getElementById("feet").value).replace(",","."))||0;
+    const cur=parseSize(document.getElementById("inch").value,"po");
+    const base=cur==null?0:cur;
+    const rem=base-Math.floor(base/12)*12;
+    inch=ft*12+rem;
+    document.getElementById("inch").value=inch.toFixed(4);
+    mm=inch*IN;
+    document.getElementById("mm").value=mm.toFixed(3);
+  }else{
+    inch=parseSize(document.getElementById("inch").value,"po");
+    if(inch==null) return;
+    mm=inch*IN;
+    document.getElementById("mm").value=mm.toFixed(3);
+  }
+  const feet=Math.floor(inch/12+1e-12), rem=inch-feet*12;
+  if(src!=="feet") document.getElementById("feet").value=String(feet);
   document.getElementById("bigmm").textContent=mm.toFixed(3)+" mm";
   document.getElementById("bigin").textContent=inch.toFixed(4)+" po";
   document.getElementById("bigfrac").textContent=frac(rem);
@@ -349,33 +384,77 @@ function renderTap(){
 function renderOring(){
   const q=document.getElementById("oq").value.trim().replace("-","");
   const cs=document.querySelector("#cs button.on")?.dataset.cs;
+  const idm=parseSize(document.getElementById("oid").value,"po");
+  const odm=parseSize(document.getElementById("ood").value,"po");
   let rows=ORINGS.filter(o=>(!q||o[0].includes(q)) && (!cs||Math.abs(o[2]-parseFloat(cs))<0.01));
+  const odOf=o=>o[1]+2*o[2];
+  if(idm!=null || odm!=null){
+    rows=[...rows].sort((a,b)=>{
+      const da=idm!=null?Math.abs(a[1]-idm):0;
+      const db=idm!=null?Math.abs(b[1]-idm):0;
+      const ea=odm!=null?Math.abs(odOf(a)-odm):0;
+      const eb=odm!=null?Math.abs(odOf(b)-odm):0;
+      return (da+ea)-(db+eb);
+    });
+  }
   let pick="";
   if(!rows.length){
+    const pool=ORINGS.filter(o=>!cs||Math.abs(o[2]-parseFloat(cs))<0.01);
     const n=parseInt(q,10);
-    const near=[...ORINGS].sort((a,b)=>Math.abs((parseInt(a[0],10)||0)-n)-Math.abs((parseInt(b[0],10)||0)-n)).slice(0,8);
-    pick=`<label>aucun dash exact — choisis</label><select id="opick">${near.map(o=>`<option value="${o[0]}">-${o[0]} · ID ${o[1].toFixed(3)} po</option>`).join("")}</select>`;
+    const near=[...pool].sort((a,b)=>{
+      if(idm!=null||odm!=null){
+        const da=(idm!=null?Math.abs(a[1]-idm):0)+(odm!=null?Math.abs(odOf(a)-odm):0);
+        const db=(idm!=null?Math.abs(b[1]-idm):0)+(odm!=null?Math.abs(odOf(b)-odm):0);
+        return da-db;
+      }
+      return Math.abs((parseInt(a[0],10)||0)-n)-Math.abs((parseInt(b[0],10)||0)-n);
+    }).slice(0,8);
+    pick=`<label>aucun dash exact — choisis</label><select id="opick">${near.map(o=>`<option value="${o[0]}">-${o[0]} · ID ${o[1].toFixed(3)} · OD ${odOf(o).toFixed(3)}</option>`).join("")}</select>`;
     rows=near.slice(0,1);
   }
-  document.getElementById("otable").innerHTML=pick+"<tr><th>dash <button class=\"help\" data-help=\"dash\">?</button></th><th>ID po <button class=\"help\" data-help=\"id\">?</button></th><th>CS po <button class=\"help\" data-help=\"cs\">?</button></th><th>ID mm <button class=\"help\" data-help=\"id\">?</button></th></tr>"+rows.map(o=>`<tr><td>-${o[0]}</td><td>${o[1].toFixed(3)}</td><td>${o[2].toFixed(3)}</td><td>${(o[1]*IN).toFixed(2)}</td></tr>`).join("");
+  const shown=rows.slice(0,60);
+  const more=rows.length>shown.length?`<p class="meta">${rows.length} tailles — ${shown.length} affichées. Affinez CS, ID ou dash.</p>`:"";
+  document.getElementById("otable").innerHTML=pick+more+"<tr><th>dash <button class=\"help\" data-help=\"dash\">?</button></th><th>ID po <button class=\"help\" data-help=\"id\">?</button></th><th>OD po <button class=\"help\" data-help=\"odring\">?</button></th><th>CS po <button class=\"help\" data-help=\"cs\">?</button></th><th>ID mm</th></tr>"+shown.map(o=>`<tr><td>-${o[0]}</td><td>${o[1].toFixed(3)}</td><td>${odOf(o).toFixed(3)}</td><td>${o[2].toFixed(3)}</td><td>${(o[1]*IN).toFixed(2)}</td></tr>`).join("");
 }
 function kindOf(f){const s=(f.family||"").toUpperCase();if(s.includes("ORFS"))return "orfs";if(s.includes("NPT"))return "npt";if(s.includes("ORB"))return "orb";if(s.includes("JIC"))return "jic";return "jic";}
 function renderFits(){
   const q=document.getElementById("fq").value.trim().toLowerCase();
-  const rows=fittings.filter(f=>(!q||(f.code+" "+f.desc+" "+f.family).toLowerCase().includes(q)) && (!fitFam||f.family===fitFam));
+  const tokens=q.split(/[\s,;+/]+/).map(t=>t.trim()).filter(Boolean);
+  const rows=fittings.filter(f=>{
+    if(fitFam&&f.family!==fitFam) return false;
+    if(!tokens.length) return true;
+    const hay=(f.code+" "+f.desc+" "+f.family+" "+(f.angle||"")).toLowerCase();
+    return tokens.every(t=>hay.includes(t));
+  });
   let pick="";
-  if(!rows.length && q){
-    const near=fittings.filter(f=>!fitFam||f.family===fitFam).slice(0,12);
-    pick=`<label>aucun code exact — choisis</label><select id="fpick">${near.map(f=>`<option value="${f.code}">${f.code} · ${f.family} · ${f.angle}</option>`).join("")}</select>`;
+  if(!rows.length && tokens.length){
+    const near=fittings.filter(f=>!fitFam||f.family===fitFam).filter(f=>{
+      const hay=(f.code+" "+f.desc+" "+f.family+" "+(f.angle||"")).toLowerCase();
+      return tokens.some(t=>hay.includes(t));
+    }).slice(0,12);
+    const list=near.length?near:fittings.filter(f=>!fitFam||f.family===fitFam).slice(0,12);
+    pick=`<label>aucun match ET — choisis</label><select id="fpick">${list.map(f=>`<option value="${f.code}">${f.code} · ${f.family} · ${f.angle}</option>`).join("")}</select>`;
   }
   document.getElementById("fits").innerHTML=pick+(rows.length?`<p class="meta">${rows.length} séries</p>`:"")+rows.slice(0,40).map(f=>`<article><img class="part" alt="${f.desc}" src="${f.img}"><div><div class="code">${f.code}</div><div>${f.desc}</div><div class="meta">${f.family} · ${f.angle}</div></div></article>`).join("");
 }
-document.querySelector("nav").onclick=e=>{const t=e.target.closest("button");if(!t)return;document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b===t));document.querySelectorAll(".panel").forEach(p=>p.classList.toggle("on",p.id===t.dataset.tab));};
+function showTab(tab){
+  const bench=tab==="bench";
+  const show=bench?new Set(["desk","convert","oring","fit"]):new Set([tab]);
+  document.body.classList.toggle("bench-mode",bench);
+  document.querySelectorAll(".panel").forEach(p=>{
+    const on=show.has(p.id);
+    p.classList.toggle("on",on);
+    p.classList.toggle("bench-stack",bench&&on);
+  });
+  document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.tab===tab));
+}
+document.querySelector("nav").onclick=e=>{const t=e.target.closest("button");if(!t)return;showTab(t.dataset.tab);};
 document.getElementById("said").innerHTML=DESK.map((d,i)=>`<button data-i="${i}" class="${i===said?"on":""}">${d.say}</button>`).join("");
 document.getElementById("said").onclick=e=>{const b=e.target.closest("button");if(!b)return;said=+b.dataset.i;document.querySelectorAll("#said button").forEach(x=>x.classList.toggle("on",x===b));renderDesk();};
 document.getElementById("idgrid").onclick=e=>{const b=e.target.closest("button");if(!b)return;idk=b.dataset.id;renderDesk();};
 document.getElementById("mm").addEventListener("input",()=>{src="mm";renderConv();});
 document.getElementById("inch").addEventListener("input",()=>{src="inch";renderConv();});
+document.getElementById("feet").addEventListener("input",()=>{src="feet";renderConv();});
 const fracs=[[0,"0"],[1/64,"1/64"],[1/32,"1/32"],[1/16,"1/16"],[1/8,"1/8"],[1/4,"1/4"],[3/8,"3/8"],[1/2,"1/2"],[3/4,"3/4"]];
 document.getElementById("fracs").innerHTML=fracs.map((f,i)=>`<button data-i="${i}">${f[1]}</button>`).join("");
 document.getElementById("fracs").onclick=e=>{const b=e.target.closest("button");if(!b)return;src="inch";const whole=Math.floor(parseFloat(document.getElementById("inch").value)||0);document.getElementById("inch").value=(whole+fracs[+b.dataset.i][0]).toFixed(4);renderConv();};
@@ -442,9 +521,11 @@ document.getElementById("dfracs").onclick=e=>{const b=e.target.closest("button")
 document.getElementById("dsize").addEventListener("input",renderDrillFind);
 document.getElementById("dunit").onclick=e=>{const b=e.target.closest("button");if(!b)return;dUnit=b.dataset.u;document.querySelectorAll("#dunit button").forEach(x=>x.classList.toggle("on",x===b));renderDrillFind();};
 document.getElementById("letters").onclick=document.getElementById("numbers").onclick=e=>{const b=e.target.closest("button");if(!b||b.classList.contains("help"))return;dUnit="po";document.querySelectorAll("#dunit button").forEach(x=>x.classList.toggle("on",x.dataset.u==="po"));document.getElementById("dsize").value=b.dataset.v;renderDrillFind();};
-document.getElementById("cs").innerHTML=[["","tous"],["0.070","1/16"],["0.103","3/32"],["0.139","1/8"],["0.210","3/16"]].map((c,i)=>`<button data-cs="${c[0]}" class="${i===0?"on":""}">${c[1]}</button>`).join("");
+document.getElementById("cs").innerHTML=[["","tous"],["0.070","1/16"],["0.103","3/32"],["0.139","1/8"],["0.210","3/16"],["0.275","1/4"]].map((c,i)=>`<button data-cs="${c[0]}" class="${i===0?"on":""}">${c[1]}</button>`).join("");
 document.getElementById("cs").onclick=e=>{const b=e.target.closest("button");if(!b)return;document.querySelectorAll("#cs button").forEach(x=>x.classList.toggle("on",x===b));renderOring();};
 document.getElementById("oq").oninput=renderOring;
+document.getElementById("oid").oninput=renderOring;
+document.getElementById("ood").oninput=renderOring;
 document.getElementById("fq").oninput=renderFits;
 document.getElementById("lang").onclick=()=>{lang=lang==="fr"?"en":"fr";localStorage.setItem("ak-lang",lang);document.getElementById("lang").textContent=lang==="fr"?"EN":"FR";document.querySelectorAll("[data-fr]").forEach(el=>{el.textContent=lang==="fr"?el.dataset.fr:el.dataset.en;});renderDesk();};
 const HELP={
@@ -453,7 +534,7 @@ const HELP={
  tpi:{t:"Filets",b:"Comptez les filets sur un pouce. 18 ou 20. Ce n'est pas la grosseur. Si vous ne le savez pas, laissez le champ vide."},
  said:{t:"Taille demandée",b:"Un 1/2 po peut désigner le boyau ou le filet. Ce n'est pas le même raccord. Vérifiez le bout, puis choisissez."},
  end:{t:"Le bout",b:"Pointu : JIC. Plat avec un o-ring : ORFS. En cône qui serre fort : NPT. Droit avec l'o-ring à la base : ORB."},
- convert:{t:"mm et pouces",b:"25 millimètres valent environ un pouce. Entrez une mesure. L'autre s'affiche."},
+ convert:{t:"mm, pouces, pieds",b:"25,4 mm valent un pouce. 12 pouces valent un pied. Entrez mm, pouces ou pieds : les autres suivent."},
  tap:{t:"Taraud",b:"Le taraud grave le filet dans le trou. Percez d'abord. Le trou est plus petit que la vis. Pour un 1/4-20, sortez la mèche #7."},
  threadname:{t:"1/4-20",b:"1/4 est la grosseur de la vis. 20 est le nombre de filets sur un pouce. Ce n'est pas le nom de la mèche."},
  pct:{t:"75 %",b:"Ne percez pas aussi gros que la vis. 75 % est le trou habituel. Plus gros, le filet est faible. Plus petit, l'outil casse."},
@@ -461,11 +542,12 @@ const HELP={
  drill:{t:"Les mèches",b:"Une mèche peut s'appeler par une lettre, un numéro ou une fraction, comme 5/32. Entrez la grosseur demandée. L'outil propose la plus petite et la plus grosse."},
  letter:{t:"Lettres",b:"De A à Z. A est plus petite que Z."},
  number:{t:"Numéros",b:"De 1 à 80. Plus le numéro est grand, plus la mèche est petite. #7 sert pour la vis 1/4-20."},
- oring:{t:"O-ring",b:"Le numéro de l'o-ring n'est pas la grosseur du boyau. L'épaisseur est le rond. Le trou est le milieu."},
- fit:{t:"Numéro",b:"2404 est le numéro du raccord, écrit sur la pièce ou la fiche. Le dessin dit droit, coude ou T."},
+ oring:{t:"O-ring",b:"Mesurez d'abord l'épaisseur (CS), puis le trou (ID). L'OD = ID + 2×CS. Le dash n'est pas la grosseur du boyau."},
+ fit:{t:"Numéro",b:"2404 est le numéro du raccord. Plusieurs mots : JIC et 90 doivent tous matcher (ET). Le dessin dit droit, coude ou T."},
  dash:{t:"dash",b:"C'est le numéro de l'o-ring, comme -214. Ce n'est pas la grosseur du tuyau."},
  id:{t:"ID",b:"ID, c'est le trou au milieu de l'o-ring. En pouces, puis en millimètres."},
- cs:{t:"CS",b:"CS, c'est l'épaisseur du rond. 0,070 po, c'est un o-ring mince. 0,139 po, c'est plus gros."}
+ cs:{t:"CS",b:"CS, c'est l'épaisseur du rond. 0,070 po, c'est un o-ring mince. 0,139 po, c'est plus gros."},
+ odring:{t:"OD",b:"OD, c'est le dehors de l'o-ring. OD = ID + 2×CS. Utile pour vérifier une mesure au vernier."}
 };
 document.body.addEventListener("click",e=>{
   const b=e.target.closest(".help");
@@ -523,7 +605,7 @@ const _od=renderOd, _drill=renderDrillFind, _oring=renderOring;
 renderOd=function(){startTrial();_od();lockIfNeeded();};
 renderDrillFind=function(){startTrial();_drill();lockIfNeeded();};
 renderOring=function(){startTrial();_oring();lockIfNeeded();};
-renderDesk();renderConv();renderTap();const t14=[...document.getElementById("thread").options].findIndex(o=>o.textContent.startsWith("1/4-20"));if(t14>=0)document.getElementById("thread").value=t14;renderTap();renderOring();renderOd();renderDrillFind();trialNote();
+showTab("bench");renderDesk();renderConv();renderTap();const t14=[...document.getElementById("thread").options].findIndex(o=>o.textContent.startsWith("1/4-20"));if(t14>=0)document.getElementById("thread").value=t14;renderTap();renderOring();renderOd();renderDrillFind();trialNote();
 </script>
 <p id="trialnote" class="lead" style="text-align:center"></p><div id="pay" class="card" style="display:none;margin:16px"><b>Le mois gratuit est fini.</b><p class="lead">Les dessins restent. Le raccord, la mèche et le numéro d'o-ring se rouvrent à 9 $ par mois.</p><p><a class="btn" href="/tarifs">Voir les abonnements</a></p></div></body>
 </html>
