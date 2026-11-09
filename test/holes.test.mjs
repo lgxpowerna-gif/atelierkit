@@ -49,6 +49,8 @@ test("inch clearance is the ASME drill, shared by UNC and UNF", () => {
   );
   assert.equal(H.lookupClearance("IN", "1/4", "close").drill, "17/64");
   assert.equal(H.lookupClearance("IN", "1/4", "loose").drill, "19/64");
+  assert.equal(H.lookupClearance("IN", "1/4", "large").drill, "19/64");
+  assert.equal(H.lookupClearance("IN", "1/4", "large").fit, "loose");
   assert.notEqual(H.lookupClearance("IN", "1/4", "loose").drill, "5/16");
   assert.equal(H.lookupClearance("UNC", "3/8-16", "normal").drill, "13/32");
   assert.equal(H.lookupClearance("UNF", "3/8-24", "normal").drill, "13/32");
