@@ -32,6 +32,7 @@ input,select{width:100%;border:1px solid var(--line);background:#fff;border-radi
 .give b{display:block;font-size:22px;margin-top:4px}
 .cols{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
 .cols article{border:1px solid var(--line);border-radius:12px;padding:10px;background:#fff}
+.cols article.sel{background:var(--hi);border-color:var(--accent)}
 .cols .k{font-size:12px;color:var(--muted)}
 .cols .v{font-family:"IBM Plex Mono",monospace;font-size:18px;font-weight:600}
 .idgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
@@ -70,6 +71,7 @@ body.bench-mode .panel.bench-stack{display:block;margin-bottom:12px}
 body.bench-mode .panel.bench-stack > .card{margin-top:0}
 .bench-label{display:none;font-size:13px;font-weight:600;color:var(--accent);margin:0 0 8px;text-transform:uppercase;letter-spacing:.04em}
 body.bench-mode .bench-label{display:block}
+#tapclearbtn,#cleartapbtn{border:1px solid var(--line);background:#fff;border-radius:12px;padding:10px 12px;cursor:pointer;font-weight:600}
 @media(max-width:720px){.triple{grid-template-columns:1fr}}
 </style>
 </head>
@@ -80,6 +82,7 @@ body.bench-mode .bench-label{display:block}
     <button class="on" data-tab="bench" data-fr="Comptoir" data-en="Bench">Comptoir</button>
     <button data-tab="desk" data-fr="Hydraulique" data-en="Hydraulic">Hydraulique</button>
     <button data-tab="convert" data-fr="Convertir" data-en="Convert">Convertir</button>
+    <button data-tab="clear" data-fr="Passage" data-en="Clearance">Passage</button>
     <button data-tab="tap" data-fr="Tarauds" data-en="Taps">Tarauds</button>
     <button data-tab="drill" data-fr="Forets" data-en="Drills">Forets</button>
     <button data-tab="oring" data-fr="O-rings" data-en="O-rings">O-rings</button>
@@ -136,24 +139,56 @@ body.bench-mode .bench-label{display:block}
     </div>
   </section>
 
+  <section class="panel" id="clear">
+    <div class="card">
+      <div class="bench-label" data-fr="Passage — le boulon traverse, sans filet" data-en="Clearance — the bolt passes through, no thread">Passage — le boulon traverse, sans filet</div>
+      <p class="lead"><span data-fr="Trou de passage : la vis traverse la pièce. On ne taraude pas ce trou. Le diamètre nominal (1/4, M10) n'est pas la mèche. Choisis l'ajustement. NPT et BSP ne sont pas des boulons." data-en="Clearance hole: the bolt passes through the part. This hole is not tapped. Nominal diameter (1/4, M10) is not the drill. Pick the fit. NPT and BSP are not bolts.">Trou de passage : la vis traverse la pièce. On ne taraude pas ce trou. Le diamètre nominal (1/4, M10) n'est pas la mèche. Choisis l'ajustement. NPT et BSP ne sont pas des boulons.</span> <button class="help" data-help="clear">?</button></p>
+      <div class="chips" id="clearfam">
+        <button class="on" data-f="IN" data-fr="UNC / UNF" data-en="UNC / UNF">UNC / UNF</button>
+        <button data-f="MM" data-fr="Métrique" data-en="Metric">Métrique</button>
+      </div>
+      <div class="pair">
+        <div><label data-fr="diamètre nominal du boulon" data-en="nominal bolt diameter">diamètre nominal du boulon</label><select id="clearsize"></select></div>
+        <div>
+          <label data-fr="ajustement du trou" data-en="hole fit">ajustement du trou</label>
+          <div class="chips" id="clearfit">
+            <button data-fit="close" data-fr="serré" data-en="close">serré</button>
+            <button class="on" data-fit="normal" data-fr="normal" data-en="normal">normal</button>
+            <button data-fit="loose" data-fr="libre" data-en="loose">libre</button>
+          </div>
+        </div>
+      </div>
+      <p class="subn" id="clearfitnote"></p>
+      <div class="give"><span data-fr="Mèche de passage" data-en="Clearance drill">Mèche de passage</span><b id="clearbig">—</b></div>
+      <p class="subn" id="clearsub"></p>
+      <div class="cols" id="clearcols"></div>
+      <p class="meta" id="clearsource"></p>
+      <p class="meta" id="clearmissing"></p>
+      <p><button type="button" id="cleartapbtn" data-goto="tap" data-fr="Voir la mèche avant taraud" data-en="See the drill before tapping">Voir la mèche avant taraud</button></p>
+    </div>
+  </section>
+
   <section class="panel" id="tap">
     <div class="card">
-      <p class="lead">Choisissez le taraud demandé. L'outil indique la mèche à sortir avant de tarauder. <button class="help" data-help="tap">?</button></p>
+      <div class="bench-label" data-fr="Taraudage — trou plus petit, filet dedans" data-en="Tapping — smaller hole, thread cut inside">Taraudage — trou plus petit, filet dedans</div>
+      <p class="lead"><span data-fr="Avant de tarauder : perce un trou plus petit que la vis. Le taraud coupe le filet dans ce trou. Ce n'est pas un trou de passage." data-en="Before tapping: drill a hole smaller than the bolt. The tap cuts the thread in that hole. This is not a clearance hole.">Avant de tarauder : perce un trou plus petit que la vis. Le taraud coupe le filet dans ce trou. Ce n'est pas un trou de passage.</span> <button class="help" data-help="tap">?</button></p>
       <div class="chips" id="fams"></div>
       <p class="meta">gros, fin, métrique, tuyau, gaz <button class="help" data-help="fams">?</button></p>
       <div class="pair">
         <div><label>taraud demandé <button class="help" data-help="threadname">?</button></label><select id="thread"></select></div>
         <div><label>quelle part du filet on garde <button class="help" data-help="pct">?</button></label><input id="pct" type="number" min="50" max="100" value="75" /></div>
       </div>
-      <div class="give"><span data-fr="Sors cette mèche" data-en="Pull this drill">Sors cette mèche</span><b id="tapbig">—</b></div>
-      <div class="subn" id="tapsub"></div>
+      <div class="give"><span data-fr="Mèche avant taraud" data-en="Tap drill">Mèche avant taraud</span><b id="tapbig">—</b></div>
+      <p class="subn" id="tapintent"></p>
+      <p class="subn" id="tapsub"></p>
+      <p><button type="button" id="tapclearbtn" data-fr="Voir le trou de passage de ce diamètre" data-en="See the clearance hole for this diameter">Voir le trou de passage de ce diamètre</button></p>
       <div style="overflow:auto;margin-top:8px"><table id="taptable"></table></div>
     </div>
   </section>
 
   <section class="panel" id="drill">
     <div class="card">
-      <p class="lead">Entrez la grosseur demandée. L'outil propose la mèche plus petite et la mèche plus grosse. <button class="help" data-help="drill">?</button></p>
+      <p class="lead"><span data-fr="Entrez la grosseur de la mèche. L'outil montre la mèche du tiroir juste plus petite et juste plus grosse. Ce n'est ni le trou avant taraud, ni le trou de passage du boulon." data-en="Enter the drill size. The tool shows the next smaller and next larger bit in the drawer. This is neither the tap drill nor the bolt clearance hole.">Entrez la grosseur de la mèche. L'outil montre la mèche du tiroir juste plus petite et juste plus grosse. Ce n'est ni le trou avant taraud, ni le trou de passage du boulon.</span> <button class="help" data-help="drill">?</button></p>
       <label data-fr="la grosseur : 5/32, 9/16, 0.160 ou 4" data-en="diameter: 5/32, 9/16, 0.156 or 4">diamètre : 5/32, 9/16, 0.156 ou 4</label>
       <input id="dsize" value="5/32" />
       <div class="chips" id="dunit">
@@ -204,6 +239,8 @@ body.bench-mode .bench-label{display:block}
   <p id="popbody"></p>
   <button id="popclose">Fermer</button>
 </dialog>
+<p id="trialnote" class="lead" style="text-align:center"></p><div id="pay" class="card" style="display:none;margin:16px"><b>Le mois gratuit est fini.</b><p class="lead">Les dessins restent. Le raccord, la mèche et le numéro d'o-ring se rouvrent à 9 $ par mois.</p><p><a class="btn" href="/tarifs">Voir les abonnements</a></p></div>
+<script src="js/holes.js"></script>
 <script>
 const IN=25.4;
 const LETTERS={"A":0.234,"B":0.238,"C":0.242,"D":0.246,"E":0.250,"F":0.257,"G":0.261,"H":0.266,"I":0.272,"J":0.277,"K":0.281,"L":0.290,"M":0.295,"N":0.302,"O":0.316,"P":0.323,"Q":0.332,"R":0.339,"S":0.348,"T":0.358,"U":0.368,"V":0.377,"W":0.386,"X":0.397,"Y":0.404,"Z":0.413};
@@ -300,7 +337,7 @@ function renderOd(){
 }
 function frac(n){n=Math.abs(n);const w=Math.floor(n+1e-9);let num=Math.round((n-w)*64);if(num===64)return (w+1)+"\"";if(!num)return w+"\"";let a=num,b=64;while(b){const t=a%b;a=b;b=t;}return (w?w+" ":"")+(num/a)+"/"+(64/a)+"\"";}
 function nearest(inches){let best=frac(inches),bd=Math.abs(Math.round(inches*64)/64-inches);for(const [k,v] of Object.entries(LETTERS)){const d=Math.abs(v-inches);if(d<bd){bd=d;best=k;}}for(const [k,v] of Object.entries(NUMBERS)){const d=Math.abs(v-inches);if(d<bd){bd=d;best="#"+k;}}return best;}
-function td(major,pitch,pct){return major-1.299038105676658*pitch*(pct/100);}
+function td(major,pitch,pct){return AKHoles.tapDrillDiameter(major,pitch,pct);}
 function table(){return {UNC,UNF,MET,NPT,BSPP}[family];}
 function part(kind, angle){
   const k = (kind||"jic").toLowerCase();
@@ -372,7 +409,33 @@ function renderTap(){
   let inch, shop, calc;
   if(family==="NPT"||family==="BSPP"){inch=r[2];shop=r[1];calc=inch;}
   else {const pitch=family==="MET"?r[2]:1/r[2];calc=td(r[1],pitch,pct);inch=family==="MET"?calc/IN:calc;shop=family==="MET"?(Math.round(calc*10)/10)+" mm":nearest(inch);}
+  const pipe=family==="NPT"||family==="BSPP";
   document.getElementById("tapbig").textContent=shop+"  ·  "+(family==="MET"?calc.toFixed(2)+" mm":inch.toFixed(4)+" po");
+  const intent=document.getElementById("tapintent");
+  if(intent){
+    intent.textContent=lang==="fr"
+      ?(pipe
+        ?"Filet de tuyau (NPT ou BSP). Cette mèche sert à tarauder le tuyau. Ce n'est pas un trou de passage de boulon."
+        :"Trou plus petit que la vis, percé avant de couper le filet intérieur. Le diamètre nominal n'est pas cette mèche, et ce n'est pas le trou de passage du boulon.")
+      :(pipe
+        ?"Pipe thread (NPT or BSP). This drill is for tapping the pipe. It is not a bolt clearance hole."
+        :"Hole smaller than the bolt, drilled before the internal thread is cut. Nominal diameter is not this drill, and it is not the hole the bolt passes through.");
+  }
+  const jump=document.getElementById("tapclearbtn");
+  if(jump){
+    const hit=pipe?null:AKHoles.lookupClearance(family==="MET"?"MM":"IN", r[0], "normal");
+    if(pipe||!hit){
+      jump.dataset.goto="";
+      jump.textContent=lang==="fr"
+        ?(pipe?"NPT et BSP : pas de trou de passage ici.":"Pas dans la table de passage. Aucune mèche devinée.")
+        :(pipe?"NPT and BSP: no clearance hole here.":"Not in the clearance table. No drill is guessed.");
+    }else{
+      jump.dataset.goto="clear";
+      jump.dataset.size=hit.key;
+      jump.dataset.fam=hit.family;
+      jump.textContent=lang==="fr"?"Voir le trou de passage de ce diamètre":"See the clearance hole for this diameter";
+    }
+  }
   document.getElementById("tapsub").innerHTML=part(family==="NPT"?"npt":family==="BSPP"?"bspp":family==="MET"?"metric":"unc","Droit")+(family==="MET"?inch.toFixed(4)+" po · ":(inch*IN).toFixed(2)+" mm · ")+r[0];
   document.getElementById("taptable").innerHTML="<tr><th>Filet</th><th>Foret</th><th>mm</th></tr>"+rows.map((row,idx)=>{
     let din,label;
@@ -380,6 +443,91 @@ function renderTap(){
     else {const p=family==="MET"?row[2]:1/row[2];const c=td(row[1],p,75);din=family==="MET"?c/IN:c;label=family==="MET"?(Math.round(c*10)/10)+" mm":nearest(din);}
     return `<tr class="${idx===i?"sel":""}" data-i="${idx}"><td>${row[0]}</td><td>${label}</td><td>${(din*IN).toFixed(2)}</td></tr>`;
   }).join("");
+}
+let clearFam="IN";
+let clearFit="normal";
+function clearThreads(row){
+  const same=lang==="fr"?"même trou de passage":"same clearance hole";
+  if(row.family==="MM"){
+    const pitch=lang==="fr"?"gros ou fin, "+same:"coarse or fine, "+same;
+    return row.tap?row.tap+" · "+pitch:pitch;
+  }
+  const names=[row.unc,row.unf].filter(Boolean);
+  return names.length?names.join(" · ")+" · "+same:row.key;
+}
+function renderClearance(){
+  const rows=clearFam==="MM"?AKHoles.CLEAR_MM:AKHoles.CLEAR_IN;
+  const sel=document.getElementById("clearsize");
+  const prev=sel.value;
+  sel.innerHTML=rows.map(r=>`<option value="${r.key}">${r.key}</option>`).join("");
+  const want=prev&&rows.some(r=>r.key===prev)?prev:(clearFam==="MM"?"M10":"1/4");
+  if(rows.some(r=>r.key===want)) sel.value=want;
+  const hit=AKHoles.lookupClearance(clearFam, sel.value, clearFit);
+  const note=document.getElementById("clearfitnote");
+  const fits={
+    close:lang==="fr"?"Serré (close / fine, H12) : peu de jeu. Les trous sont bien alignés, souvent percés ensemble.":"Close (fine, H12): little play. Holes line up, often drilled together.",
+    normal:lang==="fr"?"Normal (medium, H13) : le choix habituel. Deux pièces percées à part, jeu ordinaire.":"Normal (medium, H13): the usual choice. Parts drilled separately, ordinary play.",
+    loose:lang==="fr"?"Libre (loose / coarse, H14) : plus de jeu. Peinture, trous décalés, assemblage sur le tas.":"Loose (coarse, H14): more play. Paint, misaligned holes, field assembly."
+  };
+  note.textContent=fits[clearFit];
+  document.querySelectorAll("#clearfit button").forEach(b=>b.classList.toggle("on", b.dataset.fit===clearFit));
+  const src=document.getElementById("clearsource");
+  src.textContent=lang==="fr"
+    ?"Sources : "+AKHoles.SOURCES.metric+" "+AKHoles.SOURCES.inch+" "+AKHoles.SOURCES.fits+" La formule de taraudage n'est pas utilisée ici."
+    :"Sources: "+AKHoles.SOURCES.metric+" "+AKHoles.SOURCES.inch+" "+AKHoles.SOURCES.fits+" The tapping formula is not used here.";
+  document.getElementById("clearmissing").textContent=lang==="fr"
+    ?"Pas de mèche proposée pour #12, 9/16 po, 11/16 po et 2 po : absents de ASME B18.2.8. NPT et BSP ne sont pas offerts ici."
+    :"No drill is offered for #12, 9/16 in, 11/16 in and 2 in: not in ASME B18.2.8. NPT and BSP are not offered here.";
+  if(!hit){
+    document.getElementById("clearbig").textContent="—";
+    document.getElementById("clearsub").textContent="";
+    document.getElementById("clearcols").innerHTML="";
+    return;
+  }
+  const unitLine=hit.family==="MM"
+    ?(lang==="fr"
+      ?hit.drill+"  ·  équiv. "+(hit.min/IN).toFixed(3)+" po"
+      :hit.drill+"  ·  equiv. "+(hit.min/IN).toFixed(3)+" in")
+    :(lang==="fr"
+      ?hit.drill+"  ·  "+hit.min.toFixed(3)+(hit.max?"–"+hit.max.toFixed(3):"")+" po  ·  "+(hit.min*IN).toFixed(2)+(hit.max?"–"+(hit.max*IN).toFixed(2):"")+" mm"
+      :hit.drill+"  ·  "+hit.min.toFixed(3)+(hit.max?"–"+hit.max.toFixed(3):"")+" in  ·  "+(hit.min*IN).toFixed(2)+(hit.max?"–"+(hit.max*IN).toFixed(2):"")+" mm");
+  document.getElementById("clearbig").textContent=unitLine;
+  const names={close:lang==="fr"?"serré":"close", normal:lang==="fr"?"normal":"normal", loose:lang==="fr"?"libre":"loose"};
+  document.getElementById("clearcols").innerHTML=["close","normal","loose"].map(f=>{
+    const h=hit[f];
+    const line=hit.family==="MM"?h.drill:h.drill+" · "+h.min.toFixed(3)+(h.max?"–"+h.max.toFixed(3):"")+(lang==="fr"?" po":" in");
+    return `<article class="${f===clearFit?"sel":""}"><div class="k">${names[f]}</div><div class="v">${line}</div></article>`;
+  }).join("");
+  let sub=lang==="fr"
+    ?"Diamètre nominal "+hit.key+" = "+(hit.family==="MM"?hit.nominal+" mm":hit.nominal.toFixed(3)+" po")+". Ce n'est pas la mèche. "+clearThreads(hit)+"."
+    :"Nominal diameter "+hit.key+" = "+(hit.family==="MM"?hit.nominal+" mm":hit.nominal.toFixed(3)+" in")+". That is not the drill. "+clearThreads(hit)+".";
+  if(hit.family==="IN" && hit.unc){
+    const major=hit.nominal, tpi=+String(hit.unc).split("-").pop();
+    if(tpi){
+      const d=td(major,1/tpi,75);
+      const shop=nearest(d);
+      sub+=lang==="fr"
+        ?" Autre job : avant de tarauder "+hit.unc+", la mèche est "+shop+" ("+d.toFixed(3)+" po). Plus petite, pour couper le filet. Pas pour laisser passer le boulon."
+        :" Other job: before tapping "+hit.unc+", the drill is "+shop+" ("+d.toFixed(3)+" in). Smaller, so the tap can cut the thread. Not for letting the bolt pass through.";
+    }
+  }
+  if(hit.family==="MM"){
+    sub+=lang==="fr"
+      ?" Sors la mèche en millimètres. Ne la remplace pas par une lettre ou une fraction."
+      :" Pull the millimetre drill. Do not substitute a letter or a fraction bit.";
+  }
+  if(hit.family==="MM" && hit.tap){
+    const met=MET.find(r=>r[0]===hit.tap);
+    if(met){
+      const d=td(met[1],met[2],75);
+      sub+=lang==="fr"
+        ?" Autre job : avant de tarauder "+hit.tap+", la mèche est environ "+(Math.round(d*10)/10)+" mm. Plus petite, pour couper le filet."
+        :" Other job: before tapping "+hit.tap+", the drill is about "+(Math.round(d*10)/10)+" mm. Smaller, so the tap can cut the thread.";
+    }
+  }
+  document.getElementById("clearsub").textContent=sub;
+  const toTap=document.getElementById("cleartapbtn");
+  if(toTap) toTap.dataset.call=hit.tap||hit.unc||hit.unf||"";
 }
 function renderOring(){
   const q=document.getElementById("oq").value.trim().replace("-","");
@@ -439,7 +587,7 @@ function renderFits(){
 }
 function showTab(tab){
   const bench=tab==="bench";
-  const show=bench?new Set(["desk","convert","oring","fit"]):new Set([tab]);
+  const show=bench?new Set(["desk","convert","clear","tap","oring","fit"]):new Set([tab]);
   document.body.classList.toggle("bench-mode",bench);
   document.querySelectorAll(".panel").forEach(p=>{
     const on=show.has(p.id);
@@ -463,6 +611,39 @@ family="UNC";
 document.getElementById("fams").onclick=e=>{const b=e.target.closest("button");if(!b)return;family=b.dataset.f;document.querySelectorAll("#fams button").forEach(x=>x.classList.toggle("on",x===b));document.getElementById("thread").innerHTML="";renderTap();};
 document.getElementById("thread").onchange=renderTap;
 document.getElementById("pct").oninput=renderTap;
+document.getElementById("clearfam").onclick=e=>{const b=e.target.closest("button");if(!b)return;clearFam=b.dataset.f;document.querySelectorAll("#clearfam button").forEach(x=>x.classList.toggle("on",x===b));document.getElementById("clearsize").innerHTML="";renderClearance();};
+document.getElementById("clearfit").onclick=e=>{const b=e.target.closest("button");if(!b)return;clearFit=b.dataset.fit;renderClearance();};
+document.getElementById("clearsize").onchange=renderClearance;
+document.getElementById("tapclearbtn").onclick=()=>{
+  const b=document.getElementById("tapclearbtn");
+  if(!b.dataset.goto) return;
+  clearFam=b.dataset.fam||"IN";
+  document.querySelectorAll("#clearfam button").forEach(x=>x.classList.toggle("on",x.dataset.f===clearFam));
+  document.getElementById("clearsize").innerHTML="";
+  renderClearance();
+  document.getElementById("clearsize").value=b.dataset.size;
+  renderClearance();
+  if(document.body.classList.contains("bench-mode")) document.getElementById("clear").scrollIntoView({behavior:"smooth",block:"start"});
+  else showTab("clear");
+};
+document.getElementById("cleartapbtn").onclick=()=>{
+  const call=document.getElementById("cleartapbtn").dataset.call||"";
+  if(call){
+    let fam="UNC";
+    if(/^M/i.test(call)) fam="MET";
+    else if(UNF.some(r=>r[0]===call)) fam="UNF";
+    family=fam;
+    document.querySelectorAll("#fams button").forEach(x=>x.classList.toggle("on",x.dataset.f===fam));
+    document.getElementById("thread").innerHTML="";
+    renderTap();
+    const sel=document.getElementById("thread");
+    const idx=[...sel.options].findIndex(o=>o.textContent===call);
+    if(idx>=0) sel.value=String(idx);
+    renderTap();
+  }
+  if(document.body.classList.contains("bench-mode")) document.getElementById("tap").scrollIntoView({behavior:"smooth",block:"start"});
+  else showTab("tap");
+};
 document.getElementById("taptable").onclick=e=>{const tr=e.target.closest("tr");if(!tr||!tr.dataset.i)return;document.getElementById("thread").value=tr.dataset.i;renderTap();};
 document.getElementById("letters").innerHTML=Object.entries(LETTERS).map(([k,v])=>`<button data-k="${k}" data-v="${v}">${k}<small>${v}"</small></button>`).join("");
 document.getElementById("numbers").innerHTML=Object.entries(NUMBERS).map(([k,v])=>`<button data-k="#${k}" data-v="${v}">#${k}<small>${v}"</small></button>`).join("");
@@ -503,7 +684,10 @@ function renderDrillFind(){
   const best=pile||(smaller&&bigger? (inches-smaller.v<=bigger.v-inches?smaller:bigger) : smaller||bigger);
   document.getElementById("drillbig").textContent=best?best.name:"—";
   const bits=[smaller,bigger].filter(Boolean);
-  document.getElementById("drillgap").textContent="Tu as demandé "+(inches*IN).toFixed(2)+" mm. Pour un trou avant taraud, prends la plus petite. Pour un trou qui laisse passer, prends la plus grosse.";
+  const asked=(inches*IN).toFixed(2);
+  document.getElementById("drillgap").textContent=lang==="fr"
+    ?"Tu as demandé "+asked+" mm. Plus petite et plus grosse : mèches du tiroir autour de cette mesure. Pour percer avant de tarauder, ouvre Tarauds. Pour laisser passer un boulon, ouvre Passage. Le diamètre de la vis n'est pas la mèche."
+    :"You asked for "+asked+" mm. Smaller and larger are drawer bits around that size. To drill before tapping, open Taps. To let a bolt pass through, open Clearance. Bolt diameter is not the drill.";
   document.getElementById("drillcols").innerHTML=`<div class="chips" id="dpick">
     <button data-v="${smaller?smaller.v:""}">plus petite<br>${smaller?smaller.name:"—"}</button>
     <button data-v="${bigger?bigger.v:""}">plus grosse<br>${bigger?bigger.name:"—"}</button>
@@ -527,7 +711,7 @@ document.getElementById("oq").oninput=renderOring;
 document.getElementById("oid").oninput=renderOring;
 document.getElementById("ood").oninput=renderOring;
 document.getElementById("fq").oninput=renderFits;
-document.getElementById("lang").onclick=()=>{lang=lang==="fr"?"en":"fr";localStorage.setItem("ak-lang",lang);document.getElementById("lang").textContent=lang==="fr"?"EN":"FR";document.querySelectorAll("[data-fr]").forEach(el=>{el.textContent=lang==="fr"?el.dataset.fr:el.dataset.en;});renderDesk();};
+document.getElementById("lang").onclick=()=>{lang=lang==="fr"?"en":"fr";localStorage.setItem("ak-lang",lang);document.getElementById("lang").textContent=lang==="fr"?"EN":"FR";document.querySelectorAll("[data-fr]").forEach(el=>{el.textContent=lang==="fr"?el.dataset.fr:el.dataset.en;});renderDesk();renderTap();renderDrillFind();renderClearance();};
 const HELP={
  od:{t:"Mesurer",b:"Mâle : placez le vernier à l'extérieur, sur les premiers filets. Femelle : placez-le à l'intérieur de l'ouverture. Ne mesurez pas dans le creux du filet."},
  sex:{t:"Mâle ou femelle",b:"Mâle : le filet est à l'extérieur. Femelle : le filet est à l'intérieur, écrou ou port. Un boyau a souvent une femelle droite NPSM, pas une femelle NPT."},
@@ -535,13 +719,14 @@ const HELP={
  said:{t:"Taille demandée",b:"Un 1/2 po peut désigner le boyau ou le filet. Ce n'est pas le même raccord. Vérifiez le bout, puis choisissez."},
  end:{t:"Le bout",b:"Pointu : JIC. Plat avec un o-ring : ORFS. En cône qui serre fort : NPT. Droit avec l'o-ring à la base : ORB."},
  convert:{t:"mm, pouces, pieds",b:"25,4 mm valent un pouce. 12 pouces valent un pied. Entrez mm, pouces ou pieds : les autres suivent."},
- tap:{t:"Taraud",b:"Le taraud grave le filet dans le trou. Percez d'abord. Le trou est plus petit que la vis. Pour un 1/4-20, sortez la mèche #7."},
- threadname:{t:"1/4-20",b:"1/4 est la grosseur de la vis. 20 est le nombre de filets sur un pouce. Ce n'est pas le nom de la mèche."},
- pct:{t:"75 %",b:"Ne percez pas aussi gros que la vis. 75 % est le trou habituel. Plus gros, le filet est faible. Plus petit, l'outil casse."},
- fams:{t:"Les familles",b:"Gros : vis ordinaires. Fin : filet serré, souvent sur les boyaux. Métrique : M6, M8. Tuyau : filet en cône. Gaz : filet droit, souvent sur les machines européennes."},
- drill:{t:"Les mèches",b:"Une mèche peut s'appeler par une lettre, un numéro ou une fraction, comme 5/32. Entrez la grosseur demandée. L'outil propose la plus petite et la plus grosse."},
+ clear:{t:"Trou de passage",b:"Le boulon traverse sans filet. Le diamètre écrit sur la vis (1/4, M10) n'est pas la mèche. Serré : peu de jeu. Normal : le choix habituel. Libre : plus de jeu. UNC et UNF du même diamètre ont le même trou. NPT et BSP ne sont pas ici."},
+ tap:{t:"Avant taraud",b:"Le taraud coupe le filet dans un trou plus petit que la vis. Pour un 1/4-20, sortez la mèche #7. Ce n'est pas le trou de passage (9/32 en ajustement normal)."},
+ threadname:{t:"1/4-20",b:"1/4 est le diamètre nominal de la vis. 20 est le nombre de filets sur un pouce. Ce n'est pas le nom de la mèche, ni le trou de passage."},
+ pct:{t:"75 %",b:"Ne percez pas aussi gros que la vis. 75 % est le trou habituel avant de tarauder. Plus gros, le filet est faible. Plus petit, l'outil casse. Ce calcul ne donne pas le trou de passage."},
+ fams:{t:"Les familles",b:"Gros : UNC. Fin : UNF. Métrique : M6, M8. Tuyau NPT et gaz BSP : filets de tuyau, pour tarauder seulement. Pas un trou de passage de boulon."},
+ drill:{t:"Les mèches",b:"Une mèche peut s'appeler par une lettre, un numéro ou une fraction, comme 5/32. Plus petite et plus grosse sont les mèches du tiroir autour de la mesure. Pour un filet intérieur, ouvre Tarauds. Pour un boulon qui passe, ouvre Passage."},
  letter:{t:"Lettres",b:"De A à Z. A est plus petite que Z."},
- number:{t:"Numéros",b:"De 1 à 80. Plus le numéro est grand, plus la mèche est petite. #7 sert pour la vis 1/4-20."},
+ number:{t:"Numéros",b:"De 1 à 80. Plus le numéro est grand, plus la mèche est petite. #7 est la mèche avant de tarauder une vis 1/4-20, pas le trou de passage."},
  oring:{t:"O-ring",b:"Mesurez d'abord l'épaisseur (CS), puis le trou (ID). L'OD = ID + 2×CS. Le dash n'est pas la grosseur du boyau."},
  fit:{t:"Numéro",b:"2404 est le numéro du raccord. Plusieurs mots : JIC et 90 doivent tous matcher (ET). Le dessin dit droit, coude ou T."},
  dash:{t:"dash",b:"C'est le numéro de l'o-ring, comme -214. Ce n'est pas la grosseur du tuyau."},
@@ -599,13 +784,15 @@ function lockIfNeeded(){
   if(trialOk()) return;
   const pay=document.getElementById("pay");
   if(pay) pay.style.display="block";
-  ["odgive","drillbig","give"].forEach(id=>{const n=document.getElementById(id);if(n)n.textContent="mois fini";});
+  ["odgive","drillbig","give","clearbig"].forEach(id=>{const n=document.getElementById(id);if(n)n.textContent="mois fini";});
+  ["clearsub","clearcols"].forEach(id=>{const n=document.getElementById(id);if(n)n.textContent="";});
 }
-const _od=renderOd, _drill=renderDrillFind, _oring=renderOring;
+const _od=renderOd, _drill=renderDrillFind, _oring=renderOring, _clear=renderClearance;
 renderOd=function(){startTrial();_od();lockIfNeeded();};
 renderDrillFind=function(){startTrial();_drill();lockIfNeeded();};
 renderOring=function(){startTrial();_oring();lockIfNeeded();};
-showTab("bench");renderDesk();renderConv();renderTap();const t14=[...document.getElementById("thread").options].findIndex(o=>o.textContent.startsWith("1/4-20"));if(t14>=0)document.getElementById("thread").value=t14;renderTap();renderOring();renderOd();renderDrillFind();trialNote();
+renderClearance=function(){startTrial();_clear();lockIfNeeded();};
+showTab("bench");renderDesk();renderConv();renderTap();const t14=[...document.getElementById("thread").options].findIndex(o=>o.textContent.startsWith("1/4-20"));if(t14>=0)document.getElementById("thread").value=t14;renderTap();renderOring();renderOd();renderDrillFind();renderClearance();trialNote();
 </script>
-<p id="trialnote" class="lead" style="text-align:center"></p><div id="pay" class="card" style="display:none;margin:16px"><b>Le mois gratuit est fini.</b><p class="lead">Les dessins restent. Le raccord, la mèche et le numéro d'o-ring se rouvrent à 9 $ par mois.</p><p><a class="btn" href="/tarifs">Voir les abonnements</a></p></div></body>
+</body>
 </html>
